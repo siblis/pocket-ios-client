@@ -1,0 +1,411 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */; };
+		6DD41E462120C5C8002EE1F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */; };
+		6DD41E492120C5C8002EE1F3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E472120C5C8002EE1F3 /* Login.storyboard */; };
+		6DD41E4B2120C5C9002EE1F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E4A2120C5C9002EE1F3 /* Assets.xcassets */; };
+		6DD41E4E2120C5C9002EE1F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E4C2120C5C9002EE1F3 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6DD41E402120C5C8002EE1F3 /* pocket-ios-client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pocket-ios-client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6DD41E482120C5C8002EE1F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		6DD41E4A2120C5C9002EE1F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6DD41E4D2120C5C9002EE1F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6DD41E4F2120C5C9002EE1F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6DD41E3D2120C5C8002EE1F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6DD41E372120C5C8002EE1F3 = {
+			isa = PBXGroup;
+			children = (
+				6DD41E422120C5C8002EE1F3 /* pocket-ios-client */,
+				6DD41E412120C5C8002EE1F3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6DD41E412120C5C8002EE1F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E402120C5C8002EE1F3 /* pocket-ios-client.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6DD41E422120C5C8002EE1F3 /* pocket-ios-client */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E562120C5EF002EE1F3 /* Application */,
+				6DD41E552120C5DD002EE1F3 /* Login */,
+				6DD41E5D2120C679002EE1F3 /* Supporting Files */,
+			);
+			path = "pocket-ios-client";
+			sourceTree = "<group>";
+		};
+		6DD41E552120C5DD002EE1F3 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E592120C614002EE1F3 /* Model */,
+				6DD41E582120C60B002EE1F3 /* View */,
+				6DD41E572120C5F9002EE1F3 /* Controller */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		6DD41E562120C5EF002EE1F3 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E5C2120C645002EE1F3 /* Model */,
+				6DD41E5B2120C63F002EE1F3 /* View */,
+				6DD41E5A2120C636002EE1F3 /* Controller */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		6DD41E572120C5F9002EE1F3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6DD41E582120C60B002EE1F3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E472120C5C8002EE1F3 /* Login.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DD41E592120C614002EE1F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6DD41E5A2120C636002EE1F3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6DD41E5B2120C63F002EE1F3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E4C2120C5C9002EE1F3 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DD41E5C2120C645002EE1F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6DD41E5D2120C679002EE1F3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6DD41E4A2120C5C9002EE1F3 /* Assets.xcassets */,
+				6DD41E4F2120C5C9002EE1F3 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6DD41E3F2120C5C8002EE1F3 /* pocket-ios-client */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DD41E522120C5C9002EE1F3 /* Build configuration list for PBXNativeTarget "pocket-ios-client" */;
+			buildPhases = (
+				6DD41E3C2120C5C8002EE1F3 /* Sources */,
+				6DD41E3D2120C5C8002EE1F3 /* Frameworks */,
+				6DD41E3E2120C5C8002EE1F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "pocket-ios-client";
+			productName = "pocket-ios-client";
+			productReference = 6DD41E402120C5C8002EE1F3 /* pocket-ios-client.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6DD41E382120C5C8002EE1F3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Damien Inc.";
+				TargetAttributes = {
+					6DD41E3F2120C5C8002EE1F3 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 6DD41E3B2120C5C8002EE1F3 /* Build configuration list for PBXProject "pocket-ios-client" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6DD41E372120C5C8002EE1F3;
+			productRefGroup = 6DD41E412120C5C8002EE1F3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6DD41E3F2120C5C8002EE1F3 /* pocket-ios-client */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6DD41E3E2120C5C8002EE1F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DD41E4E2120C5C9002EE1F3 /* LaunchScreen.storyboard in Resources */,
+				6DD41E4B2120C5C9002EE1F3 /* Assets.xcassets in Resources */,
+				6DD41E492120C5C8002EE1F3 /* Login.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6DD41E3C2120C5C8002EE1F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DD41E462120C5C8002EE1F3 /* LoginViewController.swift in Sources */,
+				6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6DD41E472120C5C8002EE1F3 /* Login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6DD41E482120C5C8002EE1F3 /* Base */,
+			);
+			name = Login.storyboard;
+			sourceTree = "<group>";
+		};
+		6DD41E4C2120C5C9002EE1F3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6DD41E4D2120C5C9002EE1F3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6DD41E502120C5C9002EE1F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6DD41E512120C5C9002EE1F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6DD41E532120C5C9002EE1F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7723M4M7F;
+				INFOPLIST_FILE = "$(SRCROOT)/pocket-ios-client/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.damieninc.pocket-ios-client";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6DD41E542120C5C9002EE1F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N7723M4M7F;
+				INFOPLIST_FILE = "$(SRCROOT)/pocket-ios-client/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.damieninc.pocket-ios-client";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6DD41E3B2120C5C8002EE1F3 /* Build configuration list for PBXProject "pocket-ios-client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DD41E502120C5C9002EE1F3 /* Debug */,
+				6DD41E512120C5C9002EE1F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DD41E522120C5C9002EE1F3 /* Build configuration list for PBXNativeTarget "pocket-ios-client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DD41E532120C5C9002EE1F3 /* Debug */,
+				6DD41E542120C5C9002EE1F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6DD41E382120C5C8002EE1F3 /* Project object */;
+}
