@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D6AA39F2136DED600635BB4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6D6AA39E2136DED600635BB4 /* .gitignore */; };
 		6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */; };
 		6DD41E462120C5C8002EE1F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */; };
 		6DD41E492120C5C8002EE1F3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E472120C5C8002EE1F3 /* Login.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D6AA39E2136DED600635BB4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6DD41E402120C5C8002EE1F3 /* pocket-ios-client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pocket-ios-client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +40,7 @@
 		6DD41E372120C5C8002EE1F3 = {
 			isa = PBXGroup;
 			children = (
+				6D6AA39E2136DED600635BB4 /* .gitignore */,
 				6DD41E422120C5C8002EE1F3 /* pocket-ios-client */,
 				6DD41E412120C5C8002EE1F3 /* Products */,
 			);
@@ -194,6 +197,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D6AA39F2136DED600635BB4 /* .gitignore in Resources */,
 				6DD41E4E2120C5C9002EE1F3 /* LaunchScreen.storyboard in Resources */,
 				6DD41E4B2120C5C9002EE1F3 /* Assets.xcassets in Resources */,
 				6DD41E492120C5C8002EE1F3 /* Login.storyboard in Resources */,
