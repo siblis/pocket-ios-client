@@ -9,6 +9,16 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    @IBOutlet weak var loginLable: UILabel!
+    @IBOutlet weak var passwordLable: UILabel!
+    @IBOutlet weak var pocketLable: UILabel!
+    @IBOutlet weak var messangerLable: UILabel!
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var singUpButton: UIButton!
+    
+    @IBOutlet weak var loginTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +27,14 @@ class LoginViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func signIn(_ sender: Any) {
+        
+    }
+    
+    @IBAction func signUp(_ sender: Any) {
+        
     }
 
 
