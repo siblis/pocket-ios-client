@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xN8-RX-3gv">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Test View Controller-->
+        <scene sceneID="TaL-Sd-cpn">
+            <objects>
+                <viewController id="xN8-RX-3gv" customClass="TestViewController" customModule="pocket_ios_client" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TvC-ap-5nn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A7J-Bt-0sB">
+                                <rect key="frame" x="49" y="158" width="277" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="RuO-99-9yJ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="mMS-it-bSe"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wPB-1k-DzE">
+                                <rect key="frame" x="49" y="259" width="277" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="uYu-Gr-6AF"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fO-1T-TmM">
+                                <rect key="frame" x="169" y="357" width="36" height="30"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendBottom:" destination="xN8-RX-3gv" eventType="touchUpInside" id="MvL-nU-jj5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wPB-1k-DzE" firstAttribute="centerX" secondItem="5fO-1T-TmM" secondAttribute="centerX" id="1kD-mg-uya"/>
+                            <constraint firstItem="A7J-Bt-0sB" firstAttribute="top" secondItem="vGT-zg-PEf" secondAttribute="top" constant="138" id="2Kg-jB-bXO"/>
+                            <constraint firstItem="wPB-1k-DzE" firstAttribute="top" secondItem="A7J-Bt-0sB" secondAttribute="bottom" constant="71" id="N6h-6H-gac"/>
+                            <constraint firstItem="wPB-1k-DzE" firstAttribute="leading" secondItem="A7J-Bt-0sB" secondAttribute="leading" id="V2Y-9P-wQg"/>
+                            <constraint firstItem="wPB-1k-DzE" firstAttribute="centerX" secondItem="vGT-zg-PEf" secondAttribute="centerX" id="a6R-6x-VmA"/>
+                            <constraint firstItem="5fO-1T-TmM" firstAttribute="top" secondItem="wPB-1k-DzE" secondAttribute="bottom" constant="68" id="lgU-6R-w4x"/>
+                            <constraint firstItem="A7J-Bt-0sB" firstAttribute="centerX" secondItem="vGT-zg-PEf" secondAttribute="centerX" id="lxy-Tf-uLz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vGT-zg-PEf"/>
+                    </view>
+                    <connections>
+                        <outlet property="massageOut" destination="A7J-Bt-0sB" id="NiR-BD-LuD"/>
+                        <outlet property="message" destination="wPB-1k-DzE" id="XfV-gr-6ay"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ijQ-Wt-njT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1719.2" y="-770.46476761619192"/>
+        </scene>
+    </scenes>
+</document>
