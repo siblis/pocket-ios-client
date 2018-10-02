@@ -30,10 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wo-cF-D73">
-                                <rect key="frame" x="137.5" y="324" width="100" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="mCP-hX-qMM"/>
-                                </constraints>
+                                <rect key="frame" x="166.5" y="324" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -44,7 +41,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cg2-DM-UWK">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="VladimirIos" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cg2-DM-UWK">
                                 <rect key="frame" x="47.5" y="360" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="Bi3-JK-gsA"/>
@@ -53,7 +50,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n5u-Rg-8jb">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12345" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n5u-Rg-8jb">
                                 <rect key="frame" x="47.5" y="446" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="t4F-6D-vuE"/>
@@ -66,17 +63,23 @@
                                 <rect key="frame" x="160.5" y="547" width="54" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Sign Up"/>
+                                <connections>
+                                    <action selector="signUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GPw-lg-2wV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epA-e5-Stc">
                                 <rect key="frame" x="147.5" y="496" width="80" height="36"/>
                                 <color key="backgroundColor" red="0.0" green="0.71021713040000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="giN-z2-Phg"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="giN-z2-Phg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Sign In">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="signIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oJo-W2-Tw0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -103,6 +106,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="loginLable" destination="9wo-cF-D73" id="9nC-RR-exp"/>
+                        <outlet property="loginTextField" destination="cg2-DM-UWK" id="JNw-9K-hCm"/>
+                        <outlet property="messangerLable" destination="5dG-fk-2Du" id="4XT-RA-ntS"/>
+                        <outlet property="passwordLable" destination="3U6-8P-eHL" id="aN3-Wc-hua"/>
+                        <outlet property="passwordTextField" destination="n5u-Rg-8jb" id="7ZV-YJ-ldo"/>
+                        <outlet property="pocketLable" destination="do2-g0-kmQ" id="f4I-sL-KbF"/>
+                        <outlet property="signInButton" destination="epA-e5-Stc" id="F8g-fb-S5E"/>
+                        <outlet property="singUpButton" destination="87K-wJ-ABt" id="1fq-5K-FvS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

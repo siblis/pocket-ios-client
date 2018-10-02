@@ -19,6 +19,9 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    var user: User!
+    var token: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +34,15 @@ class LoginViewController: UIViewController {
     
     @IBAction func signIn(_ sender: Any) {
         
+        guard let account_name = loginTextField.text, let password = passwordTextField.text else {return}
+        
+        user = User(account_name: account_name, password: password)
+        
+        let login = LoginService.login
+        login.login(user: user) { (token) in
+            self.token = token
+            print(token)
+        }
     }
     
     @IBAction func signUp(_ sender: Any) {
