@@ -1,22 +1,24 @@
 //
-//  UserListTableViewCell.swift
+//  ChatListTableViewCell.swift
 //  pocket-ios-client
 //
-//  Created by Damien on 04/10/2018.
+//  Created by Damien on 08/10/2018.
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
 import UIKit
 
-class UserListTableViewCell: UITableViewCell {
+class ChatListTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
+        // Configure the view for the selected state
     }
 
 }
