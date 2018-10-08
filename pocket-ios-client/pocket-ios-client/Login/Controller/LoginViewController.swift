@@ -21,7 +21,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var user: User!
-    var token: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,9 +39,21 @@ class LoginViewController: UIViewController {
         
         let login = LoginService.login
         login.login(user: user) { (token) in
-            self.token = token
-            print(token)
+            if token != "" {
+               UserDefaults.standard.set(token, forKey: "token")
+                self.performSegue(withIdentifier: "UserListSegue", sender: nil)
+            }
+            else {
+                print ("Error Login")
+            }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+//        if segue.identifier == "UserListSegue" {
+//            let destination: UserListTableViewController = segue.destination as! UserListTableViewController
+//        }
     }
     
     @IBAction func signUp(_ sender: Any) {

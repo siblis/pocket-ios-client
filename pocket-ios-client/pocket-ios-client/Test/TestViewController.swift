@@ -17,7 +17,7 @@ class TestViewController: UIViewController, WebSocketDelegate {
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-      print("websocket is disconnected: \(error?.localizedDescription)")
+        print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {

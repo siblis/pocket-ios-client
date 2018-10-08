@@ -115,11 +115,40 @@
                         <outlet property="pocketLable" destination="do2-g0-kmQ" id="f4I-sL-KbF"/>
                         <outlet property="signInButton" destination="epA-e5-Stc" id="F8g-fb-S5E"/>
                         <outlet property="singUpButton" destination="87K-wJ-ABt" id="1fq-5K-FvS"/>
+                        <segue destination="l6O-py-tbQ" kind="show" identifier="UserListSegue" id="ZsX-jg-GcV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="40.799999999999997" y="26.53673163418291"/>
+        </scene>
+        <!--User List Table View Controller-->
+        <scene sceneID="WxA-DB-hVK">
+            <objects>
+                <tableViewController id="l6O-py-tbQ" customClass="UserListTableViewController" customModule="pocket_ios_client" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vr0-mb-2QS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="Cell" rowHeight="109" id="xTO-uE-bPy" customClass="UserListTableViewCell" customModule="pocket_ios_client" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="109"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xTO-uE-bPy" id="eoA-vI-4DC">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="108.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="l6O-py-tbQ" id="OdQ-4e-w11"/>
+                            <outlet property="delegate" destination="l6O-py-tbQ" id="M3i-9X-n2F"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H9G-hl-h7b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="929" y="27"/>
         </scene>
     </scenes>
 </document>

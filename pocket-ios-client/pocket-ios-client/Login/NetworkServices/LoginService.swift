@@ -42,7 +42,7 @@ class LoginService {
             print (error.localizedDescription)
         }
         
-        //
+        // Request и получение ответа от сервера
         
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
@@ -62,11 +62,5 @@ class LoginService {
             }
         }
         task.resume()
-    }
-    
-    
-//    init(user: User) {
-//        self.user = user
-//    }
-    
+    }    
 }
