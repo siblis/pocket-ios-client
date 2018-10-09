@@ -43,6 +43,7 @@ class LoginViewController: UIViewController {
                self.token = token
             }
             else {
+                self.token = ""
                 print ("Error Login")
             }
         }
@@ -53,7 +54,8 @@ class LoginViewController: UIViewController {
         while token == nil {}
         /////////
         
-        performSegue(withIdentifier: "UserListSegue", sender: nil)
+        if token != "" {
+            performSegue(withIdentifier: "UserListSegue", sender: nil)}
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

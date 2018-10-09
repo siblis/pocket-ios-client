@@ -45,6 +45,7 @@ class NetworkServices {
         let task = session.dataTask(with: request) { (responseData, response, error) in
             guard error == nil else {
                 print("Ошибка: \(error!)")
+                complition("")
                 return}
             
             if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
@@ -88,6 +89,7 @@ class NetworkServices {
         let task = session.dataTask(with: request) { (responseData, response, error) in
             guard error == nil else {
                 print("Ошибка: \(error!)")
+                complition("Error")
                 return
             }
             
