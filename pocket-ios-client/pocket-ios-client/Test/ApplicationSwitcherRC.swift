@@ -29,7 +29,7 @@ class ApplicationSwitcherRC {
         /////////
         
         if response! == "200" {
-        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "ContactListTableViewController") as! ContactListTableViewController
+        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         }
         
         else {
