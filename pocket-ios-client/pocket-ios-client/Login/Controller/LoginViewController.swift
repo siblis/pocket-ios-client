@@ -21,10 +21,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var user: User!
+    var token: String!
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad()        
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,16 +37,23 @@ class LoginViewController: UIViewController {
         
         user = User(account_name: account_name, password: password)
         
-        let login = LoginService.login
-        login.login(user: user) { (token) in
+        NetworkServices.login(user: user) { (token) in
             if token != "" {
                UserDefaults.standard.set(token, forKey: "token")
-                self.performSegue(withIdentifier: "UserListSegue", sender: nil)
+               self.token = token
             }
             else {
                 print ("Error Login")
             }
         }
+        
+        // Грязный хак пока выполняется паралельный запрос
+        // Такое себе, но пока не знаю как иначе сделать
+        // Но работает :)
+        while token == nil {}
+        /////////
+        
+        performSegue(withIdentifier: "UserListSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

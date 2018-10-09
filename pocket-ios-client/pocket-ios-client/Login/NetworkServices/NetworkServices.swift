@@ -8,13 +8,9 @@
 
 import Foundation
 
-class LoginService {
+class NetworkServices {
     
-    static let login = LoginService()
-    
-    private init() {}
-    
-    func login(user: User, complition: @escaping (String) -> Void) {
+    static func login(user: User, complition: @escaping (String) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -62,5 +58,49 @@ class LoginService {
             }
         }
         task.resume()
-    }    
+    }
+    
+    static func getSelfUser(token: String, complition: @escaping (String) -> Void) {
+        
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "pocketmsg.ru"
+        urlComponents.path = "/v1/users/"
+        urlComponents.port = 8888
+        
+        guard let url = urlComponents.url else {fatalError("Could not create URL from components")}
+        
+        //Далее GET руквест
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        //Header
+        
+        var header = request.allHTTPHeaderFields ?? [:]
+        header["token"] = token
+        request.allHTTPHeaderFields = header
+        
+        //
+        
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: request) { (responseData, response, error) in
+            guard error == nil else {
+                print("Ошибка: \(error!)")
+                return
+            }
+            
+            if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
+                
+                let stringSplit = uft8Representation.split(separator: "\"")
+                complition(String(stringSplit[3]))
+            }
+            else {
+                print ("Нет даты")
+            }
+        }
+        task.resume()
+        
+    }
 }
