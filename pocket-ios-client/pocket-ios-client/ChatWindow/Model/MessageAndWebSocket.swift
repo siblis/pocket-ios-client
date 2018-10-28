@@ -12,6 +12,7 @@ import Starscream
 class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
+    var messageInOut: String = ""
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
@@ -23,6 +24,12 @@ class MessageAndWebSocket: WebSocketDelegate {
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("got some text: \(text)")
+        
+        let decoder = JSONDecoder()
+        if let jsonData = text.data(using: .utf8) {
+            let message = try? decoder.decode(Message.self, from: jsonData)
+            print (message?.message)
+        }
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
@@ -33,7 +40,7 @@ class MessageAndWebSocket: WebSocketDelegate {
     //MARK: Message sending
     func sendMessage (receiver: Int, message: String) {
         let encoder = JSONEncoder()
-        let message = Message(receiver: receiver, message: message)
+        let message = Message(receiver: receiver, message: message, senderid: 78, sender_name: "MaxSyt")
         
         do {
             let jsonData = try encoder.encode(message)
@@ -47,7 +54,7 @@ class MessageAndWebSocket: WebSocketDelegate {
     //MARK: WebSocket connecting
     func webSocketConnect() {
         
-        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
+        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws_echo/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
         request.setValue(UserSetup().getToken(), forHTTPHeaderField: "token")
@@ -56,6 +63,5 @@ class MessageAndWebSocket: WebSocketDelegate {
         socket.delegate = self
         socket.connect()
         
-        websocketDidConnect(socket: socket)
     }
 }

@@ -10,15 +10,30 @@ import UIKit
 
 class ChatViewController: UIViewController {
     
+    
     let msgAndSocket = MessageAndWebSocket()
     
+    //MARK: Init
     let insets: CGFloat = 5
+    let cellReuseIdentifier = "MessageCell"
+    var countMessage: Int = 0
+    var dataMessage: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.dataSource = self
+        
         msgAndSocket.webSocketConnect()
     }
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
     
     @IBOutlet weak var message: UITextField! {
         didSet {
@@ -26,14 +41,20 @@ class ChatViewController: UIViewController {
         }
     }
     
-    @IBAction func sendBotton(_ sender: Any) {
+    @IBAction func sendButton(_ sender: Any) {
         
         if let msg = message.text, msg != "" {
-            msgAndSocket.sendMessage(receiver: 24, message: msg)
+            msgAndSocket.sendMessage(receiver: 78, message: msg)
+            self.countMessage += 1
+            self.dataMessage = "\(78): \(msg)"
+            self.tableView.reloadData()
+            message.text = ""
         }
         
     }
+
     
+    //MARK: Keyboard
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -69,7 +90,7 @@ class ChatViewController: UIViewController {
     //MARK: Keyboard show&hide
     @objc func keyboardWillShow(notification: Notification) {
         guard let info = notification.userInfo as? NSDictionary, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
-        
+
         //Добавить уменьшение вьюхи с чатом
         
     }
@@ -80,6 +101,27 @@ class ChatViewController: UIViewController {
     }
 }
 
+
+extension ChatViewController: UITableViewDataSource {
+    //MARK: Table
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.countMessage
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatMessageCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! UITableViewCell
+        
+        cell.textLabel?.text = self.dataMessage
+        
+        return cell
+    }
+}
+
+
 extension ChatViewController {
     //MARK: Resizing elemets
+    
+    
 }

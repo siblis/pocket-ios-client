@@ -12,5 +12,6 @@ struct Message: Codable {
     
     var receiver: Int
     var message: String
-    
+    var senderid: Int
+    var sender_name: String
 }
