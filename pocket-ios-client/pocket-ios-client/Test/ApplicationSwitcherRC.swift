@@ -16,9 +16,8 @@ class ApplicationSwitcherRC {
     
         var rootVC: UIViewController
         
-        let token = UserDefaults.standard.string(forKey: "token")
         
-        NetworkServices.getSelfUser(token: token!) { (response) in
+        NetworkServices.getSelfUser(token: UserSetup().getToken()) { (response) in
             self.response = response
         }
         
@@ -29,7 +28,7 @@ class ApplicationSwitcherRC {
         /////////
         
         if response! == "200" {
-        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+            rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         }
         
         else {

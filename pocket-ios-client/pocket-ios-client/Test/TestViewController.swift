@@ -8,47 +8,19 @@
 
 import UIKit
 import Foundation
-import Starscream
 
-class TestViewController: UIViewController, WebSocketDelegate {
+class TestViewController: UIViewController {
     
     let userSetup = UserSetup()
     
-    func websocketDidConnect(socket: WebSocketClient) {
-      print("websocket is connected")
-    }
-    
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
-    }
-    
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        print("got some text: \(text)")
-    }
-    
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        print("got some data: \(data.count)")
-    }
-    
-    
-    var socket: WebSocket!
-    
+    let msgAndSocket = MessageAndWebSocket()
     
     @IBOutlet weak var message: UITextField!
     @IBOutlet weak var massageOut: UITextField!
     
     @IBAction func sendBottom(_ sender: Any) {
         
-        let encoder = JSONEncoder()
-        let message = Message(receiver: 24, message: "Hello, im iOS client")
-        
-        do {
-            let jsonData = try encoder.encode(message)
-            socket.write(data: jsonData)
-        }
-        catch {
-            print (error.localizedDescription)
-        }
+        msgAndSocket.sendMessage(receiver: 24, message: "Hello, im...")
         
     }
     
@@ -63,24 +35,8 @@ class TestViewController: UIViewController, WebSocketDelegate {
         //registerUser(post: getRegistered)
         //login(user: user)
         getSelf()
-        webSocketConnect()
+        msgAndSocket.webSocketConnect()
         
-    }
-    
-    // Web Socket Connect
-    
-    func webSocketConnect() {
-        
-        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
-        var request = URLRequest(url: url!)
-        request.timeoutInterval = 5
-        request.setValue(userSetup.getToken(), forHTTPHeaderField: "token")
-        
-       self.socket = WebSocket(request: request)
-        socket.delegate = self
-        socket.connect()
-        
-        websocketDidConnect(socket: socket)
     }
     
     
