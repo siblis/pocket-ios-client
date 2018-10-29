@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     var token: String!
 
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
         }
         
         // Грязный хак пока выполняется паралельный запрос
-        // Такое себе, но пока не знаю как иначе сделать
+        // Такое себе, чуть позже сделаю нормально
         // Но работает :)
         while token == nil {}
         /////////
