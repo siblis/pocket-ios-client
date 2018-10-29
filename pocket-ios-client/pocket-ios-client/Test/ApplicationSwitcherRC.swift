@@ -16,24 +16,27 @@ class ApplicationSwitcherRC {
     
         var rootVC: UIViewController
         
+        let token = UserDefaults.standard.string(forKey: "token")
         
-        NetworkServices.getSelfUser(token: UserSetup().getToken()) { (response) in
-            self.response = response
-        }
-        
-        // Грязный хак пока выполняется паралельный запрос
-        // Такое себе, но пока не знаю как иначе сделать
-        // Но работает :)
-        while response == nil {}
-        /////////
-        
-        if response! == "200" {
+        if token != nil {
+            NetworkServices.getSelfUser(token: token!) { (response) in
+                self.response = response
+            }
+          
+            // Грязный хак пока выполняется паралельный запрос
+            // Такое себе, чуть позже сделаю нормально
+            // Но работает :)
+            // Но на самом деле нет - если с сервака придёт nil - будет бесконечный цикл
+            while response == nil {
+            }
+            
             rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         }
         
         else {
-           rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         }
+        
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = rootVC
