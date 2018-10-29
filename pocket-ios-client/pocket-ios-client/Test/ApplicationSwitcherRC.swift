@@ -22,9 +22,11 @@ class ApplicationSwitcherRC {
             self.response = response
         }
         
+//        response = "205"
         // Грязный хак пока выполняется паралельный запрос
         // Такое себе, но пока не знаю как иначе сделать
         // Но работает :)
+        // Но на самом деле нет - если с сервака придёт nil - будет бесконечный цикл
         while response == nil {}
         /////////
         
@@ -34,6 +36,8 @@ class ApplicationSwitcherRC {
         
         else {
            rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            
+            
         }
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

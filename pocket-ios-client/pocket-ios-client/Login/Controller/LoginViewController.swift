@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     var token: String!
 
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {

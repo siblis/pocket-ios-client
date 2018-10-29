@@ -95,8 +95,10 @@ class NetworkServices {
             
             if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
                 
-                let stringSplit = uft8Representation.split(separator: "\"")
-                complition(String(stringSplit[3]))
+                print("Data: \(uft8Representation)")
+                
+//                let stringSplit = uft8Representation.split(separator: "\"")
+//                complition(String(stringSplit[3]))
             }
             else {
                 print ("Нет даты")
