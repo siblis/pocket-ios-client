@@ -13,5 +13,12 @@ struct Message: Codable {
     var receiver: Int
     var message: String
     var senderid: Int
-    var sender_name: String
+    var senderName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case receiver = "receiver"
+        case message = "message"
+        case senderid = "senderid"
+        case senderName = "sender_name"
+    }
 }

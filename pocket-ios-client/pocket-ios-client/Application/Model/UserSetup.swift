@@ -15,6 +15,10 @@ class UserSetup {
     }
     
     func getToken() -> String {
-        return UserDefaults.standard.string(forKey: "token") ?? "isEmpty"
+        return UserDefaults.standard.string(forKey: "token") ?? ""
+    }
+    
+    func tokenIsEmpty() -> Bool {
+        return UserDefaults.standard.string(forKey: "token") == nil
     }
 }

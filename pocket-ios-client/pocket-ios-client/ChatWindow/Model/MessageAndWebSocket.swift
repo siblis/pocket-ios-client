@@ -40,7 +40,7 @@ class MessageAndWebSocket: WebSocketDelegate {
     //MARK: Message sending
     func sendMessage (receiver: Int, message: String) {
         let encoder = JSONEncoder()
-        let message = Message(receiver: receiver, message: message, senderid: 78, sender_name: "MaxSyt")
+        let message = Message(receiver: receiver, message: message, senderid: 78, senderName: "MaxSyt")
         
         do {
             let jsonData = try encoder.encode(message)
@@ -54,9 +54,9 @@ class MessageAndWebSocket: WebSocketDelegate {
     //MARK: WebSocket connecting
     func webSocketConnect() {
         
-        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws_echo/")
+        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
         var request = URLRequest(url: url!)
-        request.timeoutInterval = 5
+        request.timeoutInterval = 15
         request.setValue(UserSetup().getToken(), forHTTPHeaderField: "token")
         
         self.socket = WebSocket(request: request)
