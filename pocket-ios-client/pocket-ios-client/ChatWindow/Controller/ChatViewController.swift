@@ -16,8 +16,7 @@ class ChatViewController: UIViewController {
     //MARK: Init
     let insets: CGFloat = 15
     let cellReuseIdentifier = "MessageCell"
-    var dataMessage = [String]()
-    var userID: Int = 25
+    var userID: Int = 24
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +50,6 @@ class ChatViewController: UIViewController {
         
         if let msg = message.text, msg != "" {
             msgAndSocket.sendMessage(receiver: self.userID, message: msg)
-            self.dataMessage.append(msg)
             self.tableView.reloadData()
             message.text = ""
         }
@@ -112,14 +110,14 @@ extension ChatViewController: UITableViewDataSource {
     //MARK: Table
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataMessage.count
+        return msgAndSocket.messageInOut.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatMessageCell
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         
-        cell.textLabel?.text = "\(self.userID): \(self.dataMessage[indexPath.row])"
+        cell.textLabel?.text = msgAndSocket.messageInOut[indexPath.row]
         
         return cell
     }

@@ -10,15 +10,17 @@ import Foundation
 
 struct Message: Codable {
     
-    var receiver: Int
+    var receiver: String
     var message: String
     var senderid: Int
     var senderName: String
+    var time: Double
     
     enum CodingKeys: String, CodingKey {
         case receiver = "receiver"
         case message = "message"
         case senderid = "senderid"
         case senderName = "sender_name"
+        case time = "timestamp"
     }
 }
