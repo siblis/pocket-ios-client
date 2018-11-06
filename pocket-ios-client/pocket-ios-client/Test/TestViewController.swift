@@ -40,8 +40,8 @@ class TestViewController: UIViewController, WebSocketDelegate {
     @IBAction func sendBottom(_ sender: Any) {
         
         let encoder = JSONEncoder()
-//        let message = Message(receiver: 24, message: "Hello, im iOS client")
-        let message = Message(receiver: 24, message: "Hello, i'm IOS client", senderid: 666, sender_name: "Guest")
+        let message = Message(receiver: 24, message: "Hello, im iOS client")
+        
         do {
             let jsonData = try encoder.encode(message)
             socket.write(data: jsonData)
