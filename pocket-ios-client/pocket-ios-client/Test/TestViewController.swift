@@ -39,17 +39,16 @@ class TestViewController: UIViewController, WebSocketDelegate {
     
     @IBAction func sendBottom(_ sender: Any) {
         
-//        let encoder = JSONEncoder()
-//        let message = Message(receiver: 24, message: "Hello, im iOS client")
-//        
-//        do {
-//            let jsonData = try encoder.encode(message)
-//            socket.write(data: jsonData)
-//        }
-//        catch {
-//            print (error.localizedDescription)
-//        }
+        let encoder = JSONEncoder()
+        let message = Message(receiver: 24, message: "Hello, im iOS client", senderid: 0, sender_name: "")
         
+        do {
+            let jsonData = try encoder.encode(message)
+            socket.write(data: jsonData)
+        }
+        catch {
+            print (error.localizedDescription)
+        }   
     }
     
     override func viewDidLoad() {

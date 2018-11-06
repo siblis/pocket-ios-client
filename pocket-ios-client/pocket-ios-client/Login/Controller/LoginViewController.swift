@@ -33,7 +33,8 @@ class LoginViewController: UIViewController {
     
     @IBAction func signIn(_ sender: Any) {
         
-        guard let account_name = loginTextField.text, let password = passwordTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        let account_name = "MaxSyt"
         
         user = User(account_name: account_name, password: password)
         
@@ -66,7 +67,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUp(_ sender: Any) {
+        let signUpVC = UIStoryboard.init(name: "SignUp", bundle: nil).instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
         
+        present(signUpVC, animated:true, completion:nil)
     }
 
 
