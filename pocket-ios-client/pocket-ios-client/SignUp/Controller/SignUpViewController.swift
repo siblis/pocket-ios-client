@@ -33,23 +33,45 @@ class SignUpViewController: UIViewController {
 
         user = User(account_name: account_name, email: email, password: password)
         
-        NetworkServices.signUp(user: user) { (token) in
-            if token != "" {
+        NetworkServices.signUp(user: user) { (token, statusCode) in
+            if (token != "") && (statusCode == 201) {
                 UserDefaults.standard.set(token, forKey: "token")
                 self.token = token
+                let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                
+                self.present(tabBarVC, animated:true, completion:nil)
             }
             else {
-                self.token = ""
-                print ("signUp error")
+                if statusCode == 409 {
+                    self.token = ""
+                    print ("user already exists")
+                    DispatchQueue.main.async {
+                        self.showErrorAlert(message: "Пользователь уже существует")
+                    }
+                } else if statusCode == 400 {
+                    self.token = ""
+                    print ("bad JSON")
+                    DispatchQueue.main.async {
+                        self.showErrorAlert(message: "Не все поля заполнены")
+                    }
+                } else {
+                    self.token = ""
+                    print ("signUp error")
+                    DispatchQueue.main.async {
+                        self.showErrorAlert(message: "Ошибка соединения с сервером")
+                    }
+                }
+                
             }
-        }
-        
-        if token != "" {
-            let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-            
-            present(tabBarVC, animated:true, completion:nil)
         }
     }
     
-
+    //алерт с ошибкой
+    func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
 }

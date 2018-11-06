@@ -11,7 +11,7 @@ import Foundation
 class NetworkServices {
     
     //функция регистрации пользователей
-    static func signUp(user: User, complition: @escaping (String) -> Void) {
+    static func signUp(user: User, complition: @escaping (String, Int) -> Void) {
         
         //POST request
         let url = URL(string: "https://pocketmsg.ru:8888/v1/users/")
@@ -50,16 +50,21 @@ class NetworkServices {
                     do {
                         json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
                         print ("token = \(json["token"] ?? "")")
-                        complition(json["token"] ?? "")
+                        print (json)
+                        complition(json["token"] ?? "", statusCode)
                     } catch {
                         print(error.localizedDescription)
+                        complition("", statusCode)
                     }
                 } else if statusCode == 409 {
                     print ("user is already registered")
+                    complition("", statusCode)
                 } else if statusCode == 400 {
                     print ("bad JSON")
+                    complition("", statusCode)
                 } else {
                     print ("unknown error, status code = \(statusCode)")
+                    complition("", statusCode)
                 }
             } else {
                 print (httpResponse!.allHeaderFields)
