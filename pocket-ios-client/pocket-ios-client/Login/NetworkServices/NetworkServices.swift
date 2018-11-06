@@ -10,6 +10,69 @@ import Foundation
 
 class NetworkServices {
     
+    //функция регистрации пользователей
+    static func signUp(user: User, complition: @escaping (String, Int) -> Void) {
+        
+        //POST request
+        let url = URL(string: "https://pocketmsg.ru:8888/v1/users/")
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+
+        
+        // делаем JSON
+        let headers = ["account_name":user.account_name,"email":user.email,"password":user.password]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: headers)
+            print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
+        }
+        catch {
+            print (error.localizedDescription)
+        }
+        
+        // Request и получение ответа от сервера
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration)
+        let task = session.dataTask(with: request) { (responseData, response, error) in
+            guard let data = responseData, error == nil else {
+                print(error?.localizedDescription ?? "Unknown error")
+                return
+            }
+            
+            let httpResponse = response as? HTTPURLResponse
+            if httpResponse != nil {
+                let statusCode = httpResponse!.statusCode
+                print (statusCode)
+                
+                //проверяем статус ответа
+                if statusCode == 201 {
+                    var json: [String: String] = [:]
+                    do {
+                        json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
+                        print ("token = \(json["token"] ?? "")")
+                        print (json)
+                        complition(json["token"] ?? "", statusCode)
+                    } catch {
+                        print(error.localizedDescription)
+                        complition("", statusCode)
+                    }
+                } else if statusCode == 409 {
+                    print ("user is already registered")
+                    complition("", statusCode)
+                } else if statusCode == 400 {
+                    print ("bad JSON")
+                    complition("", statusCode)
+                } else {
+                    print ("unknown error, status code = \(statusCode)")
+                    complition("", statusCode)
+                }
+            } else {
+                print (httpResponse!.allHeaderFields)
+            }
+        }
+        task.resume()
+    }
+    
     static func login(user: User, complition: @escaping (String) -> Void) {
         
         var urlComponents = URLComponents()

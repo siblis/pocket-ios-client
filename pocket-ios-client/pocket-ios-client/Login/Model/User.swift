@@ -10,7 +10,20 @@ import Foundation
 
 struct User: Codable {
     
-    let account_name: String
-    let password: String
+    var account_name: String //поменяла let на var - заложила возможность сменить имя
+    var password: String //поменяла let на var - заложила возможность сменить пароль
+    let email: String
+    
+    init(account_name: String, password: String) {
+        self.account_name = account_name
+        self.email = UserDefaults.standard.string(forKey: "selfEmail") ?? ""
+        self.password = password
+    }
+    
+    init(account_name: String, email: String, password: String) {
+        self.account_name = account_name
+        self.email = email
+        self.password = password
+    }
     
 }
