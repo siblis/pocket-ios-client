@@ -10,7 +10,7 @@ import UIKit
 
 class UserSetup {
     
-    func setToken(token: String) {
+    func setToken(token: String?) {
         UserDefaults.standard.set(token, forKey: "token")
     }
     

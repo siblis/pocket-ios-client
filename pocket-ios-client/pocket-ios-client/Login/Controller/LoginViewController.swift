@@ -38,25 +38,15 @@ class LoginViewController: UIViewController {
         
         user = User(account_name: account_name, password: password)
         
-        NetworkServices.login(user: user) { (token) in
-            if token != "" {
-                
-                UserDefaults.standard.set(token, forKey: "token")
-                self.token = token
-            }
-            else {
-                self.token = ""
-                print ("Error Login")
-            }
-        }
+        NetworkServices.login(user: user)
         
         // Грязный хак пока выполняется паралельный запрос
         // Такое себе, чуть позже сделаю нормально
         // Но работает :)
-        while token == nil {}
+        while UserSetup().tokenIsEmpty() {}
         /////////
         
-        if token != "" {
+        if UserSetup().getToken() != "" {
             performSegue(withIdentifier: "UserListSegue", sender: nil)}
     }
     

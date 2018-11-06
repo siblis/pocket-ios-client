@@ -73,7 +73,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func login(user: User, complition: @escaping (String) -> Void) {
+    static func login(user: User) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -107,13 +107,14 @@ class NetworkServices {
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (responseData, response, error) in
             guard error == nil else {
-                print("Ошибка: \(error!)")
-                complition("")
+                print("Ошибка Login: \(error!)")
                 return}
             
-            if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
-                print("Сообщение сервера: \(uft8Representation)")
-                complition(uft8Representation)
+            if let data = responseData {
+                let result = try? JSONDecoder().decode(Token.self, from: data)
+                UserSetup().setToken(token: result?.token)
+                print("Сообщение сервера: \(UserSetup().getToken())")
+                
             }
             else {
                 print ("Нет информации")
