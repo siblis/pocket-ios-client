@@ -9,9 +9,87 @@
 import UIKit
 
 class ChatListTableViewCell: UITableViewCell {
+    
+    let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 34
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+   
+    let nameLabel: UILabel = {
+      let label = UILabel()
+        label.text = "Steve Jobs"
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
+    }()
+    let messageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Your friend's message and something else..."
+        label.textColor = UIColor.darkGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "12.03 pm"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .right
+        return label
+    }()
+    let hasReadImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
 
     func setup() {
-        self.textLabel?.text = "New chat"
+         
+        addSubview(profileImageView)
+        
+        setupContainerView()
+        
+        profileImageView.image = UIImage(named: "steveprofile")
+       hasReadImageView.image = UIImage(named: "steveprofile")
+        
+        addConstraintsWithFormat(format: "H:|-12-[v0(68)]", views: profileImageView)
+        addConstraintsWithFormat(format: "V:[v0(68)]", views: profileImageView)
+        
+        addConstraint(NSLayoutConstraint(item: profileImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+
     }
 
+    private func setupContainerView() {
+        let containerView = UIView()
+       
+        addSubview(containerView)
+        addConstraintsWithFormat(format: "H:|-90-[v0]|", views: containerView)
+        addConstraintsWithFormat(format: "V:[v0(50)]", views: containerView)
+        addConstraint(NSLayoutConstraint(item: containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        
+        containerView.addSubview(nameLabel)
+        containerView.addSubview(messageLabel)
+        containerView.addSubview(timeLabel)
+        containerView.addSubview(hasReadImageView)
+        containerView.addConstraintsWithFormat(format: "H:|[v0][v1(80)]-12-|", views: nameLabel, timeLabel)
+        containerView.addConstraintsWithFormat(format: "V:|[v0][v1(24)]|", views: nameLabel, messageLabel)
+        containerView.addConstraintsWithFormat(format: "H:|[v0]-8-[v1(20)]-12-|", views: messageLabel, hasReadImageView)
+        containerView.addConstraintsWithFormat(format: "V:|[v0(24)]", views: timeLabel)
+        containerView.addConstraintsWithFormat(format: "V:[v0(20)]|", views: hasReadImageView)
+    }
+    
+}
+extension UIView {
+    func addConstraintsWithFormat(format: String, views: UIView...){
+        var viewsDictionary = [String: UIView]()
+        for (index, view) in views.enumerated(){
+            let key = "v\(index)"
+            viewsDictionary[key] = view
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
+    }
 }
