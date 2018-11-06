@@ -40,8 +40,9 @@ class LoginViewController: UIViewController {
         
         NetworkServices.login(user: user) { (token) in
             if token != "" {
-               UserDefaults.standard.set(token, forKey: "token")
-               self.token = token
+                
+                UserDefaults.standard.set(token, forKey: "token")
+                self.token = token
             }
             else {
                 self.token = ""
