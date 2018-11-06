@@ -14,10 +14,9 @@ class ChatViewController: UIViewController {
     let msgAndSocket = MessageAndWebSocket()
     
     //MARK: Init
-    let insets: CGFloat = 5
+    let insets: CGFloat = 15
     let cellReuseIdentifier = "MessageCell"
-    var countMessage: Int = 0
-    var dataMessage: String = ""
+    var userID: Int = 24
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,22 +40,26 @@ class ChatViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var sendBtn: UIButton! {
+        didSet {
+            sendBtn.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
     @IBAction func sendButton(_ sender: Any) {
         
         if let msg = message.text, msg != "" {
-            msgAndSocket.sendMessage(receiver: 78, message: msg)
-            self.countMessage += 1
-            self.dataMessage = "\(78): \(msg)"
+            msgAndSocket.sendMessage(receiver: self.userID, message: msg)
             self.tableView.reloadData()
             message.text = ""
         }
         
     }
 
-    
-    //MARK: Keyboard
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setupElements(y: 0)
         
         NotificationCenter.default.addObserver(
             self,
@@ -93,11 +96,12 @@ class ChatViewController: UIViewController {
 
         //Добавить уменьшение вьюхи с чатом
         
+        setupElements(y: value.cgRectValue.height)
     }
     
     @objc func keyboardWillHide(notification: Notification) {
         //Добавить возврат к обычному размеру чата
-        
+        setupElements(y: 0)
     }
 }
 
@@ -106,14 +110,14 @@ extension ChatViewController: UITableViewDataSource {
     //MARK: Table
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countMessage
+        return msgAndSocket.messageInOut.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatMessageCell
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         
-        cell.textLabel?.text = self.dataMessage
+        cell.textLabel?.text = msgAndSocket.messageInOut[indexPath.row]
         
         return cell
     }
@@ -123,5 +127,53 @@ extension ChatViewController: UITableViewDataSource {
 extension ChatViewController {
     //MARK: Resizing elemets
     
+    func setupElements(y: CGFloat) {
+        
+        sendBtnPosition(y: y)
+        messagePosition(y: y)
+        tableViewPosition(y: y)
+        
+    }
     
+    func tableViewPosition(y: CGFloat) {
+        
+        let tableViewWidth: CGFloat = UIScreen.main.bounds.size.width - insets
+        let tableViewHeight: CGFloat = UIScreen.main.bounds.size.height - sendBtn.frame.height - 4 * insets - y
+        
+        let xPosition: CGFloat = 0
+        let yPosition: CGFloat = (self.navigationController?.navigationBar.intrinsicContentSize.height)!
+        
+        let tableViewSize = CGSize(width: tableViewWidth, height: tableViewHeight)
+        let tableViewOrigin = CGPoint(x: xPosition, y: yPosition)
+        
+        tableView.frame = CGRect(origin: tableViewOrigin, size: tableViewSize)
+    }
+    
+    func messagePosition(y: CGFloat) {
+        
+        let messageWidth: CGFloat = UIScreen.main.bounds.size.width - sendBtn.frame.width - 3 * insets
+        let messageHeight: CGFloat = 30
+        
+        let xPosition: CGFloat = insets
+        let yPosition: CGFloat = UIScreen.main.bounds.size.height - messageHeight - insets - y
+        
+        let messageSize = CGSize(width: messageWidth, height: messageHeight)
+        let messageOrigin = CGPoint(x: xPosition, y: yPosition)
+        
+        message.frame = CGRect(origin: messageOrigin, size: messageSize)
+    }
+    
+    func sendBtnPosition(y: CGFloat) {
+        
+        let sendBtnWidth: CGFloat = 36
+        let sendBtnHeight: CGFloat = 30
+        
+        let xPosition: CGFloat = UIScreen.main.bounds.size.width - sendBtnWidth - insets
+        let yPosition: CGFloat = UIScreen.main.bounds.size.height - sendBtnHeight - insets - y
+        
+        let sendBtnSize = CGSize(width: sendBtnWidth, height: sendBtnHeight)
+        let sendBtnOrigin = CGPoint(x: xPosition, y: yPosition)
+        
+        sendBtn.frame = CGRect(origin: sendBtnOrigin, size: sendBtnSize)
+    }
 }

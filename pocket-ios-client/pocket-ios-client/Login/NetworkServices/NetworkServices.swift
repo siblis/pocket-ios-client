@@ -6,7 +6,7 @@
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class NetworkServices {
     
