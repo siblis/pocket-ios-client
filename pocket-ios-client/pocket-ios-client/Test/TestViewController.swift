@@ -39,6 +39,7 @@ class TestViewController: UIViewController, WebSocketDelegate {
     
     @IBAction func sendBottom(_ sender: Any) {
         
+<<<<<<< HEAD
         let encoder = JSONEncoder()
         let message = Message(receiver: "24", message: "Hello!", senderid: 78, senderName: "MaxSyt", time: 0)
         
@@ -49,6 +50,18 @@ class TestViewController: UIViewController, WebSocketDelegate {
         catch {
             print (error.localizedDescription)
         }   
+=======
+//        let encoder = JSONEncoder()
+//        let message = Message(receiver: 24, message: "Hello, im iOS client", senderid: 0, sender_name: "")
+        
+//        do {
+//            let jsonData = try encoder.encode(message)
+//            socket.write(data: jsonData)
+//        }
+//        catch {
+//            print (error.localizedDescription)
+//        }
+>>>>>>> 87a0b6dcdcdeddf212a4af3613a409c73d068908
     }
     
     override func viewDidLoad() {
@@ -227,19 +240,5 @@ class TestViewController: UIViewController, WebSocketDelegate {
             }
         }
         task.resume()
-        
     }
-    
-    // ---------------
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
