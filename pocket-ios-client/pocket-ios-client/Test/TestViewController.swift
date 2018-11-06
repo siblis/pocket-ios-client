@@ -48,8 +48,7 @@ class TestViewController: UIViewController, WebSocketDelegate {
         }
         catch {
             print (error.localizedDescription)
-        }
-        
+        }   
     }
     
     override func viewDidLoad() {
