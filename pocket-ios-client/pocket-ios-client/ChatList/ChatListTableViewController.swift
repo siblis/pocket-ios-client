@@ -11,76 +11,53 @@ import UIKit
 class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
+    
+    var chatMessages: [ChatMessage]?
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+      
+        tableView.backgroundColor = UIColor.white
+        tableView.rowHeight = 100
+        tableView.alwaysBounceVertical = true
+        tableView.register(ChatListTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        
+        setupData()
     }
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
+
+        if let count = chatMessages?.count {
+           return count
+        }
+        return 0
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatListTableViewCell
+        cell.setup()
+        
+        if let chatMessage = chatMessages?[indexPath.item] {
+            cell.nameLabel.text = chatMessage.friend?.name
+            if let profileImageName = chatMessage.friend?.profileImageName{
+                cell.profileImageView.image = UIImage(named: profileImageName)
+            }
+            cell.messageLabel.text = chatMessage.text
+            cell.messageCountLabel.text = chatMessage.messageCount
+            if let date = chatMessage.date {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "h:mm a"
+                cell.timeLabel.text = dateFormatter.string(from: date as Date)
+            }
+        }
 
         // Configure the cell...
-        cell.setup()
+//        cell.setup()
 
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
