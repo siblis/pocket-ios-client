@@ -13,11 +13,6 @@ class ApplicationSwitcherRC {
     static var rootVC: UIViewController!
     
     static var response: String!
-    {
-        didSet {
-            
-        }
-    }
     
     static func choiseRootVC() {
     
