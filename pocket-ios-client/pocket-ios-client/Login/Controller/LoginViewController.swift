@@ -33,8 +33,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func signIn(_ sender: Any) {
         
-        guard let password = passwordTextField.text else {return}
-        let account_name = "MaxSyt"
+        guard let password = passwordTextField.text, let account_name = loginLable.text else {return}
         
         user = User(account_name: account_name, password: password)
         

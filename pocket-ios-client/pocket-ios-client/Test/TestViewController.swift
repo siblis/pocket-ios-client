@@ -40,22 +40,22 @@ class TestViewController: UIViewController, WebSocketDelegate {
     @IBAction func sendBottom(_ sender: Any) {
         
 //        let encoder = JSONEncoder()
-//        let message = Message(receiver: "24", message: "Hello!", senderid: 78, senderName: "MaxSyt", time: 0)
-//        
+//        let message = Message(receiver: 24, message: "Hello, im iOS client", senderid: 0, sender_name: "")
+        
 //        do {
 //            let jsonData = try encoder.encode(message)
 //            socket.write(data: jsonData)
 //        }
 //        catch {
 //            print (error.localizedDescription)
-//        }   
+//        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let getRegistered = Post(account_name: "MaxSyt", email: "emaple@example.ru", password: "12345")
-        let user = User(account_name: "MaxSyt", password: "12345")
+        let getRegistered = Post(account_name: "", email: "", password: "")
+        let user = User(account_name: "", password: "")
         
         
         // Логин
