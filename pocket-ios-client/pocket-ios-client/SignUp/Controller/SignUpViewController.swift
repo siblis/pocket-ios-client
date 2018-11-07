@@ -39,7 +39,7 @@ class SignUpViewController: UIViewController {
         
         NetworkServices.signUp(user: user) { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
-                UserDefaults.standard.set(token, forKey: "token")
+                TokenService.setToken(token: token, forKey: "token")
                 self.token = token
                 let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
                 

@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         
         NetworkServices.login(user: user) { (token) in
             if token != "" {
-                UserDefaults.standard.set(token, forKey: "token")
+                TokenService.setToken(token: token, forKey: "token")
                 self.token = token
             }
             else {
