@@ -52,8 +52,8 @@ class TestViewController: UIViewController, WebSocketDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let getRegistered = Post(account_name: "MaxSyt", email: "emaple@example.ru", password: "12345")
-        let user = User(account_name: "MaxSyt", password: "12345")
+        let getRegistered = Post(account_name: "", email: "", password: "")
+        let user = User(account_name: "", password: "")
         
         
         // Логин

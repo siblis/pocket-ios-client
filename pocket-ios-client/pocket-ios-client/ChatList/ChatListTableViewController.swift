@@ -22,7 +22,7 @@ class ChatListTableViewController: UITableViewController {
         tableView.backgroundColor = UIColor.white
         tableView.rowHeight = 100
         tableView.alwaysBounceVertical = true
-        tableView.register(ChatListTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        //tableView.register(ChatListTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
         setupData()
     }
