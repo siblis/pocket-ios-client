@@ -113,7 +113,16 @@ class NetworkServices {
             
             if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
                 print("Сообщение сервера: \(uft8Representation)")
-                complition(uft8Representation)
+                
+                var json: [String: String] = [:]
+                do {
+                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
+                    print ("token = \(json["token"] ?? "")")
+                    complition(json["token"] ?? "")
+                } catch {
+                    print(error.localizedDescription)
+                    complition("")
+                }
             }
             else {
                 print ("Нет информации")
@@ -156,9 +165,10 @@ class NetworkServices {
             
             if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
                 
-                print("Data: \(uft8Representation)")
+                print("Data print: \(uft8Representation)")
                 
                 complition(uft8Representation)
+                
             }
             else {
                 print ("Нет даты")
