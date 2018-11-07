@@ -158,7 +158,7 @@ class NetworkServices {
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (responseData, response, error) in
             guard let data = responseData, error == nil else {
-                print("Ошибка: \(error?.localizedDescription)")
+                print("Ошибка: \(error?.localizedDescription ?? "Error")")
                 complition((error?.localizedDescription)!, 0)
                 return
             }

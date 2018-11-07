@@ -16,7 +16,7 @@ struct User: Codable {
     
     init(account_name: String, password: String) {
         self.account_name = account_name
-        self.email = UserDefaults.standard.string(forKey: "selfEmail") ?? ""
+        self.email = TokenService.getToken(forKey: "selfEmail") ?? ""
         self.password = password
     }
     
