@@ -10,34 +10,39 @@ import UIKit
 
 class ApplicationSwitcherRC {
     
+    static var rootVC: UIViewController!
+    
     static var response: String!
     
     static func choiseRootVC() {
-    
-        var rootVC: UIViewController
         
         let token = UserDefaults.standard.string(forKey: "token")
         
-        NetworkServices.getSelfUser(token: token!) { (response) in
-            self.response = response
+        if token != nil {
+            NetworkServices.getSelfUser(token: token!) { (response, statusCode) in
+                self.response = response
+                
+                if statusCode == 200 {
+                    DispatchQueue.main.async {
+                        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = rootVC
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = rootVC
+                    }
+                }
+            }
+            
         }
-        
-        // Грязный хак пока выполняется паралельный запрос
-        // Такое себе, но пока не знаю как иначе сделать
-        // Но работает :)
-        while response == nil {}
-        /////////
-        
-        if response! == "200" {
-        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-        }
-        
+
         else {
-           rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window?.rootViewController = rootVC
         }
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = rootVC
     }
-    
 }

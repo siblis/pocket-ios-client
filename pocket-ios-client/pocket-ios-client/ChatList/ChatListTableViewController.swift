@@ -18,7 +18,7 @@ class ChatListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+      
         tableView.backgroundColor = UIColor.white
         tableView.rowHeight = 100
         tableView.alwaysBounceVertical = true
@@ -29,6 +29,7 @@ class ChatListTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         if let count = chatMessages?.count {
            return count
         }
@@ -59,6 +60,4 @@ class ChatListTableViewController: UITableViewController {
 
         return cell
     }
-
-   
 }

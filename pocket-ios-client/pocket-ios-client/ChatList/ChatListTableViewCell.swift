@@ -10,8 +10,6 @@ import UIKit
 
 class ChatListTableViewCell: UITableViewCell {
     
-
-    
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -62,8 +60,8 @@ class ChatListTableViewCell: UITableViewCell {
         addConstraintsWithFormat(format: "V:[v0(68)]", views: profileImageView)
         
         addConstraint(NSLayoutConstraint(item: profileImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-
     }
+  
     private func setupMessageCountView() {
         let messageCountView = UIView()
         addSubview(messageCountView)
@@ -78,7 +76,7 @@ class ChatListTableViewCell: UITableViewCell {
         addConstraintsWithFormat(format: "H:|[v0]|", views: messageCountLabel)
         addConstraintsWithFormat(format: "V:|[v0]|", views: messageCountLabel)
     }
-
+  
     private func setupContainerView() {
         let containerView = UIView()
        
