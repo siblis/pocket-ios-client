@@ -24,6 +24,10 @@ class SignUpViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func backButtonPress(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func SignUpButtonPress(_ sender: Any) {
         guard let account_name = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
         guard !account_name.isEmpty, !email.isEmpty, !password.isEmpty else {
