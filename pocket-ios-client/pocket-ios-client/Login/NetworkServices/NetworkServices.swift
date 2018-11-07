@@ -73,7 +73,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func login(user: User) {
+    static func login(user: User, complition: @escaping (String) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -107,14 +107,22 @@ class NetworkServices {
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (responseData, response, error) in
             guard error == nil else {
-                print("Ошибка Login: \(error!)")
+                print("Ошибка: \(error!)")
+                complition("")
                 return}
             
-            if let data = responseData {
-                let result = try? JSONDecoder().decode(Token.self, from: data)
-                UserSetup().setToken(token: result?.token)
-                print("Сообщение сервера: \(UserSetup().getToken())")
+            if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
+                print("Сообщение сервера: \(uft8Representation)")
                 
+                var json: [String: String] = [:]
+                do {
+                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
+                    print ("token = \(json["token"] ?? "")")
+                    complition(json["token"] ?? "")
+                } catch {
+                    print(error.localizedDescription)
+                    complition("")
+                }
             }
             else {
                 print ("Нет информации")
@@ -123,7 +131,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func getSelfUser(token: String, complition: @escaping (String) -> Void) {
+    static func getSelfUser(token: String, complition: @escaping (String, Int) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -149,21 +157,26 @@ class NetworkServices {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (responseData, response, error) in
-            guard error == nil else {
-                print("Ошибка: \(error!)")
-                complition("Error")
+            guard let data = responseData, error == nil else {
+                print("Ошибка: \(error?.localizedDescription)")
+                complition((error?.localizedDescription)!, 0)
                 return
             }
             
-            if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
+            let httpResponse = response as? HTTPURLResponse
+            let uft8Representation = String(data: data, encoding: .utf8) ?? "Нет даты"
+            print("Data print: \(uft8Representation)")
+            
+            if httpResponse != nil {
+                let statusCode = httpResponse!.statusCode
+                print ("statusCode = \(statusCode)")
                 
-                print("Data: \(uft8Representation)")
-                
-                complition(uft8Representation)
+                complition(uft8Representation, statusCode)
+            } else {
+                print (httpResponse!.allHeaderFields)
+                complition(uft8Representation, 0)
             }
-            else {
-                print ("Нет даты")
-            }
+            
         }
         task.resume()
         
