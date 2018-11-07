@@ -11,6 +11,10 @@ import UIKit
 class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
+    
+    var chatMessages: [ChatMessage]?
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,20 +24,38 @@ class ChatListTableViewController: UITableViewController {
         tableView.alwaysBounceVertical = true
         tableView.register(ChatListTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
+        setupData()
     }
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 3
+        if let count = chatMessages?.count {
+           return count
+        }
+        return 0
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatListTableViewCell
+        cell.setup()
+        
+        if let chatMessage = chatMessages?[indexPath.item] {
+            cell.nameLabel.text = chatMessage.friend?.name
+            if let profileImageName = chatMessage.friend?.profileImageName{
+                cell.profileImageView.image = UIImage(named: profileImageName)
+            }
+            cell.messageLabel.text = chatMessage.text
+            cell.messageCountLabel.text = chatMessage.messageCount
+            if let date = chatMessage.date {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "h:mm a"
+                cell.timeLabel.text = dateFormatter.string(from: date as Date)
+            }
+        }
 
         // Configure the cell...
-        cell.setup()
+//        cell.setup()
 
         return cell
     }
