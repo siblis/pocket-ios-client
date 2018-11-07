@@ -38,13 +38,15 @@ class ChatListTableViewCell: UITableViewCell {
         label.textAlignment = .right
         return label
     }()
-    let hasReadImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 10
-        imageView.layer.masksToBounds = true
-        return imageView
+    let messageCountLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.text = "24"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.textAlignment = .center
+        return label
     }()
+    
 
     func setup() {
          
@@ -53,13 +55,26 @@ class ChatListTableViewCell: UITableViewCell {
         setupContainerView()
         
         profileImageView.image = UIImage(named: "steveprofile")
-       hasReadImageView.image = UIImage(named: "steveprofile")
         
         addConstraintsWithFormat(format: "H:|-12-[v0(68)]", views: profileImageView)
         addConstraintsWithFormat(format: "V:[v0(68)]", views: profileImageView)
         
         addConstraint(NSLayoutConstraint(item: profileImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
 
+    }
+    private func setupMessageCountView() {
+        let messageCountView = UIView()
+        addSubview(messageCountView)
+            messageCountView.backgroundColor = UIColor.red
+            messageCountView.contentMode = .scaleAspectFill
+            messageCountView.layer.cornerRadius = 14
+            messageCountView.layer.masksToBounds = true
+        addConstraintsWithFormat(format: "H:[v0(28)]-12-|", views: messageCountView)
+        addConstraintsWithFormat(format: "V:[v0(28)]-12-|", views: messageCountView)
+        
+        messageCountView.addSubview(messageCountLabel)
+        addConstraintsWithFormat(format: "H:|[v0]|", views: messageCountLabel)
+        addConstraintsWithFormat(format: "V:|[v0]|", views: messageCountLabel)
     }
 
     private func setupContainerView() {
@@ -70,15 +85,16 @@ class ChatListTableViewCell: UITableViewCell {
         addConstraintsWithFormat(format: "V:[v0(50)]", views: containerView)
         addConstraint(NSLayoutConstraint(item: containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
+        setupMessageCountView()
+        
         containerView.addSubview(nameLabel)
         containerView.addSubview(messageLabel)
         containerView.addSubview(timeLabel)
-        containerView.addSubview(hasReadImageView)
+
         containerView.addConstraintsWithFormat(format: "H:|[v0][v1(80)]-12-|", views: nameLabel, timeLabel)
         containerView.addConstraintsWithFormat(format: "V:|[v0][v1(24)]|", views: nameLabel, messageLabel)
-        containerView.addConstraintsWithFormat(format: "H:|[v0]-8-[v1(20)]-12-|", views: messageLabel, hasReadImageView)
+        containerView.addConstraintsWithFormat(format: "H:|[v0]", views: messageLabel)
         containerView.addConstraintsWithFormat(format: "V:|[v0(24)]", views: timeLabel)
-        containerView.addConstraintsWithFormat(format: "V:[v0(20)]|", views: hasReadImageView)
     }
     
 }
