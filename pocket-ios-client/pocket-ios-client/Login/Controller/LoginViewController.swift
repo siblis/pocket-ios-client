@@ -21,7 +21,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var user: User!
-    var token: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +39,11 @@ class LoginViewController: UIViewController {
         NetworkServices.login(user: user) { (token) in
             if token != "" {
                 TokenService.setToken(token: token, forKey: "token")
-                self.token = token
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "UserListSegue", sender: nil)
                 }
             }
             else {
-                self.token = ""
                 print ("Error Login")
             }
         }
