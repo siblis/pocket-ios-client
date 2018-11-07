@@ -61,7 +61,7 @@ class MessageAndWebSocket: WebSocketDelegate {
         let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
-        request.setValue(UserSetup().getToken(), forHTTPHeaderField: "token")
+        request.setValue(TokenService.getToken(forKey: "token"), forHTTPHeaderField: "token")
         
         self.socket = WebSocket(request: request)
         socket.delegate = self

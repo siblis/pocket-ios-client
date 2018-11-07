@@ -29,7 +29,7 @@ class ContactListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactListTableViewCell
         
-        let token = UserDefaults.standard.string(forKey: "token")
+        let token = TokenService.getToken(forKey: "token")
         
         cell.textLabel?.text = "\(indexPath.row) \(token!)"
 

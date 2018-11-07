@@ -16,7 +16,7 @@ class ApplicationSwitcherRC {
     
     static func choiseRootVC() {
         
-        let token = UserDefaults.standard.string(forKey: "token")
+        let token = TokenService.getToken(forKey: "token")
         
         if token != nil {
             NetworkServices.getSelfUser(token: token!) { (response, statusCode) in
