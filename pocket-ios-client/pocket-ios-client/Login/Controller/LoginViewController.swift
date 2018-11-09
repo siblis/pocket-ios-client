@@ -21,7 +21,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var user: User!
-    var token: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,30 +38,15 @@ class LoginViewController: UIViewController {
         
         NetworkServices.login(user: user) { (token) in
             if token != "" {
-               UserDefaults.standard.set(token, forKey: "token")
-               self.token = token
+                TokenService.setToken(token: token, forKey: "token")
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "UserListSegue", sender: nil)
+                }
             }
             else {
-                self.token = ""
                 print ("Error Login")
             }
         }
-        
-        // Грязный хак пока выполняется паралельный запрос
-        // Такое себе, чуть позже сделаю нормально
-        // Но работает :)
-        while token == nil {}
-        /////////
-        
-        if token != "" {
-            performSegue(withIdentifier: "UserListSegue", sender: nil)}
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-//        if segue.identifier == "UserListSegue" {
-//            let destination: UserListTableViewController = segue.destination as! UserListTableViewController
-//        }
     }
     
     @IBAction func signUp(_ sender: Any) {
@@ -70,7 +54,5 @@ class LoginViewController: UIViewController {
         
         present(signUpVC, animated:true, completion:nil)
     }
-
-
 }
 

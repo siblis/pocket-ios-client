@@ -12,8 +12,6 @@ import Starscream
 
 class TestViewController: UIViewController, WebSocketDelegate {
     
-    let userSetup = UserSetup()
-    
     func websocketDidConnect(socket: WebSocketClient) {
       print("websocket is connected")
     }
@@ -54,8 +52,8 @@ class TestViewController: UIViewController, WebSocketDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let getRegistered = Post(account_name: "MaxSyt", email: "emaple@example.ru", password: "12345")
-        let user = User(account_name: "MaxSyt", password: "12345")
+        let getRegistered = Post(account_name: "", email: "", password: "")
+        let user = User(account_name: "", password: "")
         
         
         // Логин
@@ -73,7 +71,7 @@ class TestViewController: UIViewController, WebSocketDelegate {
         let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
-        request.setValue(userSetup.getToken(), forHTTPHeaderField: "token")
+        request.setValue(TokenService.getToken(forKey: "token"), forHTTPHeaderField: "token")
         
        self.socket = WebSocket(request: request)
         socket.delegate = self
@@ -167,7 +165,7 @@ class TestViewController: UIViewController, WebSocketDelegate {
                 print("Сообщение сервера: \(uft8Representation)")
                 
                 let stringSplit = uft8Representation.split(separator: "\"")
-                self.userSetup.setToken(token: String(stringSplit[3]))
+//                self.userSetup.setToken(token: String(stringSplit[3]))
                 
                 
                 //                do {
@@ -207,9 +205,8 @@ class TestViewController: UIViewController, WebSocketDelegate {
         //Header
         
         var header = request.allHTTPHeaderFields ?? [:]
-        header["token"] = userSetup.getToken()
+        header["token"] = TokenService.getToken(forKey: "token")
         request.allHTTPHeaderFields = header
-        
         //
         
         let config = URLSessionConfiguration.default

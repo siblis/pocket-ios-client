@@ -24,10 +24,15 @@ class SignUpViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func backButtonPress(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func SignUpButtonPress(_ sender: Any) {
         guard let account_name = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
         guard !account_name.isEmpty, !email.isEmpty, !password.isEmpty else {
             print ("fill the data in fields")
+            self.showErrorAlert(message: "Не все поля заполнены")
             return
         }
 
@@ -35,11 +40,13 @@ class SignUpViewController: UIViewController {
         
         NetworkServices.signUp(user: user) { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
-                UserDefaults.standard.set(token, forKey: "token")
+                TokenService.setToken(token: token, forKey: "token")
                 self.token = token
-                let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-                
-                self.present(tabBarVC, animated:true, completion:nil)
+                DispatchQueue.main.async {
+                    let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                    
+                    self.present(tabBarVC, animated:true, completion:nil)
+                }
             }
             else {
                 if statusCode == 409 {

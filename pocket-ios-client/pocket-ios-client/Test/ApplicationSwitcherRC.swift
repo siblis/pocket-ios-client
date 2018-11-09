@@ -15,27 +15,28 @@ class ApplicationSwitcherRC {
     static var response: String!
     
     static func choiseRootVC() {
-    
-        //var rootVC: UIViewController
         
-        let token = UserDefaults.standard.string(forKey: "token")
+        let token = TokenService.getToken(forKey: "token")
         
         if token != nil {
-            NetworkServices.getSelfUser(token: token!) { (response) in
+            NetworkServices.getSelfUser(token: token!) { (response, statusCode) in
                 self.response = response
-            }
-          
-            // Грязный хак пока выполняется паралельный запрос
-            // Такое себе, чуть позже сделаю нормально
-            // Но работает :)
-            // Но на самом деле нет - если с сервака придёт nil - будет бесконечный цикл
-            while response == nil {
                 
+                if statusCode == 200 {
+                    DispatchQueue.main.async {
+                        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = rootVC
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.window?.rootViewController = rootVC
+                    }
+                }
             }
-
-            rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.window?.rootViewController = rootVC
+            
         }
 
         else {
@@ -44,22 +45,4 @@ class ApplicationSwitcherRC {
             appDelegate.window?.rootViewController = rootVC
         }
     }
-    
-//        static func loadRootVC(response: String?) {
-//
-//        var rootVC: UIViewController
-//
-//        if response != nil {
-//          rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-//        }
-//
-//        else {
-//           rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-//        }
-//
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        appDelegate.window?.rootViewController = rootVC
-//
-//    }
-
 }
