@@ -11,6 +11,7 @@ import Foundation
 class Friend: NSObject {
     var name: String?
     var profileImageName: String?
+    var onlineStatus: String?
 }
 
 

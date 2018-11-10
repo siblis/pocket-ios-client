@@ -9,9 +9,17 @@
 import UIKit
 
 class ContactListTableViewController: UITableViewController {
+    
+    var contactArray = [Friend]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = UIColor.white
+        tableView.rowHeight = 60
+        tableView.alwaysBounceVertical = true
+        tableView.tableFooterView = UIView(frame: .zero)
+        
+        contactArray = setupContactArray()
 
     }
 
@@ -22,18 +30,52 @@ class ContactListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return 50
+        return contactArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactListTableViewCell
         
-        let token = TokenService.getToken(forKey: "token")
+        cell.setUp()
         
-        cell.textLabel?.text = "\(indexPath.row) \(token!)"
+        if let nameLable = contactArray[indexPath.row].name {
+            cell.nameLabel.text = nameLable
+        }
+        
+        if let imageName = contactArray[indexPath.row].profileImageName {
+            cell.profileImageView.image = UIImage(named: imageName)
+        }
+        
+        if let statusLable = contactArray[indexPath.row].onlineStatus {
+            cell.statusLabel.text = statusLable
+        }
 
         return cell
+    }
+    
+    func setupContactArray() -> [Friend] {
+        
+        let steve = Friend()
+        steve.name = "Steve"
+        steve.profileImageName = "steveprofile"
+        steve.onlineStatus = "Умер"
+        
+        let max = Friend()
+        max.name = "Максим"
+        max.profileImageName = "man"
+        max.onlineStatus = "Занимаюсь важными делами"
+        
+        let vova = Friend()
+        vova.name = "Владимир"
+        vova.profileImageName = "man"
+        vova.onlineStatus = "Принимаю PR"
+        
+        contactArray.append(steve)
+        contactArray.append(vova)
+        contactArray.append(max)
+        
+        return contactArray
     }
     
 
