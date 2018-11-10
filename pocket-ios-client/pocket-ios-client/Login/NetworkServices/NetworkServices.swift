@@ -20,10 +20,10 @@ class NetworkServices {
 
         
         // делаем JSON
-        let headers = ["account_name":user.account_name,"email":user.email,"password":user.password]
+        let httpBody = ["account_name":user.account_name,"email":user.email,"password":user.password]
         
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: headers)
+            request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
             print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
         }
         catch {
@@ -90,11 +90,10 @@ class NetworkServices {
         
         // JSON Encoder
         
-        let encoder = JSONEncoder()
+        let httpBody = ["account_name":user.account_name,"password":user.password]
         
         do {
-            let jsonData = try encoder.encode(user)
-            request.httpBody = jsonData
+            request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
             print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
         }
         catch {
@@ -170,6 +169,17 @@ class NetworkServices {
             if httpResponse != nil {
                 let statusCode = httpResponse!.statusCode
                 print ("statusCode = \(statusCode)")
+                
+                var json: [String: Any] = [:]
+                do {
+                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: Any]
+                    print ("uid = \(json["uid"] ?? "")")
+                    TokenService.setToken(token: ("\(json["uid"] ?? 0)"), forKey: "uid")
+                    TokenService.setToken(token: "\(json["account_name"] ?? "")", forKey: "account_name")
+                    TokenService.setToken(token: "\(json["email"] ?? "")", forKey: "email")
+                } catch {
+                    print(error.localizedDescription)
+                }
                 
                 complition(uft8Representation, statusCode)
             } else {
