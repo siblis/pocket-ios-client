@@ -53,7 +53,7 @@ class TestViewController: UIViewController, WebSocketDelegate {
         super.viewDidLoad()
         
         let getRegistered = Post(account_name: "", email: "", password: "")
-        let user = User(account_name: "", password: "")
+//        let user = User(account_name: "", password: "")
         
         
         // Логин
