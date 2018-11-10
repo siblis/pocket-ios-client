@@ -21,15 +21,15 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.dataSource = self
+        self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
+        chatField.dataSource = self
         
         msgAndSocket.webSocketConnect()
     }
     
-    @IBOutlet weak var tableView: UITableView! {
+    @IBOutlet weak var chatField: UICollectionView! {
         didSet {
-            tableView.translatesAutoresizingMaskIntoConstraints = false
+            chatField.translatesAutoresizingMaskIntoConstraints = false
         }
     }
     
@@ -50,7 +50,7 @@ class ChatViewController: UIViewController {
         
         if let msg = message.text, msg != "" {
             msgAndSocket.sendMessage(receiver: self.userID, message: msg)
-            self.tableView.reloadData()
+            self.chatField.reloadData()
             message.text = ""
         }
         
@@ -106,21 +106,19 @@ class ChatViewController: UIViewController {
 }
 
 
-extension ChatViewController: UITableViewDataSource {
-    //MARK: Table
+//MARK: Table
+extension ChatViewController: UICollectionViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return msgAndSocket.messageInOut.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatMessageCell
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        
-        cell.textLabel?.text = msgAndSocket.messageInOut[indexPath.row]
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! MessageCell
         
         return cell
     }
+
 }
 
 
@@ -131,22 +129,22 @@ extension ChatViewController {
         
         sendBtnPosition(y: y)
         messagePosition(y: y)
-        tableViewPosition(y: y)
+        chatFieldPosition(y: y)
         
     }
     
-    func tableViewPosition(y: CGFloat) {
+    func chatFieldPosition(y: CGFloat) {
         
-        let tableViewWidth: CGFloat = UIScreen.main.bounds.size.width - insets
-        let tableViewHeight: CGFloat = UIScreen.main.bounds.size.height - sendBtn.frame.height - 4 * insets - y
+        let chatFieldWidth: CGFloat = UIScreen.main.bounds.size.width - insets
+        let chatFieldHeight: CGFloat = UIScreen.main.bounds.size.height - sendBtn.frame.height - 4 * insets - y
         
         let xPosition: CGFloat = 0
         let yPosition: CGFloat = (self.navigationController?.navigationBar.intrinsicContentSize.height)!
         
-        let tableViewSize = CGSize(width: tableViewWidth, height: tableViewHeight)
-        let tableViewOrigin = CGPoint(x: xPosition, y: yPosition)
+        let chatFieldSize = CGSize(width: chatFieldWidth, height: chatFieldHeight)
+        let chatFieldOrigin = CGPoint(x: xPosition, y: yPosition)
         
-        tableView.frame = CGRect(origin: tableViewOrigin, size: tableViewSize)
+        chatField.frame = CGRect(origin: chatFieldOrigin, size: chatFieldSize)
     }
     
     func messagePosition(y: CGFloat) {
