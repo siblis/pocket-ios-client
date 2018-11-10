@@ -27,6 +27,18 @@ class ChatListTableViewController: UITableViewController {
         
         setupData()
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let chatField = segue.destination as? ChatViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            let indexChat = chatMessages?[indexPath.item]
+            
+            chatField?.chatName = indexChat?.friend?.name
+        }
+    }
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

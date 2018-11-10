@@ -16,10 +16,13 @@ class ChatViewController: UIViewController {
     //MARK: Init
     let insets: CGFloat = 15
     let cellReuseIdentifier = "MessageCell"
-    var userID: Int = 24
+    var chatID: Int = 24
+    var chatName: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = chatName
         
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
@@ -49,7 +52,7 @@ class ChatViewController: UIViewController {
     @IBAction func sendButton(_ sender: Any) {
         
         if let msg = message.text, msg != "" {
-            msgAndSocket.sendMessage(receiver: self.userID, message: msg)
+            msgAndSocket.sendMessage(receiver: self.chatID, message: msg)
             self.chatField.reloadData()
             message.text = ""
         }
@@ -122,8 +125,8 @@ extension ChatViewController: UICollectionViewDataSource {
 }
 
 
+//MARK: Настройка положения элементов на вьюхе
 extension ChatViewController {
-    //MARK: Resizing elemets
     
     func setupElements(y: CGFloat) {
         
