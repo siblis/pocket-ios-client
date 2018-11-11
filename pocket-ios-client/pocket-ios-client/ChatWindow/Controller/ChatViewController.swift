@@ -128,6 +128,7 @@ extension ChatViewController: UICollectionViewDataSource {
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! MessageCell
+        cell.messageTextView.text = testMessages?[indexPath.item].message
         return cell
     }
     

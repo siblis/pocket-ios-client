@@ -9,9 +9,19 @@
 import UIKit
 
 class MessageCell: BaseCell {
+    
+    let messageTextView: UITextView = {
+       let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.text = "Sample message"
+        return textView
+    }()
+    
     override func setupViews() {
         super.setupViews()
-        
+        addSubview(messageTextView)
+        addConstraintsWithFormat(format: "H:|[v0]|", views: messageTextView)
+        addConstraintsWithFormat(format: "V:|[v0]|", views: messageTextView)
     }
     
     
