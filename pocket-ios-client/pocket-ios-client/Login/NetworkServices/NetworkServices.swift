@@ -11,7 +11,7 @@ import UIKit
 class NetworkServices {
     
     //функция регистрации пользователей
-    static func signUp(user: User, complition: @escaping (String, Int) -> Void) {
+    static func signUp(complition: @escaping (String, Int) -> Void) {
         
         //POST request
         let url = URL(string: "https://pocketmsg.ru:8888/v1/users/")
@@ -20,10 +20,10 @@ class NetworkServices {
 
         
         // делаем JSON
-        let headers = ["account_name":user.account_name,"email":user.email,"password":user.password]
+        let httpBody = ["account_name":User.account_name,"email":User.email,"password":User.password]
         
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: headers)
+            request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
             print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
         }
         catch {
@@ -49,7 +49,6 @@ class NetworkServices {
                     var json: [String: String] = [:]
                     do {
                         json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
-                        print ("token = \(json["token"] ?? "")")
                         print (json)
                         complition(json["token"] ?? "", statusCode)
                     } catch {
@@ -73,7 +72,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func login(user: User, complition: @escaping (String) -> Void) {
+    static func login(complition: @escaping (String) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -90,11 +89,10 @@ class NetworkServices {
         
         // JSON Encoder
         
-        let encoder = JSONEncoder()
+        let httpBody = ["account_name":User.account_name,"password":User.password]
         
         do {
-            let jsonData = try encoder.encode(user)
-            request.httpBody = jsonData
+            request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
             print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
         }
         catch {
@@ -117,7 +115,6 @@ class NetworkServices {
                 var json: [String: String] = [:]
                 do {
                     json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
-                    print ("token = \(json["token"] ?? "")")
                     complition(json["token"] ?? "")
                 } catch {
                     print(error.localizedDescription)

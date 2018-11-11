@@ -34,11 +34,12 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text, let account_name = loginTextField.text else {return}
         
-        user = User(account_name: account_name, password: password)
+        User.password = password
+        User.account_name = account_name
         
-        NetworkServices.login(user: user) { (token) in
+        NetworkServices.login() { (token) in
             if token != "" {
-                TokenService.setToken(token: token, forKey: "token")
+                User.token = token
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "UserListSegue", sender: nil)
                 }
