@@ -8,6 +8,27 @@
 
 import UIKit
 
-class MessageCell: UICollectionViewCell {
+class MessageCell: BaseCell {
+    override func setupViews() {
+        super.setupViews()
+        
+    }
+    
+    
+}
+
+class BaseCell: UICollectionViewCell {
+    override init(frame: CGRect) {
+        super .init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    func setupViews() {
+        backgroundColor = UIColor.blue
+        
+    }
     
 }
