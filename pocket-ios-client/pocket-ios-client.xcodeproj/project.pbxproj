@@ -30,6 +30,7 @@
 		BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9AC6A02193059F00348948 /* ChatListModel.swift */; };
 		C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1896401218B80F300CE4ABE /* SignUpViewController.swift */; };
 		C1896405218B80F300CE4ABE /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1896403218B80F300CE4ABE /* SignUp.storyboard */; };
+		C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189640721997FB700CE4ABE /* MyProfileViewController.swift */; };
 		CA7F3602D8378932351022B8 /* Pods_pocket_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		BC9AC6A02193059F00348948 /* ChatListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListModel.swift; sourceTree = "<group>"; };
 		C1896401218B80F300CE4ABE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		C1896403218B80F300CE4ABE /* SignUp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
+		C189640721997FB700CE4ABE /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				2456173C21768A04007A9103 /* ChatWindow */,
 				6DA11131216B8C1000C2AA45 /* ChatList */,
 				6DA1112B216672D300C2AA45 /* UserList */,
+				C189640621997EC000CE4ABE /* MyProfile */,
 				6DA1111D21612AB800C2AA45 /* Test */,
 				6DD41E562120C5EF002EE1F3 /* Application */,
 				6DD41E552120C5DD002EE1F3 /* Login */,
@@ -308,6 +311,14 @@
 				C1896403218B80F300CE4ABE /* SignUp.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C189640621997EC000CE4ABE /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				C189640721997FB700CE4ABE /* MyProfileViewController.swift */,
+			);
+			path = MyProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,6 +449,7 @@
 				6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */,
 				C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */,
 				6DA1112521613F2500C2AA45 /* User.swift in Sources */,
+				C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */,
 				BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */,
 				245617422178BDB8007A9103 /* ChatViewController.swift in Sources */,
 				6DA11123216132FE00C2AA45 /* Post.swift in Sources */,
