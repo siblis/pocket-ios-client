@@ -12,16 +12,28 @@ class MessageCell: BaseCell {
     
     let messageTextView: UITextView = {
        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.font = UIFont.systemFont(ofSize: 18)
         textView.text = "Sample message"
+        textView.backgroundColor = UIColor.clear
         return textView
+    }()
+    
+    let textBubbleView: UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
+        return view
     }()
     
     override func setupViews() {
         super.setupViews()
+        
+
+        
+        addSubview(textBubbleView)
         addSubview(messageTextView)
-        addConstraintsWithFormat(format: "H:|[v0]|", views: messageTextView)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: messageTextView)
+
     }
     
     
@@ -37,7 +49,7 @@ class BaseCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     func setupViews() {
-        backgroundColor = UIColor.blue
+//        backgroundColor = UIColor.blue
         
     }
     
