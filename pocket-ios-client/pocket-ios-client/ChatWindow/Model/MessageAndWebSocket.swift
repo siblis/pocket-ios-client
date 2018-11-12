@@ -44,7 +44,7 @@ class MessageAndWebSocket: WebSocketDelegate {
     func sendMessage (receiver: Int, message: String) {
         messageInOut.append("Я: \(message)")
         let encoder = JSONEncoder()
-        let message = Message(receiver: "\(receiver)", message: message, senderid: 78, senderName: "MaxSyt", time: 0)
+        let message = Message(receiver: "\(receiver)", message: message, senderid: 78, senderName: "MaxSyt", time: 0, isSender: false)
         
         do {
             let jsonData = try encoder.encode(message)

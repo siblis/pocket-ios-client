@@ -15,6 +15,7 @@ struct Message: Codable {
     var senderid: Int
     var senderName: String
     var time: Double
+    var isSender: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case receiver = "receiver"
@@ -27,9 +28,9 @@ struct Message: Codable {
 
 extension ChatViewController {
     func setupData() {
-        let message0 = Message.init(receiver: "Группа стажировки GB", message: "Hello, how are you?", senderid: 123, senderName: "user", time: 12.30)
-        let message1 = Message.init(receiver: "Группа стажировки GB", message: "Good morning", senderid: 123, senderName: "user", time: 12.35)
-        let message2 = Message.init(receiver: "Группа стажировки GB", message: "fghjj", senderid: 123, senderName: "user", time: 12.40)
+        let message0 = Message.init(receiver: "Группа стажировки GB", message: "Hello, how are you? Hope you are having a good morning", senderid: 123, senderName: "user", time: 12.30, isSender: false)
+        let message1 = Message.init(receiver: "Группа стажировки GB", message: "Good morning...", senderid: 123, senderName: "user", time: 12.35, isSender: false)
+        let message2 = Message.init(receiver: "Группа стажировки GB", message: "Are you interested in buying an Apple device? We have a wide variety of Apple devices that will suit your needs. Please make your purchase with us.", senderid: 123, senderName: "user", time: 12.40, isSender: false)
         
         testMessages = [message0, message1, message2]
     }
