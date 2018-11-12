@@ -24,3 +24,13 @@ struct Message: Codable {
         case time = "timestamp"
     }
 }
+
+extension ChatViewController {
+    func setupData() {
+        let message0 = Message.init(receiver: "Группа стажировки GB", message: "Hello, how are you?", senderid: 123, senderName: "user", time: 12.30)
+        let message1 = Message.init(receiver: "Группа стажировки GB", message: "Good morning", senderid: 123, senderName: "user", time: 12.35)
+        let message2 = Message.init(receiver: "Группа стажировки GB", message: "fghjj", senderid: 123, senderName: "user", time: 12.40)
+        
+        testMessages = [message0, message1, message2]
+    }
+}

@@ -18,21 +18,26 @@ class ChatViewController: UIViewController {
     let cellReuseIdentifier = "MessageCell"
     var chatID: Int = 24
     var chatName: String?
+    
+    var testMessages: [Message]?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = chatName
         
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
-        
+        chatField.delegate = self
         msgAndSocket.webSocketConnect()
+        setupData()
     }
     
     @IBOutlet weak var chatField: UICollectionView! {
         didSet {
-            chatField.translatesAutoresizingMaskIntoConstraints = false
+            
+//            chatField.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+////            chatField.frame = self.view.frame
         }
     }
     
@@ -109,21 +114,31 @@ class ChatViewController: UIViewController {
 }
 
 
+
 //MARK: Table
 extension ChatViewController: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return msgAndSocket.messageInOut.count
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let count = testMessages?.count {
+            return count
+        }
+        return 0
+//            msgAndSocket.messageInOut.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! MessageCell
-        
+        cell.messageTextView.text = testMessages?[indexPath.item].message
         return cell
     }
+    
 
 }
-
+extension ChatViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 100)
+    }
+}
 
 //MARK: Настройка положения элементов на вьюхе
 extension ChatViewController {
