@@ -16,7 +16,6 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
 
     var user: User!
-    var token: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +34,14 @@ class SignUpViewController: UIViewController {
             self.showErrorAlert(message: "Не все поля заполнены")
             return
         }
-
-        user = User(account_name: account_name, email: email, password: password)
         
-        NetworkServices.signUp(user: user) { (token, statusCode) in
+        User.account_name = account_name
+        User.email = email
+        User.password = password
+        
+        NetworkServices.signUp { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
-                TokenService.setToken(token: token, forKey: "token")
-                self.token = token
+                User.token = token
                 DispatchQueue.main.async {
                     let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
                     
@@ -50,19 +50,15 @@ class SignUpViewController: UIViewController {
             }
             else {
                 if statusCode == 409 {
-                    self.token = ""
                     print ("user already exists")
                     DispatchQueue.main.async {
                         self.showErrorAlert(message: "Пользователь уже существует")
                     }
-                } else if statusCode == 400 {
-                    self.token = ""
-                    print ("bad JSON")
+                } else if statusCode == 400 {                    print ("bad JSON")
                     DispatchQueue.main.async {
                         self.showErrorAlert(message: "Не все поля заполнены")
                     }
                 } else {
-                    self.token = ""
                     print ("signUp error")
                     DispatchQueue.main.async {
                         self.showErrorAlert(message: "Ошибка соединения с сервером")

@@ -10,20 +10,41 @@ import Foundation
 
 struct User: Codable {
     
-    var account_name: String //поменяла let на var - заложила возможность сменить имя
-    var password: String //поменяла let на var - заложила возможность сменить пароль
-    let email: String
-    
-    init(account_name: String, password: String) {
-        self.account_name = account_name
-        self.email = TokenService.getToken(forKey: "selfEmail") ?? ""
-        self.password = password
+    static var account_name = TokenService.getToken(forKey: "account_name") ?? "" {
+        didSet {
+            TokenService.setToken(token: account_name, forKey: "account_name")
+            print ("set account_name = \(TokenService.getToken(forKey: "account_name")!)")
+        }
+    }
+    static var password = TokenService.getToken(forKey: "password") ?? "1" {
+        didSet {
+            TokenService.setToken(token: password, forKey: "password")
+            print ("set password = \(TokenService.getToken(forKey: "password")!)")
+        }
+    }
+    static var email = TokenService.getToken(forKey: "email") ?? "@" {
+        didSet {
+            TokenService.setToken(token: email, forKey: "email")
+            print ("set email = \(TokenService.getToken(forKey: "email")!)")
+        }
+    }
+    static var token = TokenService.getToken(forKey: "token") ?? "" {
+        didSet {
+            TokenService.setToken(token: token, forKey: "token")
+            print ("set token = \(TokenService.getToken(forKey: "token")!)")
+        }
     }
     
-    init(account_name: String, email: String, password: String) {
-        self.account_name = account_name
-        self.email = email
-        self.password = password
+    static var uid = TokenService.getToken(forKey: "token") ?? "0" {
+        didSet {
+            TokenService.setToken(token: uid, forKey: "uid")
+            print ("set uid = \(TokenService.getToken(forKey: "uid")!)")
+        }
     }
+    
+    static var firstName = "Имя"
+    static var lastName = "Фамилия"
+    static var status = "Как-то так"
+    static var photo = "selfPhoto"
     
 }
