@@ -57,4 +57,12 @@ class ApplicationSwitcherRC {
             appDelegate.window?.rootViewController = rootVC
         }
     }
+    
+    static func ifServerDown() {
+        
+        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = rootVC
+        
+    }
 }
