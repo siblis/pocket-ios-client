@@ -42,6 +42,22 @@ class SignUpViewController: UIViewController {
         NetworkServices.signUp { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
                 User.token = token
+                NetworkServices.getSelfUser(token: token) { (response, statusCode) in
+                    if statusCode == 200 {
+                        var json: [String: Any] = [:]
+                        do {
+                            let data = response.data(using: .utf8)
+                            json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as! [String: Any]
+                            User.uid = "\(json["uid"] ?? 0)"
+                            User.account_name = "\(json["account_name"] ?? "")"
+                            User.email = "\(json["email"] ?? "")"
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    } else {
+                        print ("GetSelfUser error")
+                    }
+                }
                 DispatchQueue.main.async {
                     let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
                     
@@ -54,7 +70,8 @@ class SignUpViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.showErrorAlert(message: "Пользователь уже существует")
                     }
-                } else if statusCode == 400 {                    print ("bad JSON")
+                } else if statusCode == 400 {
+                    print ("bad JSON")
                     DispatchQueue.main.async {
                         self.showErrorAlert(message: "Не все поля заполнены")
                     }
