@@ -51,6 +51,16 @@ class ContactListTableViewController: UITableViewController {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let chatField = segue.destination as? ChatViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            chatField?.chatName = contactArray[indexPath.row].account_name
+        }
+    }
+    
 //    func setupContactArray() -> [Friend] {
 //        
 //        let steve = Friend()
