@@ -128,7 +128,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func getSelfUser(token: String, complition: @escaping (String, Int) -> Void) {
+    static func getSelfUser(token: String, complition: @escaping ([String: Any], Int) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -156,22 +156,26 @@ class NetworkServices {
         let task = session.dataTask(with: request) { (responseData, response, error) in
             guard let data = responseData, error == nil else {
                 print("Ошибка: \(error?.localizedDescription ?? "Error")")
-                complition((error?.localizedDescription)!, 0)
                 return
             }
             
             let httpResponse = response as? HTTPURLResponse
-            let uft8Representation = String(data: data, encoding: .utf8) ?? "Нет даты"
-            print("Data print: \(uft8Representation)")
             
-            if httpResponse != nil {
-                let statusCode = httpResponse!.statusCode
+            var json: [String: Any] = [:]
+            
+            if let statusCode = httpResponse?.statusCode, statusCode == 200 {
+                do {
+                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: Any]
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
                 print ("statusCode = \(statusCode)")
                 
-                complition(uft8Representation, statusCode)
+                complition(json, statusCode)
             } else {
                 print (httpResponse!.allHeaderFields)
-                complition(uft8Representation, 0)
+                complition(json, 0)
             }
             
         }

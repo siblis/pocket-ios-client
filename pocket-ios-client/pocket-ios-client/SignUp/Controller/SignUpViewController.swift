@@ -42,18 +42,9 @@ class SignUpViewController: UIViewController {
         NetworkServices.signUp { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
                 User.token = token
-                NetworkServices.getSelfUser(token: token) { (response, statusCode) in
+                NetworkServices.getSelfUser(token: token) { (json, statusCode) in
                     if statusCode == 200 {
-                        var json: [String: Any] = [:]
-                        do {
-                            let data = response.data(using: .utf8)
-                            json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as! [String: Any]
-                            User.uid = "\(json["uid"] ?? 0)"
-                            User.account_name = "\(json["account_name"] ?? "")"
-                            User.email = "\(json["email"] ?? "")"
-                        } catch {
-                            print(error.localizedDescription)
-                        }
+                        DataBase.saveSelfUser(json: json)
                     } else {
                         print ("GetSelfUser error")
                     }
