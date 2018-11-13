@@ -35,7 +35,7 @@ struct User: Codable {
         }
     }
     
-    static var uid = TokenService.getToken(forKey: "token") ?? "0" {
+    static var uid = TokenService.getToken(forKey: "uid") ?? "0" {
         didSet {
             TokenService.setToken(token: uid, forKey: "uid")
             print ("set uid = \(TokenService.getToken(forKey: "uid")!)")
