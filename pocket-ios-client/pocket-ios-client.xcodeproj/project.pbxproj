@@ -32,6 +32,7 @@
 		C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1896401218B80F300CE4ABE /* SignUpViewController.swift */; };
 		C1896405218B80F300CE4ABE /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1896403218B80F300CE4ABE /* SignUp.storyboard */; };
 		C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189640721997FB700CE4ABE /* MyProfileViewController.swift */; };
+		C18F9D30219ABCA30039D51C /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */; };
 		CA7F3602D8378932351022B8 /* Pods_pocket_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		C1896401218B80F300CE4ABE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		C1896403218B80F300CE4ABE /* SignUp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
 		C189640721997FB700CE4ABE /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				C189640721997FB700CE4ABE /* MyProfileViewController.swift */,
+				C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				6DA1112521613F2500C2AA45 /* User.swift in Sources */,
 				C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */,
 				BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */,
+				C18F9D30219ABCA30039D51C /* EditProfileViewController.swift in Sources */,
 				245617422178BDB8007A9103 /* ChatViewController.swift in Sources */,
 				6DA11123216132FE00C2AA45 /* Post.swift in Sources */,
 				6DA1112A2163E8FA00C2AA45 /* NetworkServices.swift in Sources */,

@@ -42,9 +42,9 @@ struct User: Codable {
         }
     }
     
-    static var firstName = "Имя"
-    static var lastName = "Фамилия"
+    static var firstName = ""
+    static var lastName = ""
     static var status = "Как-то так"
-    static var photo = "selfPhoto"
+    static var photo = "myProfile"
     
 }

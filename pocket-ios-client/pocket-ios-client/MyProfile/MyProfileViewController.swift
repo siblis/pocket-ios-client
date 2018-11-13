@@ -20,6 +20,7 @@ class MyProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        button.titleLabel?.textAlignment = .right
         return button
     }()
     
@@ -89,10 +90,10 @@ class MyProfileViewController: UIViewController {
     }()
     
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
+    let screenWidth = UIScreen.main.bounds.width
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
         
         setUpTopView()
         setUpTopViewContents()
@@ -102,11 +103,16 @@ class MyProfileViewController: UIViewController {
         editBtn.addTarget(self, action: #selector(self.editDetails(_:)), for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
     //настраиваем положение элементов в верхней половине экрана
     func setUpTopView () {
         self.view.addSubview(backgroundView)
         self.view.addConstraintsWithFormat(format: "|-0-[v0]-0-|", views: backgroundView)
-        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset)-[v0(267)]", views: backgroundView)
+        self.view.addConstraintsWithFormat(format: "V:|-0-[v0(\(safeAreaTopInset + 267))]", views: backgroundView)
         
         backgroundView.addSubview(myPhoto)
         backgroundView.addConstraintsWithFormat(format: "[v0(86)]", views: myPhoto)
@@ -124,14 +130,14 @@ class MyProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: chat)
         chatPhoto.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
         
-        backgroundView.addConstraintsWithFormat(format: "V:|-38-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: myPhoto, myName, myEmail, myId, chatPhoto, chat)
+        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: myPhoto, myName, myEmail, myId, chatPhoto, chat)
         
-        let screenWidth = UIScreen.main.bounds.width
-        drawLine(startX: 0, endX: Int(screenWidth), startY: 267, endY: 267, lineColor:             UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
+        
+        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
         
         backgroundView.addSubview(editBtn)
-        backgroundView.addConstraintsWithFormat(format: "[v0(30)]-15-|", views: editBtn)
-        backgroundView.addConstraintsWithFormat(format: "V:|-12-[v0(20)]", views: editBtn)
+        backgroundView.addConstraintsWithFormat(format: "[v0(55)]-15-|", views: editBtn)
+        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: editBtn)
     }
     
     //настраиваем содержание элементов в верхней половине экрана
@@ -140,9 +146,14 @@ class MyProfileViewController: UIViewController {
 
         myPhoto.image = UIImage(named: "myProfile")
         
-        myName.text = "Anna"
-        myEmail.text = "@ya.ru"
-        myId.text = "123"
+        if (User.firstName + User.lastName).replacingOccurrences(of: " ", with: "") != "" {
+            myName.text = User.lastName + " " + User.firstName
+        } else {
+            myName.text = User.account_name
+        }
+        
+        myEmail.text = User.email
+        myId.text = User.uid
         
         chatPhoto.image = UIImage(named: "chat")
         chat.text = "Chat"
@@ -156,22 +167,22 @@ class MyProfileViewController: UIViewController {
         self.view.addConstraintsWithFormat(format: "|-16-[v0(53)]", views: status)
         self.view.addConstraintsWithFormat(format: "|-16-[v0]-16-|", views: statusField)
         
-        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset)-[v0(267)]-13-[v1(15)]-6-[v2]->=124-|", views: backgroundView, status, statusField)
+        self.view.addConstraintsWithFormat(format: "V:|-0-[v0(\(safeAreaTopInset + 267))]-13-[v1(15)]-6-[v2]->=124-|", views: backgroundView, status, statusField)
         
         let screenWidth = UIScreen.main.bounds.width
         let tabBarWidth = self.tabBarController?.tabBar.frame.height
         let yPoint = UIScreen.main.bounds.height - tabBarWidth! - 74
-        drawLine(startX: 0, endX: Int(screenWidth), startY: Int(yPoint), endY: Int(yPoint), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: self.view)
+        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(yPoint), endY: Int(yPoint), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: self.view)
     }
     
     //настраиваем содержание элементов в нижней половине экрана
     func setUpStatusViewContents () {
         status.text = "Статус:"
-        statusField.text = "Как-то так gjglglgh;h;k; ;kjh;khj; V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]V:|[v0(287)]-13-[v1(15)]-6-[v2]"
+        statusField.text = User.status
     }
     
     //рисуем горизонтальную линию
-    func drawLine(startX: Int, endX: Int, startY: Int, endY: Int, lineColor: UIColor, lineWidth: CGFloat, inView view: UIView) {
+    static func drawLine(startX: Int, endX: Int, startY: Int, endY: Int, lineColor: UIColor, lineWidth: CGFloat, inView view: UIView) {
         
         let path = UIBezierPath()
         path.move(to: CGPoint(x: startX, y: startY))
