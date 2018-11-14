@@ -18,26 +18,25 @@ class FakeData {
     
     init() {
 
-        //Настоящий id
         user_1.id = "21"
         user_1.account_name = "Владимир"
         user_1.email = ""
         user_1.status = "Убиваю"
         user_1.avatarImage = "man"
         
-        user_2.id = "20"
+        user_2.id = "78"
         user_2.account_name = "Максим"
         user_2.email = ""
         user_2.status = "Прессую дизайнеров"
         user_2.avatarImage = "man"
         
-        user_3.id = "21"
+        user_3.id = "157"
         user_3.account_name = "Аня"
         user_3.email = ""
         user_3.status = "Пишу код"
         user_3.avatarImage = "man"
         
-        user_4.id = "19"
+        user_4.id = "158"
         user_4.account_name = "Юля"
         user_4.email = ""
         user_4.status = "Пишу код"
