@@ -10,7 +10,7 @@ import Foundation
 
 struct Token {
     
-    static var token = TokenService.getToken(forKey: "token") ?? "" {
+    static var token = TokenService.getToken(forKey: "token") {
         didSet {
             TokenService.setToken(token: token, forKey: "token")
             print ("set token = \(TokenService.getToken(forKey: "token")!)")
