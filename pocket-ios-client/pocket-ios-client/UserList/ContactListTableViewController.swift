@@ -10,7 +10,7 @@ import UIKit
 
 class ContactListTableViewController: UITableViewController {
     
-    var contactArray = [Friend]()
+    var contactArray = Contacts.list
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,9 +18,6 @@ class ContactListTableViewController: UITableViewController {
         tableView.rowHeight = 60
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
-        
-        contactArray = setupContactArray()
-
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -39,44 +36,54 @@ class ContactListTableViewController: UITableViewController {
         
         cell.setUp()
         
-        if let nameLable = contactArray[indexPath.row].name {
+        if let nameLable = contactArray[indexPath.row].account_name {
             cell.nameLabel.text = nameLable
         }
         
-        if let imageName = contactArray[indexPath.row].profileImageName {
+        if let imageName = contactArray[indexPath.row].avatarImage {
             cell.profileImageView.image = UIImage(named: imageName)
         }
         
-        if let statusLable = contactArray[indexPath.row].onlineStatus {
+        if let statusLable = contactArray[indexPath.row].status {
             cell.statusLabel.text = statusLable
         }
 
         return cell
     }
     
-    func setupContactArray() -> [Friend] {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let steve = Friend()
-        steve.name = "Steve"
-        steve.profileImageName = "steveprofile"
-        steve.onlineStatus = "Умер"
+        let chatField = segue.destination as? ChatViewController
         
-        let max = Friend()
-        max.name = "Максим"
-        max.profileImageName = "man"
-        max.onlineStatus = "Занимаюсь важными делами"
-        
-        let vova = Friend()
-        vova.name = "Владимир"
-        vova.profileImageName = "man"
-        vova.onlineStatus = "Принимаю PR"
-        
-        contactArray.append(steve)
-        contactArray.append(vova)
-        contactArray.append(max)
-        
-        return contactArray
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            chatField?.chatName = contactArray[indexPath.row].account_name
+        }
     }
+    
+//    func setupContactArray() -> [Friend] {
+//        
+//        let steve = Friend()
+//        steve.name = "Steve"
+//        steve.profileImageName = "steveprofile"
+//        steve.onlineStatus = "Умер"
+//        
+//        let max = Friend()
+//        max.name = "Максим"
+//        max.profileImageName = "man"
+//        max.onlineStatus = "Занимаюсь важными делами"
+//        
+//        let vova = Friend()
+//        vova.name = "Владимир"
+//        vova.profileImageName = "man"
+//        vova.onlineStatus = "Принимаю PR"
+//        
+//        contactArray.append(steve)
+//        contactArray.append(vova)
+//        contactArray.append(max)
+//        
+//        return contactArray
+//    }
     
 
     /*
