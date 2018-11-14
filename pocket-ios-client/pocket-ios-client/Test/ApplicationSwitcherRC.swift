@@ -12,6 +12,11 @@ class ApplicationSwitcherRC {
     
     static var rootVC: UIViewController!
     
+    enum ChoiceRootVC {
+        case login
+        case tabbar
+    }
+    
     static func choiseRootVC() {
         
         let token = TokenService.getToken(forKey: "token")
@@ -26,26 +31,41 @@ class ApplicationSwitcherRC {
                     DataBase.loadAllContactsFromDB(keyId: User.uid)
                     
                     DispatchQueue.main.async {
-                        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                        appDelegate.window?.rootViewController = rootVC
+                        choiceVC(choiseVC: .tabbar)
+                    }
+                }
+                else {
+                    //Костыль на случай протухания токена
+                    TokenService.setToken(token: nil, forKey: "token")
+                    DispatchQueue.main.async {
+                        choiceVC(choiseVC: .login)
                     }
                 }
             }
         }
 
         else {
-            rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.window?.rootViewController = rootVC
+            choiceVC(choiseVC: .login)
         }
     }
     
     static func ifServerDown() {
         
-        rootVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+        choiceVC(choiseVC: .tabbar)
+        
+    }
+    
+    static func choiceVC(choiseVC: ChoiceRootVC) {
+        let initVC = UIStoryboard.init(name: "Login", bundle: nil)
+        
+        switch choiseVC {
+        case .login:
+            rootVC = initVC.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        case .tabbar:
+            rootVC = initVC.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+        }
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = rootVC
-        
     }
 }

@@ -15,7 +15,7 @@ class TokenService {
         return token
     }
     
-    static func setToken(token: String, forKey: String) {
+    static func setToken(token: String?, forKey: String) {
         UserDefaults.standard.set(token, forKey: forKey)
     }
 }
