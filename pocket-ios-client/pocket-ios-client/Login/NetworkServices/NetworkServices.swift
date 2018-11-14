@@ -20,7 +20,7 @@ class NetworkServices {
 
         
         // делаем JSON
-        let httpBody = ["account_name":User.account_name,"email":User.email,"password":User.password]
+        let httpBody = ["account_name":UserSelf.account_name,"email":UserSelf.email,"password":UserSelf.password]
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
@@ -89,7 +89,7 @@ class NetworkServices {
         
         // JSON Encoder
         
-        let httpBody = ["account_name": User.account_name, "password": User.password]
+        let httpBody = ["account_name":UserSelf.account_name,"password":UserSelf.password]
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)

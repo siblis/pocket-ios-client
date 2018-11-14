@@ -20,9 +20,9 @@ class DataBase {
 
     static func saveSelfUser(json: [String: Any]) {
     
-    User.uid = "\(json["uid"] ?? 0)"
-    User.account_name = "\(json["account_name"] ?? "")"
-    User.email = "\(json["email"] ?? "")"
+    UserSelf.uid = "\(json["uid"] ?? 0)"
+    UserSelf.account_name = "\(json["account_name"] ?? "")"
+    UserSelf.email = "\(json["email"] ?? "")"
         
 }
     

@@ -96,15 +96,16 @@ class MyProfileViewController: UIViewController {
         super.viewDidLoad()
         
         setUpTopView()
-        setUpTopViewContents()
         setUpStatusView()
-        setUpStatusViewContents()
         
         editBtn.addTarget(self, action: #selector(self.editDetails(_:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setUpTopViewContents()
+        setUpStatusViewContents()
     }
     
     
@@ -146,14 +147,14 @@ class MyProfileViewController: UIViewController {
 
         myPhoto.image = UIImage(named: "myProfile")
         
-        if (User.firstName + User.lastName).replacingOccurrences(of: " ", with: "") != "" {
-            myName.text = User.lastName + " " + User.firstName
+        if (UserSelf.firstName + UserSelf.lastName).replacingOccurrences(of: " ", with: "") != "" {
+            myName.text = UserSelf.lastName + " " + UserSelf.firstName
         } else {
-            myName.text = User.account_name
+            myName.text = UserSelf.account_name
         }
         
-        myEmail.text = User.email
-        myId.text = User.uid
+        myEmail.text = UserSelf.email
+        myId.text = UserSelf.uid
         
         chatPhoto.image = UIImage(named: "chat")
         chat.text = "Chat"
@@ -178,7 +179,7 @@ class MyProfileViewController: UIViewController {
     //настраиваем содержание элементов в нижней половине экрана
     func setUpStatusViewContents () {
         status.text = "Статус:"
-        statusField.text = User.status
+        statusField.text = UserSelf.status
     }
     
     //рисуем горизонтальную линию

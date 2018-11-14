@@ -35,13 +35,13 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        User.account_name = account_name
-        User.email = email
-        User.password = password
+        UserSelf.account_name = account_name
+        UserSelf.email = email
+        UserSelf.password = password
         
         NetworkServices.signUp { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
-                User.token = token
+                Token.token = token
                 NetworkServices.getSelfUser(token: token) { (json, statusCode) in
                     if statusCode == 200 {
                         DataBase.saveSelfUser(json: json)
