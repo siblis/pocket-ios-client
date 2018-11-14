@@ -34,17 +34,17 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text, let account_name = loginTextField.text else {return}
         
-        User.password = password
-        User.account_name = account_name
+        UserSelf.password = password
+        UserSelf.account_name = account_name
         
         NetworkServices.login() { (token) in
             if token != "" {
-                User.token = token
+                Token.token = token
                 NetworkServices.getSelfUser(token: token) { (json, statusCode) in
                     if statusCode == 200 {
                         
                         DataBase.saveSelfUser(json: json)
-                        DataBase.instance.loadAllContactsFromDB(keyId: User.uid)
+                        DataBase.instance.loadAllContactsFromDB(keyId: UserSelf.uid)
                         
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "UserListSegue", sender: nil)

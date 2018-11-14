@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController {
+class EditProfileViewController: UIViewController, UITextFieldDelegate {
 
     //определяем элементы экрана
     let cancelBtn:UIButton = {
@@ -21,7 +21,7 @@ class EditProfileViewController: UIViewController {
     
     let doneBtn:UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+        button.setTitleColor(UIColor(red:0.59, green:0.59, blue:0.59, alpha:1.0), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.titleLabel?.textAlignment = .right
         return button
@@ -48,6 +48,7 @@ class EditProfileViewController: UIViewController {
         textField.placeholder = "Имя"
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.returnKeyType = .done
+        textField.tag = 1
         return textField
     }()
     
@@ -56,6 +57,7 @@ class EditProfileViewController: UIViewController {
         textField.placeholder = "Фамилия"
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.returnKeyType = .done
+        textField.tag = 2
         return textField
     }()
     
@@ -63,6 +65,7 @@ class EditProfileViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Статус:"
         textField.returnKeyType = .done
+        textField.tag = 3
         return textField
     }()
 
@@ -72,13 +75,35 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        firstName.delegate = self
+        lastName.delegate = self
+        status.delegate = self
+        
         setUpHeader()
         setUpHeaderContents()
         setUpBody()
         setUpBodyContents()
         
         cancelBtn.addTarget(self, action: #selector(cancel(_:)), for: .touchUpInside)
+        doneBtn.addTarget(self, action: #selector(saveChanges(_:)), for: .touchUpInside)
+        firstName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        lastName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        status.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        myPhoto.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector (showActionSheet(_:))))
+        myPhoto.isUserInteractionEnabled = true
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        firstName.text = UserSelf.firstName
+        lastName.text = UserSelf.lastName
+        status.text = UserSelf.status
     }
     
     func setUpHeader () {
@@ -124,6 +149,70 @@ class EditProfileViewController: UIViewController {
     
     @objc func cancel (_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        var value: String
+        switch textField.tag {
+        case 1:
+            value = UserSelf.firstName
+        case 2:
+            value = UserSelf.lastName
+        case 3:
+            value = UserSelf.status
+        default:
+            value = ""
+        }
+        if textField.text != value {
+            doneBtn.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+            doneBtn.isEnabled = true
+        } else {
+            if (firstName.text == UserSelf.firstName)&&(lastName.text == UserSelf.lastName)&&(status.text == UserSelf.status) {
+                doneBtn.setTitleColor(UIColor(red:0.59, green:0.59, blue:0.59, alpha:1.0), for: .normal)
+                doneBtn.isEnabled = false
+            } else {
+                doneBtn.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+                doneBtn.isEnabled = true
+            }
+        }
+    }
+    
+    @objc func saveChanges (_ sender: UIButton) {
+        UserSelf.firstName = firstName.text ?? ""
+        UserSelf.lastName = lastName.text ?? ""
+        UserSelf.status = status.text ?? ""
+        print  ("saving changes")
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print ("tag = \(textField.tag)")
+        if let nextField = textField.superview?.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+            print ("move to next field: \(nextField.tag)")
+        } else {
+            textField.resignFirstResponder()
+        }
+        return false
+    }
+    
+    @objc func showActionSheet(_ sender: UITapGestureRecognizer) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let actionCancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        actionSheet.addAction(actionCancel)
+        
+        let actionMail = UIAlertAction(title: "Сделать фото", style: .default, handler: nil)
+        let actionShare = UIAlertAction(title: "Выбрать фото", style: .default, handler: nil)
+        let actionSave = UIAlertAction(title: "Удалить фото", style: .default, handler: nil)
+        actionSheet.addAction(actionMail)
+        actionSheet.addAction(actionShare)
+        actionSheet.addAction(actionSave)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    @objc func dismissKeyboard () {
+        self.view.endEditing(true)
     }
 
 }

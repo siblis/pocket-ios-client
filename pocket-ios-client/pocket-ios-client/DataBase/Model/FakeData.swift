@@ -52,7 +52,7 @@ class FakeData {
     
     func fakeData(keyId: String) -> [UserContact] {
         switch keyId {
-        case User.uid:
+        case UserSelf.uid:
             return [user_1, user_2, user_3, user_4, user_5]
         default:
             return []
