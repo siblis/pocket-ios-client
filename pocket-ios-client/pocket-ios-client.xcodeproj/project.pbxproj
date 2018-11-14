@@ -124,6 +124,23 @@
 			path = ChatWindow;
 			sourceTree = "<group>";
 		};
+		24AD50AE219B143600619ED6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */,
+				6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		24AD50AF219B165300619ED6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		6D2988ED21935F270004199F /* TokenService */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,9 +213,8 @@
 		6DA11131216B8C1000C2AA45 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
-				6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */,
-				6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */,
-				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
+				24AD50AE219B143600619ED6 /* Controller */,
+				24AD50AF219B165300619ED6 /* Model */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
