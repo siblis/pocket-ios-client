@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
                     if statusCode == 200 {
                         
                         DataBase.saveSelfUser(json: json)
-                        DataBase.loadAllContactsFromDB(keyId: User.uid)
+                        DataBase.instance.loadAllContactsFromDB(keyId: User.uid)
                         
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "UserListSegue", sender: nil)

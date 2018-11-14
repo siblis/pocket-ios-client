@@ -9,6 +9,14 @@
 import Foundation
 
 class DataBase {
+    
+    static let instance = {
+        return DataBase()
+    }()
+    
+    private init() {}
+    
+    func test() {}
 
     static func saveSelfUser(json: [String: Any]) {
     
@@ -18,24 +26,38 @@ class DataBase {
         
 }
     
-    static func addContact(userContact: UserContact) {
-        
+    private func addContact(userContact: UserContact) {
         Contacts.list.append(userContact)
-        
     }
     
-    static private func loadAllContacts(userContact: [UserContact]) {
-        
-        for contact in userContact {
-            DataBase.addContact(userContact: contact)
+    private func removeContact(userContact: UserContact) {
+        var i = 0
+        Contacts.list.forEach { (user) in
+            if user.id == userContact.id {
+                Contacts.list.remove(at: i)
+            }
+            i+=1
         }
-        
     }
     
-    static func loadAllContactsFromDB(keyId: Any) {
+    private func loadAllContacts(userContact: [UserContact]) {
+        for contact in userContact {
+            addContact(userContact: contact)
+        }
+    }
+    
+    func loadAllContactsFromDB(keyId: Any) {
         
         let key = keyId as! String
         
         loadAllContacts(userContact: FakeData().fakeData(keyId: key))
+    }
+    
+    func addContactToDB(userContact: UserContact) {
+        addContact(userContact: userContact)
+    }
+    
+    func removeContactToDB(userContact: UserContact) {
+        removeContact(userContact: userContact)
     }
 }
