@@ -135,14 +135,16 @@ extension ChatViewController: UICollectionViewDataSource {
             let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)] , context: nil)
                 
             if message.isSender == false {
-                cell.messageTextView.frame = CGRect(x:20 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-                cell.textBubbleView.frame = CGRect(x:20 + 0, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
-                cell.textBubbleView.backgroundColor = #colorLiteral(red: 0.8973206878, green: 0.9018508792, blue: 0.9191583991, alpha: 1)
+                cell.messageTextView.frame = CGRect(x:15 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+                cell.textBubbleView.frame = CGRect(x:15 + 0, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
+                cell.bubbleImageView.image = MessageCell.leftBubbleImage
+                cell.bubbleImageView.tintColor = #colorLiteral(red: 0.8973206878, green: 0.9018508792, blue: 0.9191583991, alpha: 1)
                 cell.messageTextView.textColor = UIColor.black
             } else {
                 cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
                 cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 8 - 16, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
-                cell.textBubbleView.backgroundColor = #colorLiteral(red: 0.1881233156, green: 0.6438228488, blue: 0.9878250957, alpha: 1)
+                cell.bubbleImageView.image = MessageCell.rightBubbleImage
+                cell.bubbleImageView.tintColor = #colorLiteral(red: 0.1881233156, green: 0.6438228488, blue: 0.9878250957, alpha: 1)
                 cell.messageTextView.textColor = UIColor.white
             }
         }
