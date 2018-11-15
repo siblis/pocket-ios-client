@@ -64,6 +64,16 @@ class ChatListTableViewController: UITableViewController {
             if let date = chatMessage.date {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "h:mm a"
+                
+                let elapsedTimeInSeconds = NSDate().timeIntervalSince(date as Date)
+                let secondInDays: TimeInterval = 60 * 60 * 24
+                
+                if elapsedTimeInSeconds > 7 * secondInDays {
+                    dateFormatter.dateFormat = "dd/MM/yy"
+                }else if elapsedTimeInSeconds > secondInDays {
+                    dateFormatter.dateFormat = "EEE"
+                }
+                
                 cell.timeLabel.text = dateFormatter.string(from: date as Date)
             }
         }
