@@ -26,6 +26,7 @@ class ChatMessage: NSObject {
 extension ChatListTableViewController {
     
     func setupData() {
+        //        установила время в формате: n минут назад (-n * 60 секунд)
         let GB = Friend()
         GB.name = "Группа стажировки GB"
         GB.profileImageName = "team"
@@ -43,7 +44,7 @@ extension ChatListTableViewController {
         let chatMessage1 = ChatMessage()
         chatMessage1.friend = Voronin
         chatMessage1.text = "Адрес типа http://localhost:8888..."
-        chatMessage1.date = NSDate()
+        chatMessage1.date = NSDate().addingTimeInterval(-2 * 60)
         chatMessage1.messageCount = "2"
         
         let Steve = Friend()
@@ -53,9 +54,19 @@ extension ChatListTableViewController {
         let chatMessage2 = ChatMessage()
         chatMessage2.friend = Steve
         chatMessage2.text = "Apple creates great IOS Devices for the world..."
-        chatMessage2.date = NSDate()
+        chatMessage2.date = NSDate().addingTimeInterval(-60 * 60 * 24)
         chatMessage2.messageCount = "86"
         
-        chatMessages = [chatMessage, chatMessage1, chatMessage2]
+        let Geek = Friend()
+        Geek.name = "Geek"
+        Geek.profileImageName = "myProfile"
+        
+        let chatMessage3 = ChatMessage()
+        chatMessage3.friend = Geek
+        chatMessage3.text = "hi everybody"
+        chatMessage3.date = NSDate().addingTimeInterval(-5 * 60 * 60 * 24 * 7)
+        chatMessage3.messageCount = "1"
+        
+        chatMessages = [chatMessage, chatMessage1, chatMessage2, chatMessage3]
     }
 }
