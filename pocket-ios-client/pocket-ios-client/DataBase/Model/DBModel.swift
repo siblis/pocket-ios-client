@@ -39,8 +39,10 @@ struct UserContact {
     var account_name: String? = ""
     var email: String? = ""
     var status: String? = ""
-    var avatarImage: String?
+    var avatarImage: String? = ""
     
+    var firstName = ""
+    var lastName = ""
 }
 
 struct Contacts {
@@ -53,4 +55,22 @@ struct Chats {
     
     static var list = [Int:UserContact]()
     
+}
+
+struct Message: Codable {
+    
+    var receiver: String
+    var text: String
+    var senderid: Int
+    var senderName: String
+    var time: Double
+    var isEnemy: Bool = false
+    
+    enum CodingKeys: String, CodingKey {
+        case receiver = "receiver"
+        case text = "message"
+        case senderid = "senderid"
+        case senderName = "sender_name"
+        case time = "timestamp"
+    }
 }

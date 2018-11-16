@@ -1,38 +1,45 @@
 //
-//  MyProfileViewController.swift
+//  UserProfileViewController.swift
 //  pocket-ios-client
 //
-//  Created by Anya on 12/11/2018.
+//  Created by Anya on 16/11/2018.
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
 import UIKit
 
-class MyProfileViewController: UIViewController {
-    //определяем элементы экрана
+class UserProfileViewController: UIViewController {
+
+    let backButton:UIButton = {
+        let button = UIButton()
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.layer.masksToBounds = true
+        return button
+    }()
+    
+    let deleteButton:UIButton = {
+        let button = UIButton()
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.layer.masksToBounds = true
+        return button
+    }()
+    
     let backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red:0.98, green:0.98, blue:1.00, alpha:1.0)
         return view
     }()
+
     
-    let editBtn:UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .right
-        return button
-    }()
-    
-    let myPhoto: UIImageView = {
+    let userPhoto: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 43
         image.layer.masksToBounds = true
-        image.layer.cornerRadius = 43 
         return image
     }()
     
-    let myName: UILabel = {
+    let userName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
@@ -40,7 +47,7 @@ class MyProfileViewController: UIViewController {
         return label
     }()
     
-    let myEmail: UILabel = {
+    let userEmail: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
@@ -48,7 +55,7 @@ class MyProfileViewController: UIViewController {
         return label
     }()
     
-    let myId: UILabel = {
+    let UserId: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
@@ -92,13 +99,17 @@ class MyProfileViewController: UIViewController {
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
     let screenWidth = UIScreen.main.bounds.width
     
+    var user: UserContact?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         
         setUpTopView()
         setUpStatusView()
         
-        editBtn.addTarget(self, action: #selector(self.editDetails(_:)), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(back(_:)), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteUser(_:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,46 +126,50 @@ class MyProfileViewController: UIViewController {
         self.view.addConstraintsWithFormat(format: "|-0-[v0]-0-|", views: backgroundView)
         self.view.addConstraintsWithFormat(format: "V:|-0-[v0(\(safeAreaTopInset + 267))]", views: backgroundView)
         
-        backgroundView.addSubview(myPhoto)
-        backgroundView.addConstraintsWithFormat(format: "[v0(86)]", views: myPhoto)
-        myPhoto.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
+        backgroundView.addSubview(backButton)
+        backgroundView.addSubview(deleteButton)
+        self.view.addConstraintsWithFormat(format: "|-8-[v0(13)]-[v1(22)]-15-|", views: backButton, deleteButton)
+        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(21)]", views: backButton)
+        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 10)-[v0(24)]", views: deleteButton)
         
-        backgroundView.addSubview(myName)
-        backgroundView.addSubview(myEmail)
-        backgroundView.addSubview(myId)
+        backgroundView.addSubview(userPhoto)
+        backgroundView.addConstraintsWithFormat(format: "[v0(86)]", views: userPhoto)
+        userPhoto.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
+        
+        backgroundView.addSubview(userName)
+        backgroundView.addSubview(userEmail)
+        backgroundView.addSubview(UserId)
         backgroundView.addSubview(chatPhoto)
         backgroundView.addSubview(chat)
-        backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: myName)
-        backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: myEmail)
-        backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: myId)
+        backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: userName)
+        backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: userEmail)
+        backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: UserId)
         backgroundView.addConstraintsWithFormat(format: "[v0(38)]", views: chatPhoto)
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: chat)
         chatPhoto.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
         
-        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: myPhoto, myName, myEmail, myId, chatPhoto, chat)
+        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: userPhoto, userName, userEmail, UserId, chatPhoto, chat)
         
         
         MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
         
-        backgroundView.addSubview(editBtn)
-        backgroundView.addConstraintsWithFormat(format: "[v0(55)]-15-|", views: editBtn)
-        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: editBtn)
     }
     
     //настраиваем содержание элементов в верхней половине экрана
     func setUpTopViewContents () {
-        editBtn.setTitle("Edit", for: .normal)
-
-        myPhoto.image = UIImage(named: "myProfile")
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
         
-        if (UserSelf.firstName + UserSelf.lastName).replacingOccurrences(of: " ", with: "") != "" {
-            myName.text = UserSelf.lastName + " " + UserSelf.firstName
+        userPhoto.image = UIImage(named: user?.avatarImage ?? "")
+        
+         if (user!.firstName + user!.lastName).replacingOccurrences(of: " ", with: "") != "" {
+            userName.text = user!.lastName + " " + user!.firstName
         } else {
-            myName.text = UserSelf.account_name
+            userName.text = user!.account_name
         }
         
-        myEmail.text = UserSelf.email
-        myId.text = UserSelf.uid
+        userEmail.text = user!.email
+        UserId.text = user!.id
         
         chatPhoto.image = UIImage(named: "chat")
         chat.text = "Chat"
@@ -175,26 +190,33 @@ class MyProfileViewController: UIViewController {
     //настраиваем содержание элементов в нижней половине экрана
     func setUpStatusViewContents () {
         status.text = "Статус:"
-        statusField.text = UserSelf.status
+        statusField.text = user!.status
     }
     
-    //рисуем горизонтальную линию
-    static func drawLine(startX: Int, endX: Int, startY: Int, endY: Int, lineColor: UIColor, lineWidth: CGFloat, inView view: UIView) {
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: startX, y: startY))
-        path.addLine(to: CGPoint(x: endX, y: endY))
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.strokeColor = lineColor.cgColor
-        shapeLayer.lineWidth = lineWidth
-        
-        view.layer.addSublayer(shapeLayer)
+    
+    @objc func back (_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func editDetails(_ sender: UIButton) {
-        performSegue(withIdentifier: "editDetailsSegue", sender: sender)
+    @objc func deleteUser (_ sender: UIButton) {
+        showDeleteAlert()
+    }
+
+    //алерт с удалением
+    func showDeleteAlert() {
+        let alert = UIAlertController(title: "", message: "Вы действительно хотите удалить пользователя?", preferredStyle: .alert)
+        
+        let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
+            let userContact = Contacts.list.firstIndex(where: {$0.id == self.user!.id})!
+            Contacts.list.remove(at: userContact)
+            
+            let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+            
+            self.present(tabBarVC, animated:true, completion:nil)
+        })
+        let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        present(alert, animated: true, completion: nil)
     }
 }
-
