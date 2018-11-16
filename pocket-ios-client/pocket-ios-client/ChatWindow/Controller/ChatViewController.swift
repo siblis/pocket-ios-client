@@ -120,12 +120,20 @@ class ChatViewController: UIViewController {
     
     @objc func infoButtonTap (_ sender: UIButton) {
         performSegue(withIdentifier: "userDetailsSegue", sender: self)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
-            userDetailsVC.user = self.user
+            if user != nil {
+                userDetailsVC.user = self.user
+            } else {
+                userDetailsVC.user = UserContact()
+                userDetailsVC.user?.account_name = chatName
+                userDetailsVC.user?.avatarImage = "noPhoto"
+            }
+            
         }
     }
 }
