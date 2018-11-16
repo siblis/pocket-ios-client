@@ -39,8 +39,10 @@ struct UserContact {
     var account_name: String? = ""
     var email: String? = ""
     var status: String? = ""
-    var avatarImage: String?
+    var avatarImage: String? = ""
     
+    var firstName = ""
+    var lastName = ""
 }
 
 struct Contacts {
