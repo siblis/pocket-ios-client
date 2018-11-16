@@ -10,6 +10,8 @@ import Foundation
 
 class FakeData {
     
+    static var testMessages: [Message] = []
+    
     var user_1 = UserContact()
     var user_2 = UserContact()
     var user_3 = UserContact()
@@ -57,4 +59,5 @@ class FakeData {
             return []
         }
     }
+    
 }

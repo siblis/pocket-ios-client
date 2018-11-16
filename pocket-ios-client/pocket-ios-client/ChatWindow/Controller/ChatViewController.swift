@@ -10,22 +10,20 @@ import UIKit
 
 class ChatViewController: UIViewController {
     
-    let msgAndSocket = MessageAndWebSocket()
     
     //MARK: Init
     let insets: CGFloat = 15
     let cellReuseIdentifier = "MessageCell"
-    var chatID: Int = 24
+    var chatID: Int?
     var user: UserContact?
     var chatName: String?
-    
-    var testMessages: [Message]?
+    var chat: [Message] = []
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = chatName
-        
+        setupData()
         //кнопка перехода на экран с деталями пользователя
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonTap(_:)), for: .touchUpInside)
@@ -35,8 +33,12 @@ class ChatViewController: UIViewController {
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
         chatField.delegate = self
-        msgAndSocket.webSocketConnect()
-        setupData()
+//        MessageAndWebSocket.webSocketConnect()
+        for elemet in FakeData.testMessages {
+            if Int(elemet.receiver) == chatID || elemet.senderid == chatID {
+                chat.append(elemet)
+            }
+        }
     }
     
     @IBOutlet weak var chatField: UICollectionView! {
@@ -62,8 +64,8 @@ class ChatViewController: UIViewController {
     
     @IBAction func sendButton(_ sender: Any) {
         
-        if let msg = message.text, msg != "" {
-            msgAndSocket.sendMessage(receiver: self.chatID, message: msg)
+        if let msg = message.text, let chID = self.chatID, msg != "" {
+            MessageAndWebSocket().sendMessage(receiver: chID, message: msg)
             self.chatField.reloadData()
             message.text = ""
         }
@@ -144,35 +146,33 @@ class ChatViewController: UIViewController {
 extension ChatViewController: UICollectionViewDataSource {
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = testMessages?.count {
-            return count
-        }
-        return 0
+       
+        return chat.count
 //            msgAndSocket.messageInOut.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! MessageCell
-        cell.messageTextView.text = testMessages?[indexPath.item].text
-        if let message = testMessages?[indexPath.item] {
-            let messageText = message.text
-            let size = CGSize(width: 250, height: 1000)
-            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)] , context: nil)
-                
-            if message.isSender == false {
-                cell.messageTextView.frame = CGRect(x:15 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-                cell.textBubbleView.frame = CGRect(x:15 + 0, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
-                cell.bubbleImageView.image = MessageCell.leftBubbleImage
-                cell.bubbleImageView.tintColor = #colorLiteral(red: 0.8973206878, green: 0.9018508792, blue: 0.9191583991, alpha: 1)
-                cell.messageTextView.textColor = UIColor.black
-            } else {
-                cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 8 - 16, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
-                cell.bubbleImageView.image = MessageCell.rightBubbleImage
-                cell.bubbleImageView.tintColor = #colorLiteral(red: 0.1881233156, green: 0.6438228488, blue: 0.9878250957, alpha: 1)
-                cell.messageTextView.textColor = UIColor.white
-            }
+        
+        let message = chat[indexPath.item]
+        let messageText = message.text
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)] , context: nil)
+            
+        cell.messageTextView.text = message.text
+        if message.isEnemy {
+            cell.messageTextView.frame = CGRect(x:15 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+            cell.textBubbleView.frame = CGRect(x:15 + 0, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
+            cell.bubbleImageView.image = MessageCell.leftBubbleImage
+            cell.bubbleImageView.tintColor = #colorLiteral(red: 0.8973206878, green: 0.9018508792, blue: 0.9191583991, alpha: 1)
+            cell.messageTextView.textColor = UIColor.black
+        } else {
+            cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+            cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 8 - 16, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
+            cell.bubbleImageView.image = MessageCell.rightBubbleImage
+            cell.bubbleImageView.tintColor = #colorLiteral(red: 0.1881233156, green: 0.6438228488, blue: 0.9878250957, alpha: 1)
+            cell.messageTextView.textColor = UIColor.white
         }
         
         return cell
@@ -183,14 +183,14 @@ extension ChatViewController: UICollectionViewDataSource {
 extension ChatViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if let messageText = testMessages?[indexPath.item].text {
-            let size = CGSize(width: 250, height: 1000)
-            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)] , context: nil)
-            return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
-        }
-        
-        return CGSize(width: view.frame.width, height: 100)
+        let messageText = chat[indexPath.item].text
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)] , context: nil)
+        return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
+//        }
+//        
+//        return CGSize(width: view.frame.width, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

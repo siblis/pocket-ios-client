@@ -9,6 +9,7 @@
 import Foundation
 
 class Friend: NSObject {
+    var id: Int = 0
     var name: String?
     var profileImageName: String?
     var onlineStatus: String?
@@ -28,6 +29,7 @@ extension ChatListTableViewController {
     func setupData() {
         //        установила время в формате: n минут назад (-n * 60 секунд)
         let GB = Friend()
+        GB.id = 777
         GB.name = "Группа стажировки GB"
         GB.profileImageName = "team"
         
@@ -38,6 +40,7 @@ extension ChatListTableViewController {
         chatMessage.messageCount = "34"
         
         let Voronin = Friend()
+        Voronin.id = 888
         Voronin.name = "Evgeniy Voronin"
         Voronin.profileImageName = "man"
         
@@ -48,6 +51,7 @@ extension ChatListTableViewController {
         chatMessage1.messageCount = "2"
         
         let Steve = Friend()
+        Steve.id = 555
         Steve.name = "Steve Jobs"
         Steve.profileImageName = "steveprofile"
         

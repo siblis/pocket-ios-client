@@ -37,6 +37,7 @@ class ChatListTableViewController: UITableViewController {
             let indexChat = chatMessages?[indexPath.item]
             
             chatField?.chatName = indexChat?.friend?.name
+            chatField?.chatID = indexChat?.friend?.id
         }
     }
 
