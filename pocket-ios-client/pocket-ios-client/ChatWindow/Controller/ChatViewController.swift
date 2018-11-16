@@ -16,6 +16,7 @@ class ChatViewController: UIViewController {
     let insets: CGFloat = 15
     let cellReuseIdentifier = "MessageCell"
     var chatID: Int = 24
+    var user: UserContact?
     var chatName: String?
     
     var testMessages: [Message]?
@@ -24,6 +25,12 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = chatName
+        
+        //кнопка перехода на экран с деталями пользователя
+        let infoButton = UIButton(type: .infoLight)
+        infoButton.addTarget(self, action: #selector(infoButtonTap(_:)), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: infoButton)
+        self.navigationItem.rightBarButtonItem = barButton
         
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
@@ -109,6 +116,17 @@ class ChatViewController: UIViewController {
     @objc func keyboardWillHide(notification: Notification) {
         //Добавить возврат к обычному размеру чата
         setupElements(y: 0)
+    }
+    
+    @objc func infoButtonTap (_ sender: UIButton) {
+        performSegue(withIdentifier: "userDetailsSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "userDetailsSegue" {
+            let userDetailsVC = segue.destination as! UserProfileViewController
+            userDetailsVC.user = self.user
+        }
     }
 }
 
