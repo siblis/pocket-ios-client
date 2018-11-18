@@ -11,6 +11,7 @@ import Foundation
 class FakeData {
     
     static var testMessages: [Message] = []
+    static var chatMessages: [ChatMessage] = []
     
     var user_1 = UserContact()
     var user_2 = UserContact()

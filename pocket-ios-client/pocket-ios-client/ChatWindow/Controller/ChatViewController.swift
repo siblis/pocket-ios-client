@@ -14,16 +14,13 @@ class ChatViewController: UIViewController {
     //MARK: Init
     let insets: CGFloat = 15
     let cellReuseIdentifier = "MessageCell"
-    var chatID: Int?
     var user: UserContact?
-    var chatName: String?
     var chat: [Message] = []
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = chatName
-        setupData()
+        title = user?.account_name
         //кнопка перехода на экран с деталями пользователя
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonTap(_:)), for: .touchUpInside)
@@ -33,9 +30,8 @@ class ChatViewController: UIViewController {
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
         chatField.delegate = self
-//        MessageAndWebSocket.webSocketConnect()
         for elemet in FakeData.testMessages {
-            if Int(elemet.receiver) == chatID || elemet.senderid == chatID {
+            if (elemet.receiver == user?.id) || ("\(elemet.senderid)" == user?.id) {
                 chat.append(elemet)
             }
         }
@@ -64,8 +60,8 @@ class ChatViewController: UIViewController {
     
     @IBAction func sendButton(_ sender: Any) {
         
-        if let msg = message.text, let chID = self.chatID, msg != "" {
-            MessageAndWebSocket().sendMessage(receiver: chID, message: msg)
+        if let msg = message.text, let chID = self.user?.id, msg != "" {
+            WSS.initial.sendMessage(receiver: chID, message: msg)
             self.chatField.reloadData()
             message.text = ""
         }
@@ -108,7 +104,7 @@ class ChatViewController: UIViewController {
     
     //MARK: Keyboard show&hide
     @objc func keyboardWillShow(notification: Notification) {
-        guard let info = notification.userInfo as? NSDictionary, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
+        guard let info = notification.userInfo as NSDictionary?, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
 
         //Добавить уменьшение вьюхи с чатом
         
@@ -128,13 +124,7 @@ class ChatViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
-            if user != nil {
-                userDetailsVC.user = self.user
-            } else {
-                userDetailsVC.user = UserContact()
-                userDetailsVC.user?.account_name = chatName
-                userDetailsVC.user?.avatarImage = "noPhoto"
-            }
+            userDetailsVC.user = self.user
             
         }
     }

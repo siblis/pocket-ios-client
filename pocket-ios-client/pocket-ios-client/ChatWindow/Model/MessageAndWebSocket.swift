@@ -9,7 +9,7 @@
 import Foundation
 import Starscream
 
-class MessageAndWebSocket: WebSocketDelegate {
+final class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
     var messageInOut = [String]()
@@ -41,10 +41,10 @@ class MessageAndWebSocket: WebSocketDelegate {
     }
     
     //MARK: Message sending
-    func sendMessage (receiver: Int, message: String) {
+    func sendMessage (receiver: String, message: String) {
         messageInOut.append("Я: \(message)")
         let encoder = JSONEncoder()
-        let message = Message(receiver: "\(receiver)", text: message, senderid: 78, senderName: "MaxSyt", time: 0, isSender: false)
+        let message = Message(receiver: receiver, text: message, senderid: 78, senderName: "MaxSyt", time: 0, isEnemy: false)
         
         do {
             let jsonData = try encoder.encode(message)
@@ -58,7 +58,7 @@ class MessageAndWebSocket: WebSocketDelegate {
     //MARK: WebSocket connecting
     func webSocketConnect() {
         
-        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
+        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws_echo/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
         request.setValue(TokenService.getToken(forKey: "token"), forHTTPHeaderField: "token")
@@ -66,6 +66,9 @@ class MessageAndWebSocket: WebSocketDelegate {
         self.socket = WebSocket(request: request)
         socket.delegate = self
         socket.connect()
-        
     }
+}
+
+class WSS {
+    static let initial = MessageAndWebSocket()
 }

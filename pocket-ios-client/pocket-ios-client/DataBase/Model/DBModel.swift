@@ -57,6 +57,13 @@ struct Chats {
     
 }
 
+struct ChatMessage {
+    var text: String?
+    var date: NSDate?
+    var messageCount: String?
+    var user: UserContact?
+}
+
 struct Message: Codable {
     
     var receiver: String
