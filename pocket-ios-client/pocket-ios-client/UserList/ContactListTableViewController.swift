@@ -57,7 +57,6 @@ class ContactListTableViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             chatField?.user = contactArray[indexPath.row]
-            chatField?.chatName = contactArray[indexPath.row].account_name
         }
     }
     

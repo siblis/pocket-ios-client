@@ -10,6 +10,9 @@ import Foundation
 
 class FakeData {
     
+    static var testMessages: [Message] = []
+    static var chatMessages: [ChatMessage] = []
+    
     var user_1 = UserContact()
     var user_2 = UserContact()
     var user_3 = UserContact()
@@ -42,7 +45,7 @@ class FakeData {
         user_4.status = "Пишу код"
         user_4.avatarImage = "man"
         
-        user_5.id = "0"
+        user_5.id = "555"
         user_5.account_name = "Steve Jobs"
         user_5.email = ""
         user_5.status = "Всё еще мёртвый"
@@ -57,4 +60,5 @@ class FakeData {
             return []
         }
     }
+    
 }
