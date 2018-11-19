@@ -123,12 +123,12 @@ class UserProfileViewController: UIViewController {
     //настраиваем положение элементов в верхней половине экрана
     func setUpTopView () {
         self.view.addSubview(backgroundView)
-        self.view.addConstraintsWithFormat(format: "|-0-[v0]-0-|", views: backgroundView)
+        self.view.addConstraintsWithFormat(format: "[v0(\(screenWidth))]", views: backgroundView)
         self.view.addConstraintsWithFormat(format: "V:|-0-[v0(\(safeAreaTopInset + 267))]", views: backgroundView)
         
         backgroundView.addSubview(backButton)
         backgroundView.addSubview(deleteButton)
-        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-[v1(22)]-15-|", views: backButton, deleteButton)
+        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-\(screenWidth-60)-[v1(22)]-15-|", views: backButton, deleteButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(21)]", views: backButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 10)-[v0(24)]", views: deleteButton)
         
@@ -160,7 +160,7 @@ class UserProfileViewController: UIViewController {
         backButton.setImage(UIImage(named: "back"), for: .normal)
         deleteButton.setImage(UIImage(named: "trash"), for: .normal)
         
-        userPhoto.image = UIImage(named: user?.avatarImage ?? "")
+        userPhoto.image = UIImage(named: user?.avatarImage ?? "noPhoto")
         
          if (user!.firstName + user!.lastName).replacingOccurrences(of: " ", with: "") != "" {
             userName.text = user!.lastName + " " + user!.firstName

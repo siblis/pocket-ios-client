@@ -16,7 +16,11 @@ class ChatViewController: UIViewController {
     let downInset: CGFloat = 30
     let cellReuseIdentifier = "MessageCell"
     var user: UserContact?
+    var groupContacts: [Int:UserContact] = [:]
+    let token = TokenService.getToken(forKey: "token")
+    let myGroup = DispatchGroup()
     var chat: [Message] = []
+    
     
 
     override func viewDidLoad() {
@@ -121,15 +125,47 @@ class ChatViewController: UIViewController {
     }
     
     @objc func infoButtonTap (_ sender: UIButton) {
-        performSegue(withIdentifier: "userDetailsSegue", sender: self)
+        if (user?.participants.isEmpty)! {
+            performSegue(withIdentifier: "userDetailsSegue", sender: self)
+        } else {
+            getGroupUsers(ids: (user?.participants)!)
+        }
+    }
+    
+    func getGroupUsers (ids: [Int]) {
+        for id in ids {
+            myGroup.enter()
+            NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
+                if statusCode == 200 {
+                    var user = UserContact()
+                    user.id = "\(json["uid"] ?? "0")"
+                    user.account_name = "\(json["account_name"] ?? "No user")"
+                    user.email = "\(json["email"] ?? "No email")"
+                    self.groupContacts[id] = user
+                    self.myGroup.leave()
+                } else {
+                    self.groupContacts[id]?.id = "0"
+                    self.groupContacts[id]?.account_name = "User not found"
+                    self.groupContacts[id]?.email = "No email"
+                    self.myGroup.leave()
+                }
+            })
+        }
         
+        myGroup.notify(queue: DispatchQueue.main, execute: {
+            print("Finished all requests.")
+            self.performSegue(withIdentifier: "groupDetailsSegue", sender: self)
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
             userDetailsVC.user = self.user
-            
+        } else if segue.identifier == "groupDetailsSegue" {
+            let groupDetailsVC = segue.destination as! GroupProfileViewController
+            groupDetailsVC.group = self.user
+            groupDetailsVC.groupContacts = self.groupContacts
         }
     }
 }

@@ -25,7 +25,7 @@ struct UserSelf {
     static var account_name: String = ""
     static var email: String = ""
     static var password: String = ""
-    static var avatarImage: String = ""
+    static var avatarImage: String = "noPhoto"
     
     static var firstName = ""
     static var lastName = ""
@@ -39,10 +39,11 @@ struct UserContact {
     var account_name: String? = ""
     var email: String? = ""
     var status: String? = ""
-    var avatarImage: String? = ""
+    var avatarImage: String? = "noPhoto"
     
     var firstName = ""
     var lastName = ""
+    var participants: [Int] = []
 }
 
 struct Contacts {
