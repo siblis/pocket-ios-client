@@ -128,7 +128,7 @@ class UserProfileViewController: UIViewController {
         
         backgroundView.addSubview(backButton)
         backgroundView.addSubview(deleteButton)
-        self.view.addConstraintsWithFormat(format: "|-8-[v0(13)]-[v1(22)]-15-|", views: backButton, deleteButton)
+        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-[v1(22)]-15-|", views: backButton, deleteButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(21)]", views: backButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 10)-[v0(24)]", views: deleteButton)
         

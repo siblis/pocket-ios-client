@@ -350,6 +350,46 @@
             </objects>
             <point key="canvasLocation" x="4686" y="1153"/>
         </scene>
+        <!--Group Profile View Controller-->
+        <scene sceneID="iKV-lc-1mz">
+            <objects>
+                <viewController storyboardIdentifier="GroupProfileViewController" id="v1V-fQ-Iil" customClass="GroupProfileViewController" customModule="pocket_ios_client" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ERv-xz-da4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="531-jf-4Qj">
+                                <rect key="frame" x="0.0" y="247" width="375" height="420"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="participantCell" id="hzb-GI-BbO" customClass="ParticipantCell" customModule="pocket_ios_client" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hzb-GI-BbO" id="NGH-ZB-EKV">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="531-jf-4Qj" firstAttribute="width" secondItem="ERv-xz-da4" secondAttribute="width" id="Aoz-la-3Iy"/>
+                            <constraint firstItem="531-jf-4Qj" firstAttribute="top" secondItem="R8u-gM-SNF" secondAttribute="top" constant="227" id="KlO-YV-ZhK"/>
+                            <constraint firstItem="R8u-gM-SNF" firstAttribute="bottom" secondItem="531-jf-4Qj" secondAttribute="bottom" id="bIn-wE-K4i"/>
+                            <constraint firstItem="531-jf-4Qj" firstAttribute="centerX" secondItem="R8u-gM-SNF" secondAttribute="centerX" id="ks3-w5-4wf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R8u-gM-SNF"/>
+                    </view>
+                    <connections>
+                        <outlet property="participantsTableView" destination="531-jf-4Qj" id="7ce-zA-hga"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="spJ-oy-hJe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5485.6000000000004" y="1152.7736131934034"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="JLh-Rv-qTc">
             <objects>
@@ -357,6 +397,7 @@
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="nUZ-D0-koa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Stp-r7-WtX">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -375,6 +416,7 @@
                     <tabBarItem key="tabBarItem" systemItem="bookmarks" id="5vi-WT-pUm"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bN0-Te-tfG">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -391,6 +433,6 @@
         <image name="settings" width="27" height="27"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KCD-2t-1D7"/>
+        <segue reference="WXY-gw-BwQ"/>
     </inferredMetricsTieBreakers>
 </document>

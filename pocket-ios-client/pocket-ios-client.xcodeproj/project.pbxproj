@@ -36,7 +36,9 @@
 		C1896405218B80F300CE4ABE /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1896403218B80F300CE4ABE /* SignUp.storyboard */; };
 		C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189640721997FB700CE4ABE /* MyProfileViewController.swift */; };
 		C1896411219E9B4D00CE4ABE /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1896410219E9B4D00CE4ABE /* UserProfileViewController.swift */; };
+		C189641321A0A2B500CE4ABE /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189641221A0A2B500CE4ABE /* GroupProfileViewController.swift */; };
 		C18F9D30219ABCA30039D51C /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */; };
+		C1DAE22121A28DFF00F33112 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DAE22021A28DFF00F33112 /* ParticipantCell.swift */; };
 		CA7F3602D8378932351022B8 /* Pods_pocket_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +77,9 @@
 		C1896403218B80F300CE4ABE /* SignUp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
 		C189640721997FB700CE4ABE /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		C1896410219E9B4D00CE4ABE /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		C189641221A0A2B500CE4ABE /* GroupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileViewController.swift; sourceTree = "<group>"; };
 		C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		C1DAE22021A28DFF00F33112 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +387,8 @@
 			isa = PBXGroup;
 			children = (
 				C1896410219E9B4D00CE4ABE /* UserProfileViewController.swift */,
+				C189641221A0A2B500CE4ABE /* GroupProfileViewController.swift */,
+				C1DAE22021A28DFF00F33112 /* ParticipantCell.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DD41E462120C5C8002EE1F3 /* LoginViewController.swift in Sources */,
+				C1DAE22121A28DFF00F33112 /* ParticipantCell.swift in Sources */,
 				C1896411219E9B4D00CE4ABE /* UserProfileViewController.swift in Sources */,
 				6DA11133216B8C2E00C2AA45 /* ChatListTableViewCell.swift in Sources */,
 				242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */,
@@ -516,6 +523,7 @@
 				6D2988F021935F590004199F /* TokenService.swift in Sources */,
 				6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */,
 				C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */,
+				C189641321A0A2B500CE4ABE /* GroupProfileViewController.swift in Sources */,
 				6D2E38CD219B68A300059DD3 /* DBModel.swift in Sources */,
 				6DA1112521613F2500C2AA45 /* User.swift in Sources */,
 				C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */,
