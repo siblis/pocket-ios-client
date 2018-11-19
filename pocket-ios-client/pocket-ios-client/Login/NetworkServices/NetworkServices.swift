@@ -182,4 +182,60 @@ class NetworkServices {
         task.resume()
         
     }
+    
+    //получаем пользователя по id
+    static func getUser(id: Int, token: String, complition: @escaping ([String: Any], Int) -> Void) {
+        
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "pocketmsg.ru"
+        urlComponents.path = "/v1/users/"+"\(id)"
+        urlComponents.port = 8888
+        
+        guard let url = urlComponents.url else {fatalError("Could not create URL from components")}
+        
+        //Далее GET реквест
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        //Header
+        
+        var header = request.allHTTPHeaderFields ?? [:]
+        header["token"] = token
+        request.allHTTPHeaderFields = header
+        
+        //
+        
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: request) { (responseData, response, error) in
+            guard let data = responseData, error == nil else {
+                print("Ошибка: \(error?.localizedDescription ?? "Error")")
+                return
+            }
+            
+            let httpResponse = response as? HTTPURLResponse
+            
+            var json: [String: Any] = [:]
+            
+            if let statusCode = httpResponse?.statusCode, statusCode == 200 {
+                do {
+                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: Any]
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                print ("statusCode = \(statusCode)")
+                
+                complition(json, statusCode)
+            } else {
+                print (httpResponse!.allHeaderFields)
+                complition(json, 0)
+            }
+            
+        }
+        task.resume()
+        
+    }
 }

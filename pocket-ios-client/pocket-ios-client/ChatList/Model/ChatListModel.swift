@@ -19,7 +19,8 @@ extension ChatListTableViewController {
             status: "",
             avatarImage: "team",
             firstName: "",
-            lastName: ""
+            lastName: "",
+            participants: [21,78,146,157,158]
         )
 
         let chatMessage = ChatMessage.init(
@@ -36,7 +37,8 @@ extension ChatListTableViewController {
             status: "",
             avatarImage: "man",
             firstName: "",
-            lastName: ""
+            lastName: "",
+            participants: []
         )
         
         let chatMessage1 = ChatMessage.init(
@@ -53,7 +55,8 @@ extension ChatListTableViewController {
             status: "",
             avatarImage: "steveprofile",
             firstName: "",
-            lastName: ""
+            lastName: "",
+            participants: []
         )
         
         let chatMessage2 = ChatMessage.init(
@@ -70,7 +73,8 @@ extension ChatListTableViewController {
             status: "",
             avatarImage: "myProfile",
             firstName: "",
-            lastName: ""
+            lastName: "",
+            participants: []
         )
         
         let chatMessage3 = ChatMessage.init(
