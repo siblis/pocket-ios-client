@@ -13,17 +13,15 @@ class ChatViewController: UIViewController {
     
     //MARK: Init
     let insets: CGFloat = 15
+    let downInset: CGFloat = 30
     let cellReuseIdentifier = "MessageCell"
-    var chatID: Int?
     var user: UserContact?
-    var chatName: String?
     var chat: [Message] = []
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = chatName
-        setupData()
+        title = user?.account_name
         //кнопка перехода на экран с деталями пользователя
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonTap(_:)), for: .touchUpInside)
@@ -33,17 +31,12 @@ class ChatViewController: UIViewController {
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
         chatField.delegate = self
-//        MessageAndWebSocket.webSocketConnect()
-        for elemet in FakeData.testMessages {
-            if Int(elemet.receiver) == chatID || elemet.senderid == chatID {
-                chat.append(elemet)
-            }
-        }
+        
     }
     
     @IBOutlet weak var chatField: UICollectionView! {
         didSet {
-            
+            chatField.translatesAutoresizingMaskIntoConstraints = false
 //            chatField.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 ////            chatField.frame = self.view.frame
         }
@@ -64,18 +57,24 @@ class ChatViewController: UIViewController {
     
     @IBAction func sendButton(_ sender: Any) {
         
-        if let msg = message.text, let chID = self.chatID, msg != "" {
-            MessageAndWebSocket().sendMessage(receiver: chID, message: msg)
-            self.chatField.reloadData()
+        if let msg = message.text, let chID = self.user?.id, msg != "" {
+            let selfMsg = WSS.initial.sendMessage(receiver: chID, message: msg)
+            WSS.initial.userMsgRouter(msg: selfMsg)
             message.text = ""
         }
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupElements(y: 0)
+        setupElements(y: downInset)
+        
+        WSS.initial.vc = self
+        for elemet in FakeData.testMessages {
+            if (elemet.receiver == user?.id) || ("\(elemet.senderid)" == user?.id) {
+                chat.append(elemet)
+            }
+        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -100,6 +99,7 @@ class ChatViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        WSS.initial.vc = nil
     }
     
     @IBAction func viewTapped(_ sender: Any) {
@@ -108,7 +108,7 @@ class ChatViewController: UIViewController {
     
     //MARK: Keyboard show&hide
     @objc func keyboardWillShow(notification: Notification) {
-        guard let info = notification.userInfo as? NSDictionary, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
+        guard let info = notification.userInfo as NSDictionary?, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
 
         //Добавить уменьшение вьюхи с чатом
         
@@ -117,7 +117,7 @@ class ChatViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: Notification) {
         //Добавить возврат к обычному размеру чата
-        setupElements(y: 0)
+        setupElements(y: downInset)
     }
     
     @objc func infoButtonTap (_ sender: UIButton) {
@@ -128,13 +128,7 @@ class ChatViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
-            if user != nil {
-                userDetailsVC.user = self.user
-            } else {
-                userDetailsVC.user = UserContact()
-                userDetailsVC.user?.account_name = chatName
-                userDetailsVC.user?.avatarImage = "noPhoto"
-            }
+            userDetailsVC.user = self.user
             
         }
     }
@@ -148,7 +142,6 @@ extension ChatViewController: UICollectionViewDataSource {
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        
         return chat.count
-//            msgAndSocket.messageInOut.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

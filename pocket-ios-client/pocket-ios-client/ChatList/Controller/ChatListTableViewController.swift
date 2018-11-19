@@ -11,10 +11,6 @@ import UIKit
 class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
-    
-    var chatMessages: [ChatMessage]?
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +19,7 @@ class ChatListTableViewController: UITableViewController {
         tableView.rowHeight = 100
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
-        //tableView.register(ChatListTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        
-        setupData()
+
     }
     
     
@@ -34,20 +28,15 @@ class ChatListTableViewController: UITableViewController {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let indexChat = chatMessages?[indexPath.item]
-            
-            chatField?.chatName = indexChat?.friend?.name
-            chatField?.chatID = indexChat?.friend?.id
+            chatField?.user = FakeData.chatMessages[indexPath.item].user
         }
     }
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if let count = chatMessages?.count {
-           return count
-        }
-        return 0
+        return FakeData.chatMessages.count
+
     }
 
 
@@ -55,32 +44,28 @@ class ChatListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatListTableViewCell
         cell.setup()
         
-        if let chatMessage = chatMessages?[indexPath.item] {
-            cell.nameLabel.text = chatMessage.friend?.name
-            if let profileImageName = chatMessage.friend?.profileImageName{
-                cell.profileImageView.image = UIImage(named: profileImageName)
-            }
-            cell.messageLabel.text = chatMessage.text
-            cell.messageCountLabel.text = chatMessage.messageCount
-            if let date = chatMessage.date {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
-                
-                let elapsedTimeInSeconds = NSDate().timeIntervalSince(date as Date)
-                let secondInDays: TimeInterval = 60 * 60 * 24
-                
-                if elapsedTimeInSeconds > 7 * secondInDays {
-                    dateFormatter.dateFormat = "dd/MM/yy"
-                }else if elapsedTimeInSeconds > secondInDays {
-                    dateFormatter.dateFormat = "EEE"
-                }
-                
-                cell.timeLabel.text = dateFormatter.string(from: date as Date)
-            }
+        let chatMessage = FakeData.chatMessages[indexPath.item]
+        cell.nameLabel.text = chatMessage.user?.account_name
+        if let profileImageName = chatMessage.user?.avatarImage {
+            cell.profileImageView.image = UIImage(named: profileImageName)
         }
-
-        // Configure the cell...
-//        cell.setup()
+        cell.messageLabel.text = chatMessage.text
+        cell.messageCountLabel.text = chatMessage.messageCount
+        if let date = chatMessage.date {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "h:mm a"
+            
+            let elapsedTimeInSeconds = NSDate().timeIntervalSince(date as Date)
+            let secondInDays: TimeInterval = 60 * 60 * 24
+            
+            if elapsedTimeInSeconds > 7 * secondInDays {
+                dateFormatter.dateFormat = "dd/MM/yy"
+            }else if elapsedTimeInSeconds > secondInDays {
+                dateFormatter.dateFormat = "EEE"
+            }
+                
+            cell.timeLabel.text = dateFormatter.string(from: date as Date)
+        }
 
         return cell
     }

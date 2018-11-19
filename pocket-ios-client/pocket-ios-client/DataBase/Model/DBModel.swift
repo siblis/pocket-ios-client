@@ -57,6 +57,13 @@ struct Chats {
     
 }
 
+struct ChatMessage {
+    var text: String?
+    var date: NSDate?
+    var messageCount: String?
+    var user: UserContact?
+}
+
 struct Message: Codable {
     
     var receiver: String
@@ -64,7 +71,7 @@ struct Message: Codable {
     var senderid: Int
     var senderName: String
     var time: Double
-    var isEnemy: Bool = false
+    var isEnemy: Bool = true
     
     enum CodingKeys: String, CodingKey {
         case receiver = "receiver"
