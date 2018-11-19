@@ -13,6 +13,7 @@ class ChatViewController: UIViewController {
     
     //MARK: Init
     let insets: CGFloat = 15
+    let downInset: CGFloat = 30
     let cellReuseIdentifier = "MessageCell"
     var user: UserContact?
     var chat: [Message] = []
@@ -30,16 +31,12 @@ class ChatViewController: UIViewController {
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
         chatField.delegate = self
-        for elemet in FakeData.testMessages {
-            if (elemet.receiver == user?.id) || ("\(elemet.senderid)" == user?.id) {
-                chat.append(elemet)
-            }
-        }
+        
     }
     
     @IBOutlet weak var chatField: UICollectionView! {
         didSet {
-            
+            chatField.translatesAutoresizingMaskIntoConstraints = false
 //            chatField.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 ////            chatField.frame = self.view.frame
         }
@@ -61,17 +58,23 @@ class ChatViewController: UIViewController {
     @IBAction func sendButton(_ sender: Any) {
         
         if let msg = message.text, let chID = self.user?.id, msg != "" {
-            WSS.initial.sendMessage(receiver: chID, message: msg)
-            self.chatField.reloadData()
+            let selfMsg = WSS.initial.sendMessage(receiver: chID, message: msg)
+            WSS.initial.userMsgRouter(msg: selfMsg)
             message.text = ""
         }
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupElements(y: 0)
+        setupElements(y: downInset)
+        
+        WSS.initial.vc = self
+        for elemet in FakeData.testMessages {
+            if (elemet.receiver == user?.id) || ("\(elemet.senderid)" == user?.id) {
+                chat.append(elemet)
+            }
+        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -96,6 +99,7 @@ class ChatViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        WSS.initial.vc = nil
     }
     
     @IBAction func viewTapped(_ sender: Any) {
@@ -113,7 +117,7 @@ class ChatViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: Notification) {
         //Добавить возврат к обычному размеру чата
-        setupElements(y: 0)
+        setupElements(y: downInset)
     }
     
     @objc func infoButtonTap (_ sender: UIButton) {
@@ -138,7 +142,6 @@ extension ChatViewController: UICollectionViewDataSource {
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        
         return chat.count
-//            msgAndSocket.messageInOut.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

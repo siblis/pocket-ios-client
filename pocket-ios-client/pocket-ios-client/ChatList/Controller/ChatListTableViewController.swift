@@ -28,9 +28,7 @@ class ChatListTableViewController: UITableViewController {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let indexChat = FakeData.chatMessages[indexPath.item]
-            
-            chatField?.user = indexChat.user
+            chatField?.user = FakeData.chatMessages[indexPath.item].user
         }
     }
 

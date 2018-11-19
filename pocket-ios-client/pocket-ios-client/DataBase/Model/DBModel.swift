@@ -71,7 +71,7 @@ struct Message: Codable {
     var senderid: Int
     var senderName: String
     var time: Double
-    var isEnemy: Bool = false
+    var isEnemy: Bool = true
     
     enum CodingKeys: String, CodingKey {
         case receiver = "receiver"

@@ -12,8 +12,7 @@ import Starscream
 final class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
-    var messageInOut = [String]()
-    
+    var vc: ChatViewController!
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
@@ -28,9 +27,10 @@ final class MessageAndWebSocket: WebSocketDelegate {
         
         let decoder = JSONDecoder()
         if let jsonData = text.data(using: .utf8) {
-            let message = try? decoder.decode(Message.self, from: jsonData)
-            if let msg = message?.text, let sndID = message?.receiver {
-                messageInOut.append("\(sndID): \(msg)")
+            let messageInOut = try? decoder.decode(Message.self, from: jsonData)
+                
+            if let msg = messageInOut {
+                userMsgRouter(msg: msg)
             }
         }
     }
@@ -41,24 +41,40 @@ final class MessageAndWebSocket: WebSocketDelegate {
     }
     
     //MARK: Message sending
-    func sendMessage (receiver: String, message: String) {
-        messageInOut.append("Я: \(message)")
+    func sendMessage (receiver: String, message: String) -> Message {
         let encoder = JSONEncoder()
-        let message = Message(receiver: receiver, text: message, senderid: 78, senderName: "MaxSyt", time: 0, isEnemy: false)
+        let msg = Message(
+            receiver: receiver,
+            text: message,
+            senderid: 78,
+            senderName: "MaxSyt",
+            time: 0,
+            isEnemy: false
+        )
         
         do {
-            let jsonData = try encoder.encode(message)
+            let jsonData = try encoder.encode(msg)
             socket.write(data: jsonData)
         }
         catch {
             print (error.localizedDescription)
         }
+        return msg
+    }
+    
+    func userMsgRouter(msg: Message) {
+
+        if (vc != nil) && ((msg.receiver == vc.user?.id) || ("\(msg.senderid)" == vc.user?.id)) {
+            vc.chat.append(msg)
+            vc.chatField.reloadData()
+        }
+        FakeData.testMessages.append(msg)
     }
     
     //MARK: WebSocket connecting
     func webSocketConnect() {
         
-        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws_echo/")
+        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
         request.setValue(TokenService.getToken(forKey: "token"), forHTTPHeaderField: "token")
