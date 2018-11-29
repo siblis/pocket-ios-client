@@ -10,20 +10,22 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet weak var loginLable: UILabel!
-    @IBOutlet weak var passwordLable: UILabel!
+   
     @IBOutlet weak var pocketLable: UILabel!
-    @IBOutlet weak var messangerLable: UILabel!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var singUpButton: UIButton!
     
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+   
+    
     var user: User!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginTextField.attributedPlaceholder = NSAttributedString(string: "Login / Email",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
 
     override func didReceiveMemoryWarning() {
