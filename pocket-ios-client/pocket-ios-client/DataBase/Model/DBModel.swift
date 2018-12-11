@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
+
 
 struct Token {
     
@@ -35,7 +37,7 @@ struct UserSelf {
 
 struct UserContact {
     
-    var id: String? = ""
+    var id: Int? = 0
     var account_name: String? = ""
     var email: String? = ""
     var status: String? = ""
@@ -65,20 +67,63 @@ struct ChatMessage {
     var user: UserContact?
 }
 
-struct Message: Codable {
+
+//MARK: Парсинг сообщений и модель для реалма
+class Message: Object, Codable {
+    @objc dynamic var receiver: Int = 0
+    @objc dynamic var text: String = ""
+    @objc dynamic var senderid: Int = 0
+    @objc dynamic var senderName: String  = ""
+    @objc dynamic var time: String  = ""
+    @objc dynamic var isEnemy: Bool = true
     
-    var receiver: String
-    var text: String
-    var senderid: Int
-    var senderName: String
-    var time: Double
-    var isEnemy: Bool = true
+    override class func primaryKey() -> String? {
+        return "time"
+    }
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case receiver = "receiver"
         case text = "message"
         case senderid = "senderid"
         case senderName = "sender_name"
         case time = "timestamp"
     }
+    
+    public required convenience init(
+        receiver: Int,
+        text: String,
+        senderid: Int,
+        senderName: String,
+        time: Double,
+        isEnemy: Bool = true
+    ){
+        self.init()
+        self.receiver = receiver
+        self.text = text
+        self.senderid = senderid
+        self.senderName = senderName
+        self.time = dateFormater(time)
+        self.isEnemy = isEnemy
+    }
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let receiver = try container.decode(Int.self, forKey: .receiver)
+        let text = try container.decode(String.self, forKey: .text)
+        let senderid = try container.decode(Int.self, forKey: .senderid)
+        let senderName = try container.decode(String.self, forKey: .senderName)
+        let time = try container.decode(Double.self, forKey: .time)
+        self.init(receiver: receiver, text: text, senderid: senderid, senderName: senderName, time: time)
+    }
+    
+    private func dateFormater(_ time: Double) -> String {
+        let date = NSDate(timeIntervalSince1970: TimeInterval(time))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+        dateFormatter.timeZone = TimeZone.current
+        let localDate = dateFormatter.string(from: date as Date)
+        return localDate
+    }
+    
 }

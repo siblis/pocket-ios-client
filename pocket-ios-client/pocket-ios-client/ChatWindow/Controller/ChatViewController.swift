@@ -63,7 +63,6 @@ class ChatViewController: UIViewController {
         
         if let msg = message.text, let chID = self.user?.id, msg != "" {
             let selfMsg = WSS.initial.sendMessage(receiver: chID, message: msg)
-            WSS.initial.userMsgRouter(msg: selfMsg)
             message.text = ""
         }
     }
@@ -74,11 +73,6 @@ class ChatViewController: UIViewController {
         setupElements(y: downInset)
         
         WSS.initial.vc = self
-        for elemet in FakeData.testMessages {
-            if (elemet.receiver == user?.id) || ("\(elemet.senderid)" == user?.id) {
-                chat.append(elemet)
-            }
-        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -138,13 +132,13 @@ class ChatViewController: UIViewController {
             NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
                 if statusCode == 200 {
                     var user = UserContact()
-                    user.id = "\(json["uid"] ?? "0")"
+                    user.id = json["uid"] as? Int
                     user.account_name = "\(json["account_name"] ?? "No user")"
                     user.email = "\(json["email"] ?? "No email")"
                     self.groupContacts[id] = user
                     self.myGroup.leave()
                 } else {
-                    self.groupContacts[id]?.id = "0"
+                    self.groupContacts[id]?.id = 0
                     self.groupContacts[id]?.account_name = "User not found"
                     self.groupContacts[id]?.email = "No email"
                     self.myGroup.leave()

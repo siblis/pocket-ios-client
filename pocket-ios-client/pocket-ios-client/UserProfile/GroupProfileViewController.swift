@@ -144,7 +144,7 @@ class GroupProfileViewController: UIViewController {
         groupPhoto.image = UIImage(named: group?.avatarImage ?? "noPhoto")
         
         groupName.text = group?.account_name
-        groupId.text = group?.id
+        groupId.text = String(describing: group?.id)
         
         participantsLabel.text = "Участники"
     }

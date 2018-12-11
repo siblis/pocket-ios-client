@@ -48,16 +48,16 @@ class LoginViewController: UIViewController {
                         DataBase.saveSelfUser(json: json)
                         DataBase.instance.loadAllContactsFromDB(keyId: UserSelf.uid)
                         
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "UserListSegue", sender: nil)
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "UserListSegue", sender: nil)
+                        }
+                    }
+                    else {
+                        print ("Error Login")
+                    }
                 }
             }
-            else {
-                print ("Error Login")
-            }
         }
-    }
-}
     }
     
     @IBAction func signUp(_ sender: Any) {

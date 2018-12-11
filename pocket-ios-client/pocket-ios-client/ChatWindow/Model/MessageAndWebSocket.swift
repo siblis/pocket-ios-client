@@ -6,13 +6,15 @@
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Starscream
+import RealmSwift
 
 final class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
     var vc: ChatViewController!
+    let realm = try! Realm()
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
@@ -25,13 +27,13 @@ final class MessageAndWebSocket: WebSocketDelegate {
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("got some text: \(text)")
         
-        let decoder = JSONDecoder()
-        if let jsonData = text.data(using: .utf8) {
-            let messageInOut = try? decoder.decode(Message.self, from: jsonData)
-                
-            if let msg = messageInOut {
-                userMsgRouter(msg: msg)
-            }
+        guard let jsonData = text.data(using: .utf8) else { return }
+        do {
+            let messageInOut = try JSONDecoder().decode(Message.self, from: jsonData)
+            AdaptationDBJSON().saveInDB([messageInOut])
+        }
+        catch let err {
+            print("Err", err)
         }
     }
     
@@ -41,34 +43,25 @@ final class MessageAndWebSocket: WebSocketDelegate {
     }
     
     //MARK: Message sending
-    func sendMessage (receiver: String, message: String) -> Message {
-        let encoder = JSONEncoder()
-        let msg = Message(
+    func sendMessage (receiver: Int, message: String) -> Message {
+        
+        let msg = Message.init(
             receiver: receiver,
             text: message,
             senderid: 78,
             senderName: "MaxSyt",
-            time: 0,
+            time: NSDate().timeIntervalSince1970,
             isEnemy: false
         )
-        
+        AdaptationDBJSON().saveInDB([msg])
         do {
-            let jsonData = try encoder.encode(msg)
+            let jsonData = try JSONEncoder().encode(msg)
             socket.write(data: jsonData)
         }
         catch {
             print (error.localizedDescription)
         }
         return msg
-    }
-    
-    func userMsgRouter(msg: Message) {
-
-        if (vc != nil) && ((msg.receiver == vc.user?.id) || ("\(msg.senderid)" == vc.user?.id)) {
-            vc.chat.append(msg)
-            vc.chatField.reloadData()
-        }
-        FakeData.testMessages.append(msg)
     }
     
     //MARK: WebSocket connecting

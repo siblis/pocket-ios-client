@@ -15,7 +15,6 @@ class InitAfterLogin: UITabBarController {
 
         //Блок инициализации начальных данных
         WSS.initial.webSocketConnect()
-        ChatViewController().setupData()
         ChatListTableViewController().setupData()
     }
 
