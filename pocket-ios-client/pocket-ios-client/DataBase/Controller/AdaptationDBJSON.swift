@@ -6,7 +6,7 @@
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import RealmSwift
 
 protocol AdaptationInformation {
@@ -15,13 +15,28 @@ protocol AdaptationInformation {
 
 class AdaptationDBJSON: AdaptationInformation {
     
+    let realm = try! Realm()
+    
     func saveInDB(_ smElements: [Object]) {
-        DispatchQueue.global().async {
-            let realm = try! Realm()
-            try! realm.write {
-                realm.add(smElements, update: true)
-            }
+        try! self.realm.write {
+                self.realm.add(smElements, update: true)
         }
+    }
+    
+    func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A> {
+       return self.realm.objects(smTableDB.self)
+    }
+    
+    
+    func realmObserver<A: Object>(smTableDB: Results<A>) -> NotificationToken? {
+        return smTableDB.observe({ (changes) in
+            switch changes {
+            case .initial, .update:
+                print("Some doing")
+            case .error(let error):
+                print(error)
+            }
+        })
     }
     
 }

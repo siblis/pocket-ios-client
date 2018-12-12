@@ -22,26 +22,26 @@ struct Token {
 }
 
 struct UserSelf {
-    
+
     static var uid: String = ""
-    static var account_name: String = ""
+    static var accountName: String = ""
     static var email: String = ""
     static var password: String = ""
     static var avatarImage: String = "noPhoto"
-    
+
     static var firstName = ""
     static var lastName = ""
     static var status = ""
-    
+
 }
 
 struct UserContact {
     
-    var id: Int? = 0
-    var account_name: String? = ""
-    var email: String? = ""
-    var status: String? = ""
-    var avatarImage: String? = "noPhoto"
+    var id: Int = 0
+    var account_name: String = ""
+    var email: String = ""
+    var status: String = ""
+    var avatarImage: String = "noPhoto"
     
     var firstName = ""
     var lastName = ""
@@ -67,6 +67,89 @@ struct ChatMessage {
     var user: UserContact?
 }
 
+//MARK: Парсинг аккаунта контакта и модель для реалма
+
+class ContactAccount: Object, Codable {
+    @objc dynamic var uid: Int = 0
+    @objc dynamic var accountName: String = ""
+    @objc dynamic var email: String = ""
+    @objc dynamic var status: String  = ""
+    @objc dynamic var avatarImage: String  = "noPhoto"
+    
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var lastName: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "uid"
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case uid = "uid"
+        case accountName = "account_name"
+        case email = "email"
+    }
+    
+    public required convenience init(
+        uid: Int,
+        accountName: String,
+        email: String
+        ){
+        self.init()
+        self.uid = uid
+        self.accountName = accountName
+        self.email = email
+    }
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let uid = try container.decode(Int.self, forKey: .uid)
+        let accountName = try container.decode(String.self, forKey: .accountName)
+        let email = try container.decode(String.self, forKey: .email)
+        self.init(uid: uid, accountName: accountName, email: email)
+    }
+}
+
+//MARK: Парсинг собственного профиля и модель для реалма
+class SelfAccount: Object, Codable {
+    @objc dynamic var uid: Int = 0
+    @objc dynamic var accountName: String = ""
+    @objc dynamic var email: String = ""
+    @objc dynamic var password: String  = ""
+    @objc dynamic var avatarImage: String  = "noPhoto"
+    
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var lastName: String = ""
+    @objc dynamic var status: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "uid"
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case uid = "uid"
+        case accountName = "account_name"
+        case email = "email"
+    }
+    
+    public required convenience init(
+        uid: Int,
+        accountName: String,
+        email: String
+        ){
+        self.init()
+        self.uid = uid
+        self.accountName = accountName
+        self.email = email
+    }
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let uid = try container.decode(Int.self, forKey: .uid)
+        let accountName = try container.decode(String.self, forKey: .accountName)
+        let email = try container.decode(String.self, forKey: .email)
+        self.init(uid: uid, accountName: accountName, email: email)
+    }
+}
 
 //MARK: Парсинг сообщений и модель для реалма
 class Message: Object, Codable {
@@ -125,5 +208,4 @@ class Message: Object, Codable {
         let localDate = dateFormatter.string(from: date as Date)
         return localDate
     }
-    
 }

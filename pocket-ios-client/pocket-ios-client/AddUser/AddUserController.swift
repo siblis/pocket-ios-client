@@ -12,19 +12,6 @@ private let reuseIdentifier = "Cell"
 
 class AddUserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    
-    let inputTextContainerView: UIView = {
-       let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let inputTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Text here"
-        return textField
-    }()
-    
     let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = #colorLiteral(red: 0.2071147859, green: 0.5941259265, blue: 0.8571158051, alpha: 1)
@@ -37,23 +24,7 @@ class AddUserController: UICollectionViewController, UICollectionViewDelegateFlo
         button.layer.cornerRadius = 10
         return button
     }()
-    let micButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "micIcon"), for: .normal)
-        button.tintColor = .lightGray
-        return button
-    }()
-    let smileButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "smileButton"), for: .normal)
-        button.tintColor = .lightGray
-        return button
-    }()
     
-    var bottomConstraint = NSLayoutConstraint()
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
@@ -64,31 +35,16 @@ class AddUserController: UICollectionViewController, UICollectionViewDelegateFlo
         self.collectionView!.register(AddUserCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         setupViews()
-        setupInputComponents()
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+
     }
     
-    @objc func handleKeyboardNotification(notofication: NSNotification) {
-        if let userInfo = notofication.userInfo {
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-            
-            let isKeyboardShowing = notofication.name == UIResponder.keyboardWillShowNotification
-            
-            bottomConstraint.constant = isKeyboardShowing ? -keyboardFrame.height : 0
-            
-            UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-                
-            }, completion: {(completed) in
-                
-            })
-        }
-    }
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        inputTextField.endEditing(true)
+    func setupViews() {
+        
+        view.addSubview(addButton)
+        let centralXConstraint = NSLayoutConstraint(item: addButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        let centralYConstraint = NSLayoutConstraint(item: addButton, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: -100)
+        view.addConstraint(centralXConstraint)
+        view.addConstraint(centralYConstraint)
     }
 
 

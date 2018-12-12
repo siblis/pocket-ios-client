@@ -18,12 +18,14 @@ class DataBase {
     
     func test() {}
 
-    static func saveSelfUser(json: [String: Any]) {
-    
-        UserSelf.uid = "\(json["uid"] ?? 0)"
-        UserSelf.account_name = "\(json["account_name"] ?? "")"
-        UserSelf.email = "\(json["email"] ?? "")"
-        
+    static func saveSelfUser(json: Data) {
+        do {
+            let selfInfo = try JSONDecoder().decode(SelfAccount.self, from: json)
+            AdaptationDBJSON().saveInDB([selfInfo])
+        }
+        catch let err {
+            print("Err", err)
+        }       
     }
     
     private func addContact(userContact: UserContact) {

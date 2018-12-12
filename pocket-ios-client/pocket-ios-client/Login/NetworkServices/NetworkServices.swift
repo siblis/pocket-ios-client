@@ -20,7 +20,7 @@ class NetworkServices {
 
         
         // делаем JSON
-        let httpBody = ["account_name":UserSelf.account_name,"email":UserSelf.email,"password":UserSelf.password]
+        let httpBody = ["account_name":UserSelf.accountName,"email":UserSelf.email,"password":UserSelf.password]
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
@@ -89,7 +89,7 @@ class NetworkServices {
         
         // JSON Encoder
         
-        let httpBody = ["account_name":UserSelf.account_name,"password":UserSelf.password]
+        let httpBody = ["account_name":UserSelf.accountName,"password":UserSelf.password]
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
@@ -128,7 +128,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func getSelfUser(token: String, complition: @escaping ([String: Any], Int) -> Void) {
+    static func getSelfUser(token: String, complition: @escaping (Data, Int) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -160,18 +160,11 @@ class NetworkServices {
             }
             
             let httpResponse = response as? HTTPURLResponse
-            
-            var json: [String: Any] = [:]
+            var json = Data()
             
             if let statusCode = httpResponse?.statusCode, statusCode == 200 {
-                do {
-                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: Any]
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
+                json = data
                 print ("statusCode = \(statusCode)")
-                
                 complition(json, statusCode)
             } else {
                 print (httpResponse!.allHeaderFields)

@@ -16,7 +16,6 @@ class FakeData {
     var user_2 = UserContact()
     var user_3 = UserContact()
     var user_4 = UserContact()
-    var user_5 = UserContact()
     
     init() {
 
@@ -43,18 +42,13 @@ class FakeData {
         user_4.email = ""
         user_4.status = "Пишу код"
         user_4.avatarImage = "man"
-        
-        user_5.id = 555
-        user_5.account_name = "Steve Jobs"
-        user_5.email = ""
-        user_5.status = "Всё еще мёртвый"
-        user_5.avatarImage = "steveprofile"
+
     }
     
     func fakeData(keyId: String) -> [UserContact] {
         switch keyId {
         case UserSelf.uid:
-            return [user_1, user_2, user_3, user_4, user_5]
+            return [user_1, user_2, user_3, user_4]
         default:
             return []
         }

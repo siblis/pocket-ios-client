@@ -13,7 +13,7 @@ extension ChatListTableViewController {
     func setupData() {
         //        установила время в формате: n минут назад (-n * 60 секунд)
         let GB = UserContact.init(
-            id: "777",
+            id: 777,
             account_name: "Группа стажировки GB",
             email: "",
             status: "",
@@ -31,7 +31,7 @@ extension ChatListTableViewController {
         )
         
         let Voronin = UserContact.init(
-            id: "888",
+            id: 72,
             account_name: "Evgeniy Voronin",
             email: "",
             status: "",
@@ -49,7 +49,7 @@ extension ChatListTableViewController {
         )
         
         let Steve = UserContact.init(
-            id: "555",
+            id: 555,
             account_name: "Steve Jobs",
             email: "",
             status: "",
@@ -67,8 +67,8 @@ extension ChatListTableViewController {
         )
         
         let Geek = UserContact.init(
-            id: "24",
-            account_name: "Geek",
+            id: 24,
+            account_name: "Guest2",
             email: "",
             status: "",
             avatarImage: "myProfile",

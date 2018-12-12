@@ -132,7 +132,7 @@ class ChatViewController: UIViewController {
             NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
                 if statusCode == 200 {
                     var user = UserContact()
-                    user.id = json["uid"] as? Int
+                    user.id = json["uid"] as! Int ?? 0
                     user.account_name = "\(json["account_name"] ?? "No user")"
                     user.email = "\(json["email"] ?? "No email")"
                     self.groupContacts[id] = user

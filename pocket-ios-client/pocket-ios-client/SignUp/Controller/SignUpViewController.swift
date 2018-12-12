@@ -40,31 +40,25 @@ class SignUpViewController: UIViewController {
 //    }
     
     @IBAction func SignUpButtonPress(_ sender: Any) {
-        guard let account_name = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
-        guard !account_name.isEmpty, !email.isEmpty, !password.isEmpty else {
+        guard let accountName = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
+        guard !accountName.isEmpty, !email.isEmpty, !password.isEmpty else {
             print ("fill the data in fields")
             self.showErrorAlert(message: "Не все поля заполнены")
             return
         }
         
-        UserSelf.account_name = account_name
+        UserSelf.accountName = accountName
         UserSelf.email = email
         UserSelf.password = password
         
         NetworkServices.signUp { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
                 Token.token = token
-                NetworkServices.getSelfUser(token: token) { (json, statusCode) in
-                    if statusCode == 200 {
-                        DataBase.saveSelfUser(json: json)
-                    } else {
-                        print ("GetSelfUser error")
-                    }
-                }
                 DispatchQueue.main.async {
-                    let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-                    
-                    self.present(tabBarVC, animated:true, completion:nil)
+//                    let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+//
+//                    self.present(tabBarVC, animated:true, completion:nil)
+                    ApplicationSwitcherRC.initVC(choiseVC: .tabbar)
                 }
             }
             else {
