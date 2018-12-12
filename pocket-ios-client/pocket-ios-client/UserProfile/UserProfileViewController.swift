@@ -169,7 +169,7 @@ class UserProfileViewController: UIViewController {
         }
         
         userEmail.text = user!.email
-        UserId.text = user!.id
+        UserId.text = String(describing: user!.id)
         
         chatPhoto.image = UIImage(named: "chat")
         chat.text = "Chat"

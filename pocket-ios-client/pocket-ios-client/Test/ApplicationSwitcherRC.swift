@@ -20,30 +20,11 @@ class ApplicationSwitcherRC {
     static func choiseRootVC() {
         
         let token = TokenService.getToken(forKey: "token")
-        print (UserSelf.account_name + " " + UserSelf.email + " " + UserSelf.password)
+        print (UserSelf.accountName + " " + UserSelf.email + " " + UserSelf.password)
         
         if token != nil {
-            NetworkServices.getSelfUser(token: token!) { (json, statusCode) in
-                
-                if statusCode == 200 {
-                    
-                    DataBase.saveSelfUser(json: json)
-                    DataBase.instance.loadAllContactsFromDB(keyId: UserSelf.uid)
-                    
-                    DispatchQueue.main.async {
-                        initVC(choiseVC: .tabbar)
-                    }
-                }
-                else {
-                    //Костыль на случай протухания токена
-                    TokenService.setToken(token: nil, forKey: "token")
-                    DispatchQueue.main.async {
-                        initVC(choiseVC: .login)
-                    }
-                }
-            }
+            initVC(choiseVC: .tabbar)
         }
-
         else {
             initVC(choiseVC: .login)
         }

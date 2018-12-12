@@ -13,10 +13,24 @@ class InitAfterLogin: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let token = TokenService.getToken(forKey: "token")
         //Блок инициализации начальных данных
-        WSS.initial.webSocketConnect()
-        ChatViewController().setupData()
-        ChatListTableViewController().setupData()
+        NetworkServices.getSelfUser(token: token!) { (json, statusCode) in
+            if statusCode == 200 {
+                DataBase.saveSelfUser(json: json)
+                DataBase.instance.loadAllContactsFromDB(keyId: UserSelf.uid)
+                WSS.initial.webSocketConnect()
+                ChatListTableViewController().setupData()
+            }
+            else {
+                //Костыль на случай протухания токена
+                TokenService.setToken(token: nil, forKey: "token")
+                DispatchQueue.main.async {
+                    ApplicationSwitcherRC.initVC(choiseVC: .login)
+                }
+            }
+        }
+        
     }
 
 }

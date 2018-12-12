@@ -39,18 +39,10 @@ class ContactListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactListTableViewCell
         
         cell.setUp()
-        
-        if let nameLable = contactArray[indexPath.row].account_name {
-            cell.nameLabel.text = nameLable
-        }
-        
-        if let imageName = contactArray[indexPath.row].avatarImage {
-            cell.profileImageView.image = UIImage(named: imageName)
-        }
-        
-        if let statusLable = contactArray[indexPath.row].status {
-            cell.statusLabel.text = statusLable
-        }
+
+        cell.nameLabel.text = contactArray[indexPath.row].account_name
+        cell.profileImageView.image = UIImage(named: contactArray[indexPath.row].avatarImage)
+        cell.statusLabel.text = contactArray[indexPath.row].status
 
         return cell
     }
