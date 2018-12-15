@@ -8,13 +8,11 @@
 
 import UIKit
 import Starscream
-import RealmSwift
 
 final class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
     var vc: ChatViewController!
-    let realm = try! Realm()
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
@@ -53,7 +51,6 @@ final class MessageAndWebSocket: WebSocketDelegate {
             time: NSDate().timeIntervalSince1970,
             isEnemy: false
         )
-        AdaptationDBJSON().saveInDB([msg])
         do {
             let jsonData = try JSONEncoder().encode(msg)
             socket.write(data: jsonData)

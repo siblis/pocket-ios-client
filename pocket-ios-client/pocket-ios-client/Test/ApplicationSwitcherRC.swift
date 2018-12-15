@@ -18,10 +18,7 @@ class ApplicationSwitcherRC {
     }
     
     static func choiseRootVC() {
-        
         let token = TokenService.getToken(forKey: "token")
-        print (UserSelf.accountName + " " + UserSelf.email + " " + UserSelf.password)
-        
         if token != nil {
             initVC(choiseVC: .tabbar)
         }
@@ -31,9 +28,7 @@ class ApplicationSwitcherRC {
     }
     
     static func ifServerDown() {
-        
         initVC(choiseVC: .tabbar)
-        
     }
     
     static func initVC(choiseVC: ChoiceRootVC) {

@@ -21,8 +21,6 @@ class MessageCell: BaseCell {
     
     let textBubbleView: UIView = {
        let view = UIView()
-//        view.backgroundColor = UIColor(white: 0.95, alpha: 1)
-//        view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
         return view
     }()
@@ -62,9 +60,7 @@ class BaseCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func setupViews() {
-//        backgroundColor = UIColor.blue
-        
-    }
     
+    func setupViews() {
+    }
 }

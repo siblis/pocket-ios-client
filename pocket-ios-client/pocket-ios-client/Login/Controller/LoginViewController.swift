@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LoginViewController: UIViewController {
     
@@ -22,6 +23,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     var user: User!
+    var selfInfo = SelfAccount()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +40,12 @@ class LoginViewController: UIViewController {
     
     @IBAction func signIn(_ sender: Any) {
         
-        guard let password = passwordTextField.text, let account_name = loginTextField.text else {return}
-        
-        UserSelf.password = password
-        UserSelf.accountName = account_name
-        
-        NetworkServices.login() { (token) in
+        guard let password = passwordTextField.text, let accountName = loginTextField.text else {return}
+        selfInfo.password = password
+        selfInfo.accountName = accountName
+        NetworkServices.login(accountName: accountName, password: password) { (token) in
             if token != "" {
+                AdaptationDBJSON().saveInDB([self.selfInfo])
                 Token.token = token
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "UserListSegue", sender: nil)

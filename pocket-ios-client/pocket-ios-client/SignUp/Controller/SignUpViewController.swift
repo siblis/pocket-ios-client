@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SignUpViewController: UIViewController {
     
@@ -21,10 +22,10 @@ class SignUpViewController: UIViewController {
     
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        
     }
     
     var user: User!
+    var selfInfo = SelfAccount()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +33,6 @@ class SignUpViewController: UIViewController {
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
     }
-    
-    
-    
-//    @IBAction func backButtonPress(_ sender: Any) {
-//        self.dismiss(animated: true, completion: nil)
-//    }
     
     @IBAction func SignUpButtonPress(_ sender: Any) {
         guard let accountName = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
@@ -47,17 +42,15 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        UserSelf.accountName = accountName
-        UserSelf.email = email
-        UserSelf.password = password
+        selfInfo.accountName = accountName
+        selfInfo.email = email
+        selfInfo.password = password
         
-        NetworkServices.signUp { (token, statusCode) in
+        NetworkServices.signUp(accountName: accountName, email: email, password: password) { (token, statusCode) in
             if (token != "") && (statusCode == 201) {
                 Token.token = token
+                AdaptationDBJSON().saveInDB([self.selfInfo])
                 DispatchQueue.main.async {
-//                    let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-//
-//                    self.present(tabBarVC, animated:true, completion:nil)
                     ApplicationSwitcherRC.initVC(choiseVC: .tabbar)
                 }
             }
