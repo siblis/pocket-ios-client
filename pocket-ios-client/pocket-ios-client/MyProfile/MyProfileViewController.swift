@@ -11,7 +11,7 @@ import RealmSwift
 
 class MyProfileViewController: UIViewController {
     
-    var selfInfo: Results<SelfAccount>!
+    var selfInfo = SelfAccount()
     var notificationDB: NotificationToken?
     
     //определяем элементы экрана
@@ -100,8 +100,8 @@ class MyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selfInfo = AdaptationDBJSON().loadFromDB(smTableDB: SelfAccount.self)
-        self.notificationDB = AdaptationDBJSON().realmObserver(smTableDB: selfInfo)
+        selfInfo = DataBase().loadSelfUser()
+        self.notificationDB = DataBase().observerSelfUser()
         setUpTopView()
         setUpStatusView()
         
@@ -154,14 +154,14 @@ class MyProfileViewController: UIViewController {
 
         myPhoto.image = UIImage(named: "myProfile")
         
-        if (UserSelf.firstName + UserSelf.lastName).replacingOccurrences(of: " ", with: "") != "" {
-            myName.text = UserSelf.lastName + " " + UserSelf.firstName
+        if (selfInfo.firstName + selfInfo.lastName).replacingOccurrences(of: " ", with: "") != "" {
+            myName.text = selfInfo.lastName + " " + selfInfo.firstName
         } else {
-            myName.text = selfInfo[0].accountName
+            myName.text = selfInfo.accountName
         }
         
-        myEmail.text = selfInfo[0].email
-        myId.text = String(describing: selfInfo[0].uid)
+        myEmail.text = selfInfo.email
+        myId.text = String(describing: selfInfo.uid)
         
         chatPhoto.image = UIImage(named: "chat")
         chat.text = "Chat"
@@ -182,7 +182,7 @@ class MyProfileViewController: UIViewController {
     //настраиваем содержание элементов в нижней половине экрана
     func setUpStatusViewContents () {
         status.text = "Статус:"
-        statusField.text = selfInfo[0].status
+        statusField.text = selfInfo.status
     }
     
     //рисуем горизонтальную линию

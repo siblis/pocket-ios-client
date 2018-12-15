@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class EditProfileViewController: UIViewController, UITextFieldDelegate {
+    
+    var selfInfo = SelfAccount()
 
     //определяем элементы экрана
     let cancelBtn:UIButton = {
@@ -100,10 +103,10 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        firstName.text = UserSelf.firstName
-        lastName.text = UserSelf.lastName
-        status.text = UserSelf.status
+        selfInfo = DataBase().loadSelfUser()
+        firstName.text = selfInfo.firstName
+        lastName.text = selfInfo.lastName
+        status.text = selfInfo.status
     }
     
     func setUpHeader () {
@@ -155,11 +158,11 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         var value: String
         switch textField.tag {
         case 1:
-            value = UserSelf.firstName
+            value = selfInfo.firstName
         case 2:
-            value = UserSelf.lastName
+            value = selfInfo.lastName
         case 3:
-            value = UserSelf.status
+            value = selfInfo.status
         default:
             value = ""
         }
@@ -167,7 +170,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
             doneBtn.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
             doneBtn.isEnabled = true
         } else {
-            if (firstName.text == UserSelf.firstName)&&(lastName.text == UserSelf.lastName)&&(status.text == UserSelf.status) {
+            if (firstName.text == selfInfo.firstName)&&(lastName.text == selfInfo.lastName)&&(status.text == selfInfo.status) {
                 doneBtn.setTitleColor(UIColor(red:0.59, green:0.59, blue:0.59, alpha:1.0), for: .normal)
                 doneBtn.isEnabled = false
             } else {
@@ -178,9 +181,10 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func saveChanges (_ sender: UIButton) {
-        UserSelf.firstName = firstName.text ?? ""
-        UserSelf.lastName = lastName.text ?? ""
-        UserSelf.status = status.text ?? ""
+        selfInfo.firstName = firstName.text ?? ""
+        selfInfo.lastName = lastName.text ?? ""
+        selfInfo.status = status.text ?? ""
+        AdaptationDBJSON().saveInDB([selfInfo])
         print  ("saving changes")
         self.dismiss(animated: true, completion: nil)
     }

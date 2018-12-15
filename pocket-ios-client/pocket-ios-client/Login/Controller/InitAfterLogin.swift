@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class InitAfterLogin: UITabBarController {
 
@@ -17,8 +18,8 @@ class InitAfterLogin: UITabBarController {
         //Блок инициализации начальных данных
         NetworkServices.getSelfUser(token: token!) { (json, statusCode) in
             if statusCode == 200 {
-                DataBase.saveSelfUser(json: json)
-                DataBase.instance.loadAllContactsFromDB(keyId: UserSelf.uid)
+                DataBase().saveSelfUser(json: json)
+//                DataBase().loadAllContactsFromDB(keyId: )
                 WSS.initial.webSocketConnect()
                 ChatListTableViewController().setupData()
             }
@@ -30,7 +31,6 @@ class InitAfterLogin: UITabBarController {
                 }
             }
         }
-        
     }
 
 }

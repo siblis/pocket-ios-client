@@ -11,7 +11,7 @@ import UIKit
 class NetworkServices {
     
     //функция регистрации пользователей
-    static func signUp(complition: @escaping (String, Int) -> Void) {
+    static func signUp(accountName: String, email: String, password: String, complition: @escaping (String, Int) -> Void) {
         
         //POST request
         let url = URL(string: "https://pocketmsg.ru:8888/v1/users/")
@@ -20,7 +20,7 @@ class NetworkServices {
 
         
         // делаем JSON
-        let httpBody = ["account_name":UserSelf.accountName,"email":UserSelf.email,"password":UserSelf.password]
+        let httpBody = ["account_name": accountName, "email": email, "password": password]
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
@@ -72,7 +72,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func login(complition: @escaping (String) -> Void) {
+    static func login(accountName: String, password: String, complition: @escaping (String) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -89,7 +89,7 @@ class NetworkServices {
         
         // JSON Encoder
         
-        let httpBody = ["account_name":UserSelf.accountName,"password":UserSelf.password]
+        let httpBody = ["account_name": accountName, "password": password]
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
@@ -158,17 +158,13 @@ class NetworkServices {
                 print("Ошибка: \(error?.localizedDescription ?? "Error")")
                 return
             }
-            
             let httpResponse = response as? HTTPURLResponse
-            var json = Data()
-            
             if let statusCode = httpResponse?.statusCode, statusCode == 200 {
-                json = data
                 print ("statusCode = \(statusCode)")
-                complition(json, statusCode)
+                complition(data, statusCode)
             } else {
                 print (httpResponse!.allHeaderFields)
-                complition(json, 0)
+                complition(data, 0)
             }
             
         }
@@ -177,7 +173,7 @@ class NetworkServices {
     }
     
     //получаем пользователя по id
-    static func getUser(id: Int, token: String, complition: @escaping ([String: Any], Int) -> Void) {
+    static func getUser(id: Int, token: String, complition: @escaping (Data, Int) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -207,28 +203,57 @@ class NetworkServices {
                 print("Ошибка: \(error?.localizedDescription ?? "Error")")
                 return
             }
-            
             let httpResponse = response as? HTTPURLResponse
-            
-            var json: [String: Any] = [:]
-            
             if let statusCode = httpResponse?.statusCode, statusCode == 200 {
-                do {
-                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: Any]
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
                 print ("statusCode = \(statusCode)")
-                
-                complition(json, statusCode)
+                complition(data, statusCode)
             } else {
                 print (httpResponse!.allHeaderFields)
-                complition(json, 0)
+                complition(data, 0)
             }
-            
         }
         task.resume()
+    }
+    
+    //MARK: Add user by e-mail
+    static func addUserByMail(_ email: String, complition: @escaping (Data, Int) -> Void) {
         
+        //POST request
+        guard let url = URL(string: "https://pocketmsg.ru:8888/v1/users/contacts/") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        var header = request.allHTTPHeaderFields ?? [:]
+        header["token"] = TokenService.getToken(forKey: "token")!
+        request.allHTTPHeaderFields = header
+        
+        // делаем JSON
+        let httpBody = ["contact": email]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
+            print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
+        }
+        catch {
+            print (error.localizedDescription)
+        }
+        
+        // Request и получение ответа от сервера
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: request) { (responseData, response, error) in
+            guard let data = responseData, error == nil else {
+                print("Ошибка: \(error?.localizedDescription ?? "Error")")
+                return
+            }
+            let httpResponse = response as? HTTPURLResponse
+            if let statusCode = httpResponse?.statusCode, statusCode == 201 {
+                print ("statusCode = \(statusCode)")
+                complition(data, statusCode)
+            } else {
+                print (httpResponse!.allHeaderFields)
+                complition(data, 0)
+            }
+        }
+        task.resume()
     }
 }

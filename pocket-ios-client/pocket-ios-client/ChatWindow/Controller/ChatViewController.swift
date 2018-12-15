@@ -15,8 +15,8 @@ class ChatViewController: UIViewController {
     let insets: CGFloat = 15
     let downInset: CGFloat = 30
     let cellReuseIdentifier = "MessageCell"
-    var user: UserContact?
-    var groupContacts: [Int:UserContact] = [:]
+    var user = ContactAccount()
+    var groupContacts: [Int: ContactAccount] = [:]
     let token = TokenService.getToken(forKey: "token")
     let myGroup = DispatchGroup()
     var chat: [Message] = []
@@ -25,7 +25,7 @@ class ChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = user?.account_name
+        title = user.accountName
         //кнопка перехода на экран с деталями пользователя
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonTap(_:)), for: .touchUpInside)
@@ -41,8 +41,6 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var chatField: UICollectionView! {
         didSet {
             chatField.translatesAutoresizingMaskIntoConstraints = false
-//            chatField.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-////            chatField.frame = self.view.frame
         }
     }
     
@@ -61,8 +59,9 @@ class ChatViewController: UIViewController {
     
     @IBAction func sendButton(_ sender: Any) {
         
-        if let msg = message.text, let chID = self.user?.id, msg != "" {
-            let selfMsg = WSS.initial.sendMessage(receiver: chID, message: msg)
+        if let msg = message.text, msg != "" {
+            let selfMsg = WSS.initial.sendMessage(receiver: user.uid, message: msg)
+            AdaptationDBJSON().saveInDB([selfMsg])
             message.text = ""
         }
     }
@@ -109,7 +108,6 @@ class ChatViewController: UIViewController {
         guard let info = notification.userInfo as NSDictionary?, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
 
         //Добавить уменьшение вьюхи с чатом
-        
         setupElements(y: value.cgRectValue.height)
     }
     
@@ -119,51 +117,49 @@ class ChatViewController: UIViewController {
     }
     
     @objc func infoButtonTap (_ sender: UIButton) {
-        if (user?.participants.isEmpty)! {
-            performSegue(withIdentifier: "userDetailsSegue", sender: self)
-        } else {
-            getGroupUsers(ids: (user?.participants)!)
-        }
+        performSegue(withIdentifier: "userDetailsSegue", sender: self)
+//        if (user?.participants.isEmpty)! {
+//            
+//        } else {
+//            for id in (user?.participants)! {
+//                getGroupUsers(id: id)
+//            }
+//            performSegue(withIdentifier: "groupDetailsSegue", sender: self)
+//        }
     }
     
-    func getGroupUsers (ids: [Int]) {
-        for id in ids {
-            myGroup.enter()
-            NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
-                if statusCode == 200 {
-                    var user = UserContact()
-                    user.id = json["uid"] as! Int ?? 0
-                    user.account_name = "\(json["account_name"] ?? "No user")"
-                    user.email = "\(json["email"] ?? "No email")"
+    func getGroupUsers (id: Int) {
+        myGroup.enter()
+        NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
+            if statusCode == 200 {
+                do {
+                    let user = try JSONDecoder().decode(ContactAccount.self, from: json)
                     self.groupContacts[id] = user
-                    self.myGroup.leave()
-                } else {
-                    self.groupContacts[id]?.id = 0
-                    self.groupContacts[id]?.account_name = "User not found"
-                    self.groupContacts[id]?.email = "No email"
-                    self.myGroup.leave()
                 }
-            })
-        }
-        
-        myGroup.notify(queue: DispatchQueue.main, execute: {
-            print("Finished all requests.")
-            self.performSegue(withIdentifier: "groupDetailsSegue", sender: self)
+                catch let err {
+                    print("Err", err)
+                }
+            } else {
+                self.groupContacts[id]?.uid = 0
+                self.groupContacts[id]?.accountName = "User not found"
+                self.groupContacts[id]?.email = "No email"
+            }
         })
+        myGroup.leave()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
             userDetailsVC.user = self.user
-        } else if segue.identifier == "groupDetailsSegue" {
-            let groupDetailsVC = segue.destination as! GroupProfileViewController
-            groupDetailsVC.group = self.user
-            groupDetailsVC.groupContacts = self.groupContacts
         }
+//        } else if segue.identifier == "groupDetailsSegue" {
+//            let groupDetailsVC = segue.destination as! GroupProfileViewController
+//            groupDetailsVC.group = self.user
+//            groupDetailsVC.groupContacts = self.groupContacts
+//        }
     }
 }
-
 
 
 //MARK: Table
@@ -211,9 +207,6 @@ extension ChatViewController: UICollectionViewDelegateFlowLayout {
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)] , context: nil)
         return CGSize(width: view.frame.width, height: estimatedFrame.height + 20)
-//        }
-//        
-//        return CGSize(width: view.frame.width, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

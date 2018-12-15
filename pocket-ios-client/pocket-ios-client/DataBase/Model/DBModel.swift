@@ -15,113 +15,61 @@ struct Token {
     static var token = TokenService.getToken(forKey: "token") {
         didSet {
             TokenService.setToken(token: token, forKey: "token")
-            print ("set token = \(TokenService.getToken(forKey: "token")!)")
+            print ("set token = \(String(describing: TokenService.getToken(forKey: "token")))")
         }
     }
-    
 }
 
-struct UserSelf {
-
-    static var uid: String = ""
-    static var accountName: String = ""
-    static var email: String = ""
-    static var password: String = ""
-    static var avatarImage: String = "noPhoto"
-
-    static var firstName = ""
-    static var lastName = ""
-    static var status = ""
-
-}
-
-struct UserContact {
-    
-    var id: Int = 0
-    var account_name: String = ""
-    var email: String = ""
-    var status: String = ""
-    var avatarImage: String = "noPhoto"
-    
-    var firstName = ""
-    var lastName = ""
-    var participants: [Int] = []
-}
-
-struct Contacts {
-    
-    static var list = [UserContact]()
-    
-}
-
-struct Chats {
-    
-    static var list = [Int:UserContact]()
-    
-}
-
-struct ChatMessage {
-    var text: String?
-    var date: NSDate?
-    var messageCount: String?
-    var user: UserContact?
-}
-
-//MARK: Парсинг аккаунта контакта и модель для реалма
-
-class ContactAccount: Object, Codable {
-    @objc dynamic var uid: Int = 0
-    @objc dynamic var accountName: String = ""
-    @objc dynamic var email: String = ""
-    @objc dynamic var status: String  = ""
-    @objc dynamic var avatarImage: String  = "noPhoto"
-    
-    @objc dynamic var firstName: String = ""
-    @objc dynamic var lastName: String = ""
-    
-    override class func primaryKey() -> String? {
-        return "uid"
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case uid = "uid"
-        case accountName = "account_name"
-        case email = "email"
-    }
-    
-    public required convenience init(
-        uid: Int,
-        accountName: String,
-        email: String
-        ){
-        self.init()
-        self.uid = uid
-        self.accountName = accountName
-        self.email = email
-    }
-    
-    public required convenience init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let uid = try container.decode(Int.self, forKey: .uid)
-        let accountName = try container.decode(String.self, forKey: .accountName)
-        let email = try container.decode(String.self, forKey: .email)
-        self.init(uid: uid, accountName: accountName, email: email)
-    }
-}
-
-//MARK: Парсинг собственного профиля и модель для реалма
+//MARK: Модель собственного профиля (Login, SignUp, MyProfile)
 class SelfAccount: Object, Codable {
     @objc dynamic var uid: Int = 0
     @objc dynamic var accountName: String = ""
     @objc dynamic var email: String = ""
     @objc dynamic var password: String  = ""
-    @objc dynamic var avatarImage: String  = "noPhoto"
+    @objc dynamic var avatarImage: String  = "myProfile"
     
     @objc dynamic var firstName: String = ""
     @objc dynamic var lastName: String = ""
     @objc dynamic var status: String = ""
     
     override class func primaryKey() -> String? {
+        return "accountName"
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case uid = "uid"
+        case accountName = "account_name"
+        case email = "email"
+    }
+    
+    public convenience init(
+        uid: Int,
+        accountName: String,
+        email: String
+        ){
+        self.init()
+        self.uid = uid
+        self.accountName = accountName
+        self.email = email
+    }
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let uid = try container.decode(Int.self, forKey: .uid)
+        let accountName = try container.decode(String.self, forKey: .accountName)
+        let email = try container.decode(String.self, forKey: .email)
+        self.init(uid: uid, accountName: accountName, email: email)
+    }
+}
+
+//MARK: Модель аккаунта контакта (UserList)
+class ContactAccount: Object, Codable {
+    @objc dynamic var uid: Int = 0
+    @objc dynamic var accountName: String = ""
+    @objc dynamic var email: String = ""
+    @objc dynamic var avatarImage: String  = "man"
+    
+    override class func primaryKey() -> String? {
         return "uid"
     }
     
@@ -151,7 +99,60 @@ class SelfAccount: Object, Codable {
     }
 }
 
-//MARK: Парсинг сообщений и модель для реалма
+//MARK: Модель групп ()
+class Group: Object, Decodable {
+    @objc dynamic var gid: Int = 0
+    @objc dynamic var groupName: String = ""
+    var users = List<ContactAccount>()
+    
+    override class func primaryKey() -> String? {
+        return "gid"
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case gid = "gid"
+        case groupName = "group_name"
+        case users = "users"
+    }
+    
+    public required convenience init(
+        gid: Int,
+        groupName: String,
+        users: List<ContactAccount>
+        ){
+        self.init()
+        self.gid = gid
+        self.groupName = groupName
+        self.users = users
+    }
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let gid = try container.decode(Int.self, forKey: .gid)
+        let groupName = try container.decode(String.self, forKey: .groupName)
+        let usersArray = try container.decode([ContactAccount].self, forKey: .users)
+        let users = List<ContactAccount>()
+        users.append(objectsIn: usersArray)
+        self.init(gid: gid, groupName: groupName, users: users)
+    }
+}
+
+//MARK: Модель чатов (ChatList)
+class Chat: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var chatName: String = ""
+    @objc dynamic var text: String = ""
+    @objc dynamic var time: String = ""
+    @objc dynamic var messageCount: Int = 0
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
+    
+}
+
+//MARK: Модель сообщений (ChatWindow)
 class Message: Object, Codable {
     @objc dynamic var receiver: Int = 0
     @objc dynamic var text: String = ""

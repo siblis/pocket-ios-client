@@ -63,8 +63,7 @@ class GroupProfileViewController: UIViewController {
         return label
     }()
     
-    var group: UserContact?
-    var groupContacts: [Int: UserContact] = [:]
+    var group = Group()
     
     @IBOutlet weak var participantsTableView: UITableView!
     
@@ -84,26 +83,8 @@ class GroupProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        getGroupUsers(ids: (group?.participants)!)
         setUpTopViewContents()
-//        setUpParticipantsViewContents()
     }
-    
-//    func getGroupUsers (ids: [Int]) {
-//        for id in ids {
-//            NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
-//                if statusCode == 200 {
-//                    self.participants[id] = "\(json["account_name"] ?? "")"
-//                    print(self.participants[id])
-//                } else {
-//                    self.participants[id] = "User not found"
-//                }
-//                DispatchQueue.main.async {
-//                    self.participantsTableView.reloadData()
-//                }
-//            })
-//        }
-//    }
     
     //настраиваем положение элементов в верхней половине экрана
     func setUpTopView () {
@@ -141,10 +122,10 @@ class GroupProfileViewController: UIViewController {
         backButton.setImage(UIImage(named: "back"), for: .normal)
         exitButton.setImage(UIImage(named: "exit"), for: .normal)
         
-        groupPhoto.image = UIImage(named: group?.avatarImage ?? "noPhoto")
+        groupPhoto.image = UIImage(named: "noPhoto")
         
-        groupName.text = group?.account_name
-        groupId.text = String(describing: group?.id)
+        groupName.text = group.groupName
+        groupId.text = String(describing: group.gid)
         
         participantsLabel.text = "Участники"
     }
@@ -165,14 +146,14 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Contacts.list.count
+        return 0
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "participantCell", for: indexPath) as! ParticipantCell
-        let id = group?.participants[indexPath.row]
-        let name = self.groupContacts[id!]?.account_name ?? "No user"
+        let user = group.users[indexPath.row]
+        let name = user.accountName
 
         cell.setUp()
         cell.setUpContents(name: "\(name)")
@@ -187,9 +168,10 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showGroupContactDetails" {
             let destination = segue.destination as! UserProfileViewController
-            let row = participantsTableView.indexPathForSelectedRow?.row
-            let id = group?.participants[row!]
-            destination.user = groupContacts[id!]
+            if let row = participantsTableView.indexPathForSelectedRow?.row {
+                let user = group.users[row]
+                destination.user = user
+            }
         }
     }
 }

@@ -11,6 +11,9 @@ import RealmSwift
 
 protocol AdaptationInformation {
     func saveInDB(_ smElements: [Object])
+//    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String)
+    func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
+    func realmObserver<A: Object>(smTableDB: Results<A>, someDoing: Void) -> NotificationToken?
 }
 
 class AdaptationDBJSON: AdaptationInformation {
@@ -18,21 +21,31 @@ class AdaptationDBJSON: AdaptationInformation {
     let realm = try! Realm()
     
     func saveInDB(_ smElements: [Object]) {
-        try! self.realm.write {
-                self.realm.add(smElements, update: true)
+        try! realm.write {
+            realm.add(smElements, update: true)
         }
     }
     
+//    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String) {
+//        var smInfo = realm.objects(smTableDB.self).filter(filter)
+//        try! realm.write {
+//            smInfo = smRecord
+//        }
+//    }
+    
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A> {
-       return self.realm.objects(smTableDB.self)
+       return realm.objects(smTableDB.self)
     }
     
+    func loadOneRecordFromDB<A: Object>(smTableDB: A.Type, filter: String) -> Results<A> {
+        return realm.objects(smTableDB.self).filter(filter)
+    }
     
-    func realmObserver<A: Object>(smTableDB: Results<A>) -> NotificationToken? {
+    func realmObserver<A: Object>(smTableDB: Results<A>, someDoing: Void) -> NotificationToken? {
         return smTableDB.observe({ (changes) in
             switch changes {
             case .initial, .update:
-                print("Some doing")
+                someDoing
             case .error(let error):
                 print(error)
             }
