@@ -60,7 +60,7 @@ class ChatViewController: UIViewController {
     @IBAction func sendButton(_ sender: Any) {
         
         if let msg = message.text, msg != "" {
-            let selfMsg = WSS.initial.sendMessage(receiver: user.uid, message: msg)
+            let selfMsg = WSS.initial.sendMessage(receiver: user, message: msg)
             AdaptationDBJSON().saveInDB([selfMsg])
             message.text = ""
         }

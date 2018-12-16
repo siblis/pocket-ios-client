@@ -101,7 +101,7 @@ class MyProfileViewController: UIViewController {
         super.viewDidLoad()
         
         selfInfo = DataBase().loadSelfUser()
-        self.notificationDB = DataBase().observerSelfUser()
+        notificationDB = DataBase().observerSelfUser()
         setUpTopView()
         setUpStatusView()
         

@@ -141,15 +141,25 @@ class Group: Object, Decodable {
 class Chat: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var chatName: String = ""
-    @objc dynamic var text: String = ""
-    @objc dynamic var time: String = ""
     @objc dynamic var messageCount: Int = 0
+    var messages = List<Message>()
     
     override class func primaryKey() -> String? {
         return "id"
     }
     
-    
+    public required convenience init(
+        id: Int,
+        chatName: String,
+        messageCount: Int,
+        messages: [Message]
+        ){
+        self.init()
+        self.id = id
+        self.chatName = chatName
+        self.messageCount = messageCount
+        self.messages.append(objectsIn: messages)
+    }
 }
 
 //MARK: Модель сообщений (ChatWindow)

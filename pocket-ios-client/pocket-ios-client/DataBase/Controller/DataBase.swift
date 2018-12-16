@@ -27,18 +27,52 @@ class DataBase {
     }
     
     func observerSelfUser() -> NotificationToken? {
-        let reload: Void = print("Load self data")
         let smInfoFromDB = AdaptationDBJSON().loadFromDB(smTableDB: SelfAccount.self)
-        return AdaptationDBJSON().realmObserver(smTableDB: smInfoFromDB, someDoing: reload)
+        return AdaptationDBJSON().realmObserver(smTableDB: smInfoFromDB) { (changes) in
+            switch changes {
+            case .initial, .update:
+                print("Load self data")
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     func saveContacts(json: Data) {
+//        do {
+//            let contactInfo = try JSONDecoder().decode([ContactAccount].self, from: json)
+//            AdaptationDBJSON().saveInDB(contactInfo)
+//        }
+//        catch let err {
+//            print("Err", err)
+//        }
+        let selfInfo = loadSelfUser()
+        var contactsArray: Array<ContactAccount> = []
         do {
-            let contactInfo = try JSONDecoder().decode(ContactAccount.self, from: json)
-            AdaptationDBJSON().saveInDB([contactInfo])
+            let data = try JSONSerialization.jsonObject(with: json, options: JSONSerialization.ReadingOptions()) as! [String: [String: Any]]
+            for i in data {
+                let contacts = loadContactsList()
+                var check: Int = 0
+                for j in contacts { check = i.key == j.email ? check + 1 : check + 0 }
+                if i.key != selfInfo.email && check == 0 {
+                    let contact = ContactAccount.init(
+                        uid: i.value["id"] as! Int,
+                        accountName: i.value["name"] as! String,
+                        email: i.key
+                    )
+                    AdaptationDBJSON().saveInDB([contact])
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
         }
-        catch let err {
-            print("Err", err)
+    }
+    
+    func observerContacts(complition: @escaping (RealmCollectionChange<Results<ContactAccount>>) -> Void) -> NotificationToken? {
+        
+        let smInfoFromDB = AdaptationDBJSON().loadFromDB(smTableDB: ContactAccount.self)
+        return AdaptationDBJSON().realmObserver(smTableDB: smInfoFromDB) { (changes) in
+            complition(changes)
         }
     }
     

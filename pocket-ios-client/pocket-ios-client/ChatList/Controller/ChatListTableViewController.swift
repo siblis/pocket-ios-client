@@ -38,7 +38,7 @@ class ChatListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return 0 //FakeData.chatMessages.count
+        return chatCell.count //FakeData.chatMessages.count
 
     }
 
@@ -51,7 +51,7 @@ class ChatListTableViewController: UITableViewController {
         let user = DataBase().loadOneContactsList(userId: chatMessage.id)
         cell.nameLabel.text = user[0].accountName
         cell.profileImageView.image = UIImage(named: user[0].avatarImage)
-        cell.messageLabel.text = chatMessage.text
+        cell.messageLabel.text = chatMessage.messages.last?.text
         cell.messageCountLabel.text = String(describing: chatMessage.messageCount)
 //        if let date = chatMessage.time {
 //            let dateFormatter = DateFormatter()
@@ -68,7 +68,7 @@ class ChatListTableViewController: UITableViewController {
 //            
 //            cell.timeLabel.text = dateFormatter.string(from: date as Date)
 //        }
-        cell.timeLabel.text = chatMessage.time
+        cell.timeLabel.text = chatMessage.messages.last?.time
         return cell
     }
 }
