@@ -11,8 +11,7 @@ import Foundation
 class TokenService {
     
     static func getToken(forKey: String) -> String? {
-        let token = UserDefaults.standard.string(forKey: forKey)
-        return token
+        return UserDefaults.standard.string(forKey: forKey)
     }
     
     static func setToken(token: String?, forKey: String) {

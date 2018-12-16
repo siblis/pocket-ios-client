@@ -37,7 +37,7 @@ class SelfAccount: Object, Codable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case uid = "uid"
+        case uid = "user_id"
         case accountName = "account_name"
         case email = "email"
     }
@@ -74,7 +74,7 @@ class ContactAccount: Object, Codable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case uid = "uid"
+        case uid = "user_id"
         case accountName = "account_name"
         case email = "email"
     }
@@ -110,7 +110,7 @@ class Group: Object, Decodable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case gid = "gid"
+        case gid = "group_id"
         case groupName = "group_name"
         case users = "users"
     }
