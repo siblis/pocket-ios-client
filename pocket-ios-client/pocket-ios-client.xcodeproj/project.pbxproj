@@ -8,14 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */; };
+		24392F7621A1E48C003C444C /* InitAfterLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F7521A1E48C003C444C /* InitAfterLogin.swift */; };
+		24392F8421B873B1003C444C /* AdaptationDBJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F8321B873B1003C444C /* AdaptationDBJSON.swift */; };
 		245617422178BDB8007A9103 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245617412178BDB8007A9103 /* ChatViewController.swift */; };
+		245DE7B72196294D002596FF /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DE7B62196294D002596FF /* MessageCell.swift */; };
 		6D2988F021935F590004199F /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2988EF21935F590004199F /* TokenService.swift */; };
+		6D2E38CD219B68A300059DD3 /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E38CC219B68A300059DD3 /* DBModel.swift */; };
 		6D6AA39F2136DED600635BB4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6D6AA39E2136DED600635BB4 /* .gitignore */; };
-		6DA1111F21612AD100C2AA45 /* Test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DA1111E21612AD100C2AA45 /* Test.storyboard */; };
-		6DA1112121612DA600C2AA45 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA1112021612DA600C2AA45 /* TestViewController.swift */; };
-		6DA11123216132FE00C2AA45 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA11122216132FE00C2AA45 /* Post.swift */; };
+		6D8FB1D6219B0C7100E90D89 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8FB1D5219B0C7100E90D89 /* DataBase.swift */; };
 		6DA1112521613F2500C2AA45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA1112421613F2500C2AA45 /* User.swift */; };
-		6DA111272162B08C00C2AA45 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA111262162B08C00C2AA45 /* Message.swift */; };
 		6DA1112A2163E8FA00C2AA45 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA111292163E8FA00C2AA45 /* NetworkServices.swift */; };
 		6DA1112D2166732000C2AA45 /* ContactListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA1112C2166732000C2AA45 /* ContactListTableViewController.swift */; };
 		6DA1112F2166737900C2AA45 /* ContactListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA1112E2166737900C2AA45 /* ContactListTableViewCell.swift */; };
@@ -27,25 +28,34 @@
 		6DD41E492120C5C8002EE1F3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E472120C5C8002EE1F3 /* Login.storyboard */; };
 		6DD41E4B2120C5C9002EE1F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E4A2120C5C9002EE1F3 /* Assets.xcassets */; };
 		6DD41E4E2120C5C9002EE1F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DD41E4C2120C5C9002EE1F3 /* LaunchScreen.storyboard */; };
+		BC35488921BE9EB700DE15CB /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC35488821BE9EB700DE15CB /* CustomColors.swift */; };
 		BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9AC6A02193059F00348948 /* ChatListModel.swift */; };
+		BCFAA5F221A9C4E6009E41EE /* AddUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFAA5F121A9C4E6009E41EE /* AddUserController.swift */; };
+		BCFAA5F521A9DEF9009E41EE /* AddUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFAA5F421A9DEF9009E41EE /* AddUserCell.swift */; };
 		C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1896401218B80F300CE4ABE /* SignUpViewController.swift */; };
 		C1896405218B80F300CE4ABE /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1896403218B80F300CE4ABE /* SignUp.storyboard */; };
+		C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189640721997FB700CE4ABE /* MyProfileViewController.swift */; };
+		C1896411219E9B4D00CE4ABE /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1896410219E9B4D00CE4ABE /* UserProfileViewController.swift */; };
+		C189641321A0A2B500CE4ABE /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189641221A0A2B500CE4ABE /* GroupProfileViewController.swift */; };
+		C18F9D30219ABCA30039D51C /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */; };
+		C1DAE22121A28DFF00F33112 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DAE22021A28DFF00F33112 /* ParticipantCell.swift */; };
 		CA7F3602D8378932351022B8 /* Pods_pocket_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0D38D52F6933133B10642D50 /* Pods-pocket-ios-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.debug.xcconfig"; sourceTree = "<group>"; };
 		242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAndWebSocket.swift; sourceTree = "<group>"; };
+		24392F7521A1E48C003C444C /* InitAfterLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitAfterLogin.swift; sourceTree = "<group>"; };
+		24392F8321B873B1003C444C /* AdaptationDBJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptationDBJSON.swift; sourceTree = "<group>"; };
 		245617412178BDB8007A9103 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		245DE7B62196294D002596FF /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_ios_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3196F743F6A858E70F1D8C /* Pods-pocket-ios-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.release.xcconfig"; sourceTree = "<group>"; };
 		6D2988EF21935F590004199F /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
+		6D2E38CC219B68A300059DD3 /* DBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
 		6D6AA39E2136DED600635BB4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		6DA1111E21612AD100C2AA45 /* Test.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Test.storyboard; sourceTree = "<group>"; };
-		6DA1112021612DA600C2AA45 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
-		6DA11122216132FE00C2AA45 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		6D8FB1D5219B0C7100E90D89 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		6DA1112421613F2500C2AA45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		6DA111262162B08C00C2AA45 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		6DA111292163E8FA00C2AA45 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		6DA1112C2166732000C2AA45 /* ContactListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewController.swift; sourceTree = "<group>"; };
 		6DA1112E2166737900C2AA45 /* ContactListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewCell.swift; sourceTree = "<group>"; };
@@ -59,9 +69,17 @@
 		6DD41E4A2120C5C9002EE1F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6DD41E4D2120C5C9002EE1F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DD41E4F2120C5C9002EE1F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC35488821BE9EB700DE15CB /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		BC9AC6A02193059F00348948 /* ChatListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListModel.swift; sourceTree = "<group>"; };
+		BCFAA5F121A9C4E6009E41EE /* AddUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserController.swift; sourceTree = "<group>"; };
+		BCFAA5F421A9DEF9009E41EE /* AddUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserCell.swift; sourceTree = "<group>"; };
 		C1896401218B80F300CE4ABE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		C1896403218B80F300CE4ABE /* SignUp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
+		C189640721997FB700CE4ABE /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		C1896410219E9B4D00CE4ABE /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		C189641221A0A2B500CE4ABE /* GroupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileViewController.swift; sourceTree = "<group>"; };
+		C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		C1DAE22021A28DFF00F33112 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +106,6 @@
 		242481EC217C61D700F708C6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6DA111262162B08C00C2AA45 /* Message.swift */,
 				242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */,
 			);
 			path = Model;
@@ -98,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				245617412178BDB8007A9103 /* ChatViewController.swift */,
+				245DE7B62196294D002596FF /* MessageCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -109,6 +127,23 @@
 				242481EC217C61D700F708C6 /* Model */,
 			);
 			path = ChatWindow;
+			sourceTree = "<group>";
+		};
+		24AD50AE219B143600619ED6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */,
+				6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		24AD50AF219B165300619ED6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		6D2988ED21935F270004199F /* TokenService */ = {
@@ -127,14 +162,30 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		6DA1111D21612AB800C2AA45 /* Test */ = {
+		6D2E38CB219B688000059DD3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6DA1111E21612AD100C2AA45 /* Test.storyboard */,
-				6DA1112021612DA600C2AA45 /* TestViewController.swift */,
-				6DA11122216132FE00C2AA45 /* Post.swift */,
+				6D2E38CC219B68A300059DD3 /* DBModel.swift */,
 			);
-			path = Test;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6D8FB1D3219B0BFA00E90D89 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				6D2E38CB219B688000059DD3 /* Model */,
+				6D8FB1D4219B0C4500E90D89 /* Controller */,
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
+		6D8FB1D4219B0C4500E90D89 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6D8FB1D5219B0C7100E90D89 /* DataBase.swift */,
+				24392F8321B873B1003C444C /* AdaptationDBJSON.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		6DA111282163E8DC00C2AA45 /* NetworkServices */ = {
@@ -157,9 +208,8 @@
 		6DA11131216B8C1000C2AA45 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
-				6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */,
-				6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */,
-				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
+				24AD50AE219B143600619ED6 /* Controller */,
+				24AD50AF219B165300619ED6 /* Model */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -186,15 +236,19 @@
 		6DD41E422120C5C8002EE1F3 /* pocket-ios-client */ = {
 			isa = PBXGroup;
 			children = (
+				6D8FB1D3219B0BFA00E90D89 /* DataBase */,
 				6D2988ED21935F270004199F /* TokenService */,
-				2456173C21768A04007A9103 /* ChatWindow */,
-				6DA11131216B8C1000C2AA45 /* ChatList */,
-				6DA1112B216672D300C2AA45 /* UserList */,
-				6DA1111D21612AB800C2AA45 /* Test */,
 				6DD41E562120C5EF002EE1F3 /* Application */,
 				6DD41E552120C5DD002EE1F3 /* Login */,
 				C18963FF218B80F300CE4ABE /* SignUp */,
+				6DA1112B216672D300C2AA45 /* UserList */,
+				6DA11131216B8C1000C2AA45 /* ChatList */,
+				BCFAA5F321A9C4FB009E41EE /* AddUser */,
+				C189640621997EC000CE4ABE /* MyProfile */,
+				2456173C21768A04007A9103 /* ChatWindow */,
+				C189640F219E9B1200CE4ABE /* UserProfile */,
 				6DD41E5D2120C679002EE1F3 /* Supporting Files */,
+				BC35488821BE9EB700DE15CB /* CustomColors.swift */,
 			);
 			path = "pocket-ios-client";
 			sourceTree = "<group>";
@@ -223,6 +277,7 @@
 		6DD41E572120C5F9002EE1F3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				24392F7521A1E48C003C444C /* InitAfterLogin.swift */,
 				6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */,
 			);
 			path = Controller;
@@ -285,6 +340,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BCFAA5F321A9C4FB009E41EE /* AddUser */ = {
+			isa = PBXGroup;
+			children = (
+				BCFAA5F121A9C4E6009E41EE /* AddUserController.swift */,
+				BCFAA5F421A9DEF9009E41EE /* AddUserCell.swift */,
+			);
+			path = AddUser;
+			sourceTree = "<group>";
+		};
 		C18963FF218B80F300CE4ABE /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +372,25 @@
 				C1896403218B80F300CE4ABE /* SignUp.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C189640621997EC000CE4ABE /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				C189640721997FB700CE4ABE /* MyProfileViewController.swift */,
+				C18F9D2F219ABCA30039D51C /* EditProfileViewController.swift */,
+			);
+			path = MyProfile;
+			sourceTree = "<group>";
+		};
+		C189640F219E9B1200CE4ABE /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				C1896410219E9B4D00CE4ABE /* UserProfileViewController.swift */,
+				C189641221A0A2B500CE4ABE /* GroupProfileViewController.swift */,
+				C1DAE22021A28DFF00F33112 /* ParticipantCell.swift */,
+			);
+			path = UserProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,7 +459,6 @@
 				C1896405218B80F300CE4ABE /* SignUp.storyboard in Resources */,
 				6DD41E4B2120C5C9002EE1F3 /* Assets.xcassets in Resources */,
 				6DD41E492120C5C8002EE1F3 /* Login.storyboard in Resources */,
-				6DA1111F21612AD100C2AA45 /* Test.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,10 +472,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,22 +513,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DD41E462120C5C8002EE1F3 /* LoginViewController.swift in Sources */,
+				C1DAE22121A28DFF00F33112 /* ParticipantCell.swift in Sources */,
+				BCFAA5F221A9C4E6009E41EE /* AddUserController.swift in Sources */,
+				C1896411219E9B4D00CE4ABE /* UserProfileViewController.swift in Sources */,
 				6DA11133216B8C2E00C2AA45 /* ChatListTableViewCell.swift in Sources */,
 				242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */,
 				6DA1112F2166737900C2AA45 /* ContactListTableViewCell.swift in Sources */,
+				6D8FB1D6219B0C7100E90D89 /* DataBase.swift in Sources */,
 				6DA1113B216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift in Sources */,
-				6DA1112121612DA600C2AA45 /* TestViewController.swift in Sources */,
 				6DA11135216B8C6D00C2AA45 /* ChatListTableViewController.swift in Sources */,
 				6DA1112D2166732000C2AA45 /* ContactListTableViewController.swift in Sources */,
 				6D2988F021935F590004199F /* TokenService.swift in Sources */,
 				6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */,
+				24392F8421B873B1003C444C /* AdaptationDBJSON.swift in Sources */,
+				BCFAA5F521A9DEF9009E41EE /* AddUserCell.swift in Sources */,
 				C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */,
+				BC35488921BE9EB700DE15CB /* CustomColors.swift in Sources */,
+				C189641321A0A2B500CE4ABE /* GroupProfileViewController.swift in Sources */,
+				6D2E38CD219B68A300059DD3 /* DBModel.swift in Sources */,
 				6DA1112521613F2500C2AA45 /* User.swift in Sources */,
+				C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */,
 				BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */,
+				C18F9D30219ABCA30039D51C /* EditProfileViewController.swift in Sources */,
 				245617422178BDB8007A9103 /* ChatViewController.swift in Sources */,
-				6DA11123216132FE00C2AA45 /* Post.swift in Sources */,
 				6DA1112A2163E8FA00C2AA45 /* NetworkServices.swift in Sources */,
-				6DA111272162B08C00C2AA45 /* Message.swift in Sources */,
+				24392F7621A1E48C003C444C /* InitAfterLogin.swift in Sources */,
+				245DE7B72196294D002596FF /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,7 +684,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N7723M4M7F;
+				DEVELOPMENT_TEAM = B2H4W42259;
 				INFOPLIST_FILE = "$(SRCROOT)/pocket-ios-client/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -607,7 +703,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N7723M4M7F;
+				DEVELOPMENT_TEAM = B2H4W42259;
 				INFOPLIST_FILE = "$(SRCROOT)/pocket-ios-client/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -93,7 +93,7 @@ class ChatListTableViewCell: UITableViewCell {
 
         containerView.addConstraintsWithFormat(format: "H:|[v0][v1(80)]-12-|", views: nameLabel, timeLabel)
         containerView.addConstraintsWithFormat(format: "V:|[v0][v1(24)]|", views: nameLabel, messageLabel)
-        containerView.addConstraintsWithFormat(format: "H:|[v0]-26-|", views: messageLabel)
+        containerView.addConstraintsWithFormat(format: "H:|[v0]-36-|", views: messageLabel)
         containerView.addConstraintsWithFormat(format: "V:|[v0(24)]", views: timeLabel)
     }
     
