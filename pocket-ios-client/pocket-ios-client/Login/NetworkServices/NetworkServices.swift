@@ -83,12 +83,10 @@ class NetworkServices {
         guard let url = urlComponents.url else {fatalError("Could not create URL from components")}
         
         // PUT request
-        
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         
         // JSON Encoder
-        
         let httpBody = ["account_name": accountName, "password": password]
         
         do {
@@ -100,7 +98,6 @@ class NetworkServices {
         }
         
         // Request и получение ответа от сервера
-        
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let task = session.dataTask(with: request) { (responseData, response, error) in
@@ -139,17 +136,13 @@ class NetworkServices {
         guard let url = urlComponents.url else {fatalError("Could not create URL from components")}
         
         //Далее GET руквест
-        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
         //Header
-        
         var header = request.allHTTPHeaderFields ?? [:]
         header["token"] = token
         request.allHTTPHeaderFields = header
-        
-        //
         
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
@@ -159,17 +152,14 @@ class NetworkServices {
                 return
             }
             let httpResponse = response as? HTTPURLResponse
-            if let statusCode = httpResponse?.statusCode, statusCode == 200 {
-                print ("statusCode = \(statusCode)")
+            if let statusCode = httpResponse?.statusCode {
                 complition(data, statusCode)
             } else {
                 print (httpResponse!.allHeaderFields)
                 complition(data, 0)
             }
-            
         }
         task.resume()
-        
     }
     
     //получаем пользователя по id
@@ -215,15 +205,46 @@ class NetworkServices {
         task.resume()
     }
     
+    //Получаем контакты
+    static func getContacts(token: String, complition: @escaping (Data, Int) -> Void) {
+        
+        //GET request
+        guard let url = URL(string: "https://pocketmsg.ru:8888/v1/users/contacts/") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        var header = request.allHTTPHeaderFields ?? [:]
+        header["token"] = token
+        request.allHTTPHeaderFields = header
+        
+        // Request и получение ответа от сервера
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: request) { (responseData, response, error) in
+            guard let data = responseData, error == nil else {
+                print("Ошибка: \(error?.localizedDescription ?? "Error")")
+                return
+            }
+            let httpResponse = response as? HTTPURLResponse
+            if let statusCode = httpResponse?.statusCode {
+                
+                complition(data, statusCode)
+            } else {
+                print (httpResponse!.allHeaderFields)
+                complition(data, 0)
+            }
+        }
+        task.resume()
+    }
+    
     //MARK: Add user by e-mail
-    static func addUserByMail(_ email: String, complition: @escaping (Data, Int) -> Void) {
+    static func addUserByMail(_ email: String, token: String, complition: @escaping (Data, Int) -> Void) {
         
         //POST request
         guard let url = URL(string: "https://pocketmsg.ru:8888/v1/users/contacts/") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         var header = request.allHTTPHeaderFields ?? [:]
-        header["token"] = TokenService.getToken(forKey: "token")!
+        header["token"] = token
         request.allHTTPHeaderFields = header
         
         // делаем JSON

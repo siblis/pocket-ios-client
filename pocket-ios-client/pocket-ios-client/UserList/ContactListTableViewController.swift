@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ContactListTableViewController: UITableViewController {
     
     let contactArray = DataBase().loadContactsList()
+    var notificationDB: NotificationToken?
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
@@ -18,6 +20,14 @@ class ContactListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationDB = DataBase().observerContacts() { (changes) in
+            switch changes {
+            case .initial, .update:
+                self.tableView.reloadData()
+            case .error(let error):
+                print(error)
+            }
+        }
         tableView.backgroundColor = UIColor.white
         tableView.rowHeight = 60
         tableView.alwaysBounceVertical = true

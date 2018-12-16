@@ -13,7 +13,7 @@ protocol AdaptationInformation {
     func saveInDB(_ smElements: [Object])
 //    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String)
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
-    func realmObserver<A: Object>(smTableDB: Results<A>, someDoing: Void) -> NotificationToken?
+    func realmObserver<A: Object>(smTableDB: Results<A>, complition: @escaping (RealmCollectionChange<Results<A>>) -> Void) -> NotificationToken?
 }
 
 class AdaptationDBJSON: AdaptationInformation {
@@ -29,7 +29,7 @@ class AdaptationDBJSON: AdaptationInformation {
 //    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String) {
 //        var smInfo = realm.objects(smTableDB.self).filter(filter)
 //        try! realm.write {
-//            smInfo = smRecord
+//            smInfo[0] = smRecord
 //        }
 //    }
     
@@ -41,14 +41,13 @@ class AdaptationDBJSON: AdaptationInformation {
         return realm.objects(smTableDB.self).filter(filter)
     }
     
-    func realmObserver<A: Object>(smTableDB: Results<A>, someDoing: Void) -> NotificationToken? {
+    func realmObserver<A: Object>(
+        smTableDB: Results<A>,
+        complition: @escaping (RealmCollectionChange<Results<A>>) -> Void
+        ) -> NotificationToken? {
+        
         return smTableDB.observe({ (changes) in
-            switch changes {
-            case .initial, .update:
-                someDoing
-            case .error(let error):
-                print(error)
-            }
+            complition(changes)
         })
     }
     

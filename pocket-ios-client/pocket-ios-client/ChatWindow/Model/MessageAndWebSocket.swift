@@ -28,7 +28,13 @@ final class MessageAndWebSocket: WebSocketDelegate {
         guard let jsonData = text.data(using: .utf8) else { return }
         do {
             let messageInOut = try JSONDecoder().decode(Message.self, from: jsonData)
-            AdaptationDBJSON().saveInDB([messageInOut])
+            let chat = Chat.init(
+                id: messageInOut.senderid,
+                chatName: messageInOut.senderName,
+                messageCount: 20,
+                messages: [messageInOut]
+            )
+            AdaptationDBJSON().saveInDB([chat])
         }
         catch let err {
             print("Err", err)
@@ -41,15 +47,21 @@ final class MessageAndWebSocket: WebSocketDelegate {
     }
     
     //MARK: Message sending
-    func sendMessage (receiver: Int, message: String) -> Message {
+    func sendMessage (receiver: ContactAccount, message: String) -> Chat {
         
         let msg = Message.init(
-            receiver: receiver,
+            receiver: receiver.uid,
             text: message,
             senderid: 78,
             senderName: "MaxSyt",
             time: NSDate().timeIntervalSince1970,
             isEnemy: false
+        )
+        let chat = Chat.init(
+            id: receiver.uid,
+            chatName: receiver.accountName,
+            messageCount: 15,
+            messages: [msg]
         )
         do {
             let jsonData = try JSONEncoder().encode(msg)
@@ -58,7 +70,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
         catch {
             print (error.localizedDescription)
         }
-        return msg
+        return chat
     }
     
     //MARK: WebSocket connecting
