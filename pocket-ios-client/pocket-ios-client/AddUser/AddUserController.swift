@@ -12,7 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class AddUserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let addButton: UIButton = {
+    var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = #colorLiteral(red: 0.2071147859, green: 0.5941259265, blue: 0.8571158051, alpha: 1)
         button.setTitle("Добавить", for: .normal)
@@ -33,9 +33,25 @@ class AddUserController: UICollectionViewController, UICollectionViewDelegateFlo
 
         // Register cell classes
         self.collectionView!.register(AddUserCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
+        addButton.addTarget(self, action: #selector(self.addContact(_:)), for: .touchUpInside)
         setupViews()
-
+    }
+    
+    @objc func addContact(_ sender: UIButton) {
+//        let cell = AddUserCell.identifi
+//        let someMail =
+//        if let token = TokenService.getToken(forKey: "token") {
+//            NetworkServices.addUserByMail(someMail, token: token) { (json, statusCode) in
+//                if statusCode == 201 {
+//                    DataBase().saveContacts(json: json)
+//                }
+//                else {
+//                    print("Error: \(statusCode)")
+//                }
+//            }
+//        } else {
+//            print("Token is empty")
+//        }
     }
     
     func setupViews() {
