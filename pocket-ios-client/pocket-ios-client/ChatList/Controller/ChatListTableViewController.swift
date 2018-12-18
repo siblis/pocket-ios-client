@@ -7,14 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
-    
-    var chatMessages: [ChatMessage]?
-    
-    
+    var chatCell = DataBase().loadChatList()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +21,7 @@ class ChatListTableViewController: UITableViewController {
         tableView.rowHeight = 100
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
-        //tableView.register(ChatListTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        
-        setupData()
+
     }
     
     
@@ -34,19 +30,16 @@ class ChatListTableViewController: UITableViewController {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let indexChat = chatMessages?[indexPath.item]
-            
-            chatField?.chatName = indexChat?.friend?.name
+            let user = DataBase().loadOneContactsList(userId: chatCell[indexPath.item].id)
+            chatField?.user = user[0]
         }
     }
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if let count = chatMessages?.count {
-           return count
-        }
-        return 0
+        return chatCell.count //FakeData.chatMessages.count
+
     }
 
 
@@ -54,23 +47,28 @@ class ChatListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatListTableViewCell
         cell.setup()
         
-        if let chatMessage = chatMessages?[indexPath.item] {
-            cell.nameLabel.text = chatMessage.friend?.name
-            if let profileImageName = chatMessage.friend?.profileImageName{
-                cell.profileImageView.image = UIImage(named: profileImageName)
-            }
-            cell.messageLabel.text = chatMessage.text
-            cell.messageCountLabel.text = chatMessage.messageCount
-            if let date = chatMessage.date {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
-                cell.timeLabel.text = dateFormatter.string(from: date as Date)
-            }
-        }
-
-        // Configure the cell...
-//        cell.setup()
-
+        let chatMessage = chatCell[indexPath.item]
+        let user = DataBase().loadOneContactsList(userId: chatMessage.id)
+        cell.nameLabel.text = user[0].accountName
+        cell.profileImageView.image = UIImage(named: user[0].avatarImage)
+        cell.messageLabel.text = chatMessage.messages.last?.text
+        cell.messageCountLabel.text = String(describing: chatMessage.messageCount)
+//        if let date = chatMessage.time {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "h:mm a"
+//            
+//            let elapsedTimeInSeconds = NSDate().timeIntervalSince(date as Date)
+//            let secondInDays: TimeInterval = 60 * 60 * 24
+//            
+//            if elapsedTimeInSeconds > 7 * secondInDays {
+//                dateFormatter.dateFormat = "dd/MM/yy"
+//            }else if elapsedTimeInSeconds > secondInDays {
+//                dateFormatter.dateFormat = "EEE"
+//            }
+//            
+//            cell.timeLabel.text = dateFormatter.string(from: date as Date)
+//        }
+        cell.timeLabel.text = chatMessage.messages.last?.time
         return cell
     }
 }

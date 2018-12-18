@@ -99,7 +99,7 @@ class UserProfileViewController: UIViewController {
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
     let screenWidth = UIScreen.main.bounds.width
     
-    var user: UserContact?
+    var user = ContactAccount()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,12 +123,12 @@ class UserProfileViewController: UIViewController {
     //настраиваем положение элементов в верхней половине экрана
     func setUpTopView () {
         self.view.addSubview(backgroundView)
-        self.view.addConstraintsWithFormat(format: "|-0-[v0]-0-|", views: backgroundView)
+        self.view.addConstraintsWithFormat(format: "[v0(\(screenWidth))]", views: backgroundView)
         self.view.addConstraintsWithFormat(format: "V:|-0-[v0(\(safeAreaTopInset + 267))]", views: backgroundView)
         
         backgroundView.addSubview(backButton)
         backgroundView.addSubview(deleteButton)
-        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-[v1(22)]-15-|", views: backButton, deleteButton)
+        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-\(screenWidth-60)-[v1(22)]-15-|", views: backButton, deleteButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(21)]", views: backButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 10)-[v0(24)]", views: deleteButton)
         
@@ -159,18 +159,10 @@ class UserProfileViewController: UIViewController {
     func setUpTopViewContents () {
         backButton.setImage(UIImage(named: "back"), for: .normal)
         deleteButton.setImage(UIImage(named: "trash"), for: .normal)
-        
-        userPhoto.image = UIImage(named: user?.avatarImage ?? "")
-        
-         if (user!.firstName + user!.lastName).replacingOccurrences(of: " ", with: "") != "" {
-            userName.text = user!.lastName + " " + user!.firstName
-        } else {
-            userName.text = user!.account_name
-        }
-        
-        userEmail.text = user!.email
-        UserId.text = user!.id
-        
+        userPhoto.image = UIImage(named: user.avatarImage)
+        userName.text = user.accountName
+        userEmail.text = user.email
+        UserId.text = String(describing: user.uid)
         chatPhoto.image = UIImage(named: "chat")
         chat.text = "Chat"
     }
@@ -190,7 +182,7 @@ class UserProfileViewController: UIViewController {
     //настраиваем содержание элементов в нижней половине экрана
     func setUpStatusViewContents () {
         status.text = "Статус:"
-        statusField.text = user!.status
+        statusField.text = ""
     }
     
     
@@ -207,8 +199,8 @@ class UserProfileViewController: UIViewController {
         let alert = UIAlertController(title: "", message: "Вы действительно хотите удалить пользователя?", preferredStyle: .alert)
         
         let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
-            let userContact = Contacts.list.firstIndex(where: {$0.id == self.user!.id})!
-            Contacts.list.remove(at: userContact)
+//            let userContact = Contacts.list.firstIndex(where: {$0.id == self.user!.uid})!
+//            Contacts.list.remove(at: userContact)
             
             let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
             

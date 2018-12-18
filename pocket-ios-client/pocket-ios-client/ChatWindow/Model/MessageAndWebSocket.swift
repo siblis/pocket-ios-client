@@ -6,14 +6,13 @@
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Starscream
 
-class MessageAndWebSocket: WebSocketDelegate {
+final class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
-    var messageInOut = [String]()
-    
+    var vc: ChatViewController!
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
@@ -26,12 +25,19 @@ class MessageAndWebSocket: WebSocketDelegate {
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("got some text: \(text)")
         
-        let decoder = JSONDecoder()
-        if let jsonData = text.data(using: .utf8) {
-            let message = try? decoder.decode(Message.self, from: jsonData)
-            if let msg = message?.text, let sndID = message?.receiver {
-                messageInOut.append("\(sndID): \(msg)")
-            }
+        guard let jsonData = text.data(using: .utf8) else { return }
+        do {
+            let messageInOut = try JSONDecoder().decode(Message.self, from: jsonData)
+            let chat = Chat.init(
+                id: messageInOut.senderid,
+                chatName: messageInOut.senderName,
+                messageCount: 20,
+                messages: [messageInOut]
+            )
+            AdaptationDBJSON().saveInDB([chat])
+        }
+        catch let err {
+            print("Err", err)
         }
     }
     
@@ -41,18 +47,30 @@ class MessageAndWebSocket: WebSocketDelegate {
     }
     
     //MARK: Message sending
-    func sendMessage (receiver: Int, message: String) {
-        messageInOut.append("Я: \(message)")
-        let encoder = JSONEncoder()
-        let message = Message(receiver: "\(receiver)", text: message, senderid: 78, senderName: "MaxSyt", time: 0, isSender: false)
+    func sendMessage (receiver: ContactAccount, message: String) -> Chat {
         
+        let msg = Message.init(
+            receiver: receiver.uid,
+            text: message,
+            senderid: 78,
+            senderName: "MaxSyt",
+            time: NSDate().timeIntervalSince1970,
+            isEnemy: false
+        )
+        let chat = Chat.init(
+            id: receiver.uid,
+            chatName: receiver.accountName,
+            messageCount: 15,
+            messages: [msg]
+        )
         do {
-            let jsonData = try encoder.encode(message)
+            let jsonData = try JSONEncoder().encode(msg)
             socket.write(data: jsonData)
         }
         catch {
             print (error.localizedDescription)
         }
+        return chat
     }
     
     //MARK: WebSocket connecting
@@ -66,6 +84,9 @@ class MessageAndWebSocket: WebSocketDelegate {
         self.socket = WebSocket(request: request)
         socket.delegate = self
         socket.connect()
-        
     }
+}
+
+class WSS {
+    static let initial = MessageAndWebSocket()
 }

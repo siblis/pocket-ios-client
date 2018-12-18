@@ -18,51 +18,27 @@ class ApplicationSwitcherRC {
     }
     
     static func choiseRootVC() {
-        
         let token = TokenService.getToken(forKey: "token")
-        print (UserSelf.account_name + " " + UserSelf.email + " " + UserSelf.password)
-        
         if token != nil {
-            NetworkServices.getSelfUser(token: token!) { (json, statusCode) in
-                
-                if statusCode == 200 {
-                    
-                    DataBase.saveSelfUser(json: json)
-                    DataBase.instance.loadAllContactsFromDB(keyId: UserSelf.uid)
-                    
-                    DispatchQueue.main.async {
-                        choiceVC(choiseVC: .tabbar)
-                    }
-                }
-                else {
-                    //Костыль на случай протухания токена
-                    TokenService.setToken(token: nil, forKey: "token")
-                    DispatchQueue.main.async {
-                        choiceVC(choiseVC: .login)
-                    }
-                }
-            }
+            initVC(choiseVC: .tabbar)
         }
-
         else {
-            choiceVC(choiseVC: .login)
+            initVC(choiseVC: .login)
         }
     }
     
     static func ifServerDown() {
-        
-        choiceVC(choiseVC: .tabbar)
-        
+        initVC(choiseVC: .tabbar)
     }
     
-    static func choiceVC(choiseVC: ChoiceRootVC) {
+    static func initVC(choiseVC: ChoiceRootVC) {
         let initVC = UIStoryboard.init(name: "Login", bundle: nil)
         
         switch choiseVC {
         case .login:
             rootVC = initVC.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         case .tabbar:
-            rootVC = initVC.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+            rootVC = initVC.instantiateViewController(withIdentifier: "TabBarController") as! InitAfterLogin            
         }
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
