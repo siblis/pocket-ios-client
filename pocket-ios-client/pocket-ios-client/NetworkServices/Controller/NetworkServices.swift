@@ -11,17 +11,15 @@ import UIKit
 class NetworkServices {
     
     //функция регистрации пользователей
-    static func signUp(accountName: String, email: String, password: String, complition: @escaping (String, Int) -> Void) {
+    static func signUp(accountName: String, email: String, password: String, complition: @escaping (Data, Int) -> Void) {
         
         //POST request
         let url = URL(string: "https://pocketmsg.ru:8888/v1/auth/register/")
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
 
-        
         // делаем JSON
         let httpBody = ["account_name": accountName, "email": email, "password": password]
-        
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
             print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
@@ -42,29 +40,7 @@ class NetworkServices {
             let httpResponse = response as? HTTPURLResponse
             if httpResponse != nil {
                 let statusCode = httpResponse!.statusCode
-                print (statusCode)
-                
-                //проверяем статус ответа
-                if statusCode == 201 {
-                    var json: [String: String] = [:]
-                    do {
-                        json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
-                        print (json)
-                        complition(json["token"] ?? "", statusCode)
-                    } catch {
-                        print(error.localizedDescription)
-                        complition("", statusCode)
-                    }
-                } else if statusCode == 409 {
-                    print ("user is already registered")
-                    complition("", statusCode)
-                } else if statusCode == 400 {
-                    print ("bad JSON")
-                    complition("", statusCode)
-                } else {
-                    print ("unknown error, status code = \(statusCode)")
-                    complition("", statusCode)
-                }
+                complition(data, statusCode)
             } else {
                 print (httpResponse!.allHeaderFields)
             }
