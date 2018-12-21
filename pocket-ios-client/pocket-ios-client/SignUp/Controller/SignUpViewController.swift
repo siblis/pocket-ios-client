@@ -24,7 +24,7 @@ class SignUpViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    var user: User!
+    var user = User()
     var selfInfo = SelfAccount()
     
     override func viewDidLoad() {
@@ -46,32 +46,22 @@ class SignUpViewController: UIViewController {
         selfInfo.email = email
         selfInfo.password = password
         
-        NetworkServices.signUp(accountName: accountName, email: email, password: password) { (token, statusCode) in
-            if (token != "") && (statusCode == 201) {
-                Token.token = token
-                AdaptationDBJSON().saveInDB([self.selfInfo])
+        NetworkServices.signUp(accountName: accountName, email: email, password: password) { (json, statusCode) in
+            if statusCode == 201 {
+                do {
+                    let signUpInfo = try JSONDecoder().decode(SignUpResponse.self, from: json)
+                    Token.token = signUpInfo.token
+                    self.selfInfo.uid = signUpInfo.uid
+                    AdaptationDBJSON().saveInDB([self.selfInfo])
+                }
+                catch let err {
+                    print("Err", err)
+                }
                 DispatchQueue.main.async {
                     ApplicationSwitcherRC.initVC(choiseVC: .tabbar)
                 }
-            }
-            else {
-                if statusCode == 409 {
-                    print ("user already exists")
-                    DispatchQueue.main.async {
-                        self.showErrorAlert(message: "Пользователь уже существует")
-                    }
-                } else if statusCode == 400 {
-                    print ("bad JSON")
-                    DispatchQueue.main.async {
-                        self.showErrorAlert(message: "Не все поля заполнены")
-                    }
-                } else {
-                    print ("signUp error")
-                    DispatchQueue.main.async {
-                        self.showErrorAlert(message: "Ошибка соединения с сервером")
-                    }
-                }
-                
+            } else {
+                self.showErrorAlert(message: String(describing: statusCode))
             }
         }
     }

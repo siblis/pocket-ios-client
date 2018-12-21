@@ -26,12 +26,12 @@ class AdaptationDBJSON: AdaptationInformation {
         }
     }
     
-//    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String) {
-//        var smInfo = realm.objects(smTableDB.self).filter(filter)
-//        try! realm.write {
-//            smInfo[0] = smRecord
-//        }
-//    }
+    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String) {
+        let smInfo = realm.objects(smTableDB.self).filter(filter)
+        try! realm.write {
+            realm.add(smRecord, update: true)
+        }
+    }
     
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A> {
        return realm.objects(smTableDB.self)

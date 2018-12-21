@@ -39,29 +39,11 @@ class DataBase {
     }
     
     func saveContacts(json: Data) {
-//        do {
-//            let contactInfo = try JSONDecoder().decode([ContactAccount].self, from: json)
-//            AdaptationDBJSON().saveInDB(contactInfo)
-//        }
-//        catch let err {
-//            print("Err", err)
-//        }
         let selfInfo = loadSelfUser()
         do {
-            let data = try JSONSerialization.jsonObject(with: json, options: JSONSerialization.ReadingOptions()) as! [String: [String: Any]]
-            for i in data {
-                let contacts = loadContactsList()
-                var check: Int = 0
-                for j in contacts { check = i.key == j.email ? check + 1 : check + 0 }
-                if (i.value["email"] as! String) != selfInfo.email && check == 0 {
-                    let contact = ContactAccount.init(
-                        uid: i.value["user_id"] as! Int,
-                        accountName: i.value["account_name"] as! String,
-                        email: i.value["email"] as! String
-                    )
-                    AdaptationDBJSON().saveInDB([contact])
-                }
-            }
+            let data = try JSONDecoder().decode([ContactAccount].self, from: json)
+            let contacts = data.filter { $0.email != selfInfo.email }
+            AdaptationDBJSON().saveInDB(contacts)
         } catch {
             print(error.localizedDescription)
         }
