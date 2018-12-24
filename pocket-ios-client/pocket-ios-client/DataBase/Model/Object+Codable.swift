@@ -1,8 +1,8 @@
 //
-//  DataBaseModel.swift
+//  Object+Codable.swift
 //  pocket-ios-client
 //
-//  Created by Damien on 13/11/2018.
+//  Created by Mak on 13/11/2018.
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
