@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 
 class AddUserController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
@@ -103,7 +102,7 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
                 print ("Searching by nickname...")
                 NetworkServices.getUserByNickname(nickname: searchText, token: token) { (data, statusCode) in
                     if statusCode == 200 {
-                        print (JSON(data))
+//                        print (JSON(data))
                         var json: [String: [String:String]] = [:]
                         do {
                             json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: [String:String]]

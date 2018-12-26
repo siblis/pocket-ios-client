@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import SwiftyJSON
 
 struct Token {
     
@@ -97,12 +96,7 @@ class ContactAccount: Object, Codable {
         let email = try container.decode(String.self, forKey: .email)
         self.init(uid: uid, accountName: accountName, email: email)
     }
-    
-    public required convenience init(json: JSON) {
-        self.init()
-        
-        
-    }
+
 }
 
 //MARK: Модель групп ()
