@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class UserProfileViewController: UIViewController {
 
@@ -100,6 +101,8 @@ class UserProfileViewController: UIViewController {
     let screenWidth = UIScreen.main.bounds.width
     
     var user = ContactAccount()
+    var contactArray: Results<ContactAccount>?
+    let myGroup = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +117,10 @@ class UserProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        myGroup.enter()
+        self.contactArray = DataBase().loadContactsList()
+        print("load contacts")
+        myGroup.leave()
         setUpTopViewContents()
         setUpStatusViewContents()
     }
@@ -158,7 +164,14 @@ class UserProfileViewController: UIViewController {
     //настраиваем содержание элементов в верхней половине экрана
     func setUpTopViewContents () {
         backButton.setImage(UIImage(named: "back"), for: .normal)
-        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
+        if contactArray!.contains(where: {$0.uid == user.uid}) {
+            deleteButton.setImage(UIImage(named: "trash"), for: .normal)
+            print ("trash")
+        } else {
+            deleteButton.setImage(UIImage(named: "add"), for: .normal)
+            print ("add")
+        }
+        
         userPhoto.image = UIImage(named: user.avatarImage)
         userName.text = user.accountName
         userEmail.text = user.email
