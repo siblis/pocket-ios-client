@@ -9,7 +9,6 @@
 import Foundation
 import RealmSwift
 
-
 struct Token {
     
     static var token = TokenService.getToken(forKey: "token") {
@@ -97,6 +96,7 @@ class ContactAccount: Object, Codable {
         let email = try container.decode(String.self, forKey: .email)
         self.init(uid: uid, accountName: accountName, email: email)
     }
+
 }
 
 //MARK: Модель групп ()

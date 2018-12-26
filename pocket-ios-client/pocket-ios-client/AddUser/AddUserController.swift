@@ -2,90 +2,140 @@
 //  AddUserController.swift
 //  pocket-ios-client
 //
-//  Created by Юлия Чащина on 24/11/2018.
+//  Created by Anya on 24/12/2018.
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
-class AddUserController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
-    var addButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = #colorLiteral(red: 0.2071147859, green: 0.5941259265, blue: 0.8571158051, alpha: 1)
-        button.setTitle("Добавить", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.layer.cornerRadius = 10
-        return button
-    }()
+class AddUserController: UITableViewController, UISearchBarDelegate {
+    @IBOutlet weak var searchBar: UISearchBar!
+    var users: [ContactAccount] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
-        collectionView.alwaysBounceVertical = true
-        title = "Новый контакт"
-
-        // Register cell classes
-        self.collectionView!.register(AddUserCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        addButton.addTarget(self, action: #selector(self.addContact(_:)), for: .touchUpInside)
-        setupViews()
-    }
-    
-    @objc func addContact(_ sender: UIButton) {
-//        let cell = AddUserCell.identifi
-//        let someMail =
-//        if let token = TokenService.getToken(forKey: "token") {
-//            NetworkServices.addUserByMail(someMail, token: token) { (json, statusCode) in
-//                if statusCode == 201 {
-//                    DataBase().saveContacts(json: json)
-//                }
-//                else {
-//                    print("Error: \(statusCode)")
-//                }
-//            }
-//        } else {
-//            print("Token is empty")
-//        }
-    }
-    
-    func setupViews() {
         
-        view.addSubview(addButton)
-        let centralXConstraint = NSLayoutConstraint(item: addButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-        let centralYConstraint = NSLayoutConstraint(item: addButton, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: -100)
-        view.addConstraint(centralXConstraint)
-        view.addConstraint(centralYConstraint)
+        searchBar.delegate = self
+        searchBar.returnKeyType = UIReturnKeyType.done
+        searchBar.layer.borderColor = UIColor.lightGray.cgColor
+        searchBar.layer.borderWidth = 1
+
+        tableView.rowHeight = 50
     }
 
+    // MARK: - Table view data source
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 1
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return users.count
     }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        cell.setUp()
+        cell.configure(user: users[indexPath.row])
+
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 150)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        users.removeAll()
+        let searchText = searchBar.text!
+        let digitSet = CharacterSet.decimalDigits
+        
+        if let token = TokenService.getToken(forKey: "token") {
+            print(token)
+            if searchText.contains("@") {
+                print ("Searching by email...")
+                NetworkServices.getUserByEmail(email: searchText, token: token) { (data, statusCode) in
+                    if statusCode == 200 {
+                        do {
+                            let user = try JSONDecoder().decode(ContactAccount.self, from: data)
+                            print (user)
+                            self.users.append(user)
+                        }
+                        catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    else {
+                        print ("Status code: \(statusCode)")
+                    }
+                    
+                    print ("users: \(self.users)")
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            } else if digitSet.contains(searchText.unicodeScalars.first!) {
+                print ("Searching by id...")
+                if let id = Int(searchText) {
+                    NetworkServices.getUser(id: id, token: token) { (data, statusCode) in
+                        if statusCode == 200 {
+                            do {
+                                let user = try JSONDecoder().decode(ContactAccount.self, from: data)
+                                print (user)
+                                self.users.append(user)
+                            }
+                            catch {
+                                print(error.localizedDescription)
+                            }
+                        }
+                        else {
+                            print ("Status code: \(statusCode)")
+                        }
+                        
+                        print ("users: \(self.users)")
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
+                
+            } else {
+                print ("Searching by nickname...")
+                NetworkServices.getUserByNickname(nickname: searchText, token: token) { (data, statusCode) in
+                    if statusCode == 200 {
+//                        print (JSON(data))
+                        var json: [String: [String:String]] = [:]
+                        do {
+                            json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: [String:String]]
+                            for element in json {
+                                let user = ContactAccount(uid: Int(element.key) ?? 0, accountName: element.value["account_name"] ?? "", email: element.value["email"] ?? "")
+                                self.users.append(user)
+                            }
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    else {
+                        print ("Status code: \(statusCode)")
+                    }
+
+                    print ("users: \(self.users)")
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+            
+        }
+        
     }
     
-}
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSelectedUserDetails" {
+            let userDetails = segue.destination as? UserProfileViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                userDetails!.user = users[indexPath.row]
+            }
+        }
+    }
 
+}
