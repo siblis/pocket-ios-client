@@ -324,4 +324,46 @@ class NetworkServices {
         }
         task.resume()
     }
+    
+    //Delete user by e-mail
+    static func deleteUserByMail(_ email: String, token: String, complition: @escaping (Data, Int) -> Void) {
+        
+        //POST request
+        guard let url = URL(string: "https://pocketmsg.ru:8888/v1/account/contacts/") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        var header = request.allHTTPHeaderFields ?? [:]
+        header["token"] = token
+        request.allHTTPHeaderFields = header
+        
+        // делаем JSON
+        let httpBody = ["contact": email]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
+            print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
+        }
+        catch {
+            print (error.localizedDescription)
+        }
+        
+        // Request и получение ответа от сервера
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: request) { (responseData, response, error) in
+            guard let data = responseData, error == nil else {
+                print("Ошибка: \(error?.localizedDescription ?? "Error")")
+                return
+            }
+            let httpResponse = response as? HTTPURLResponse
+            if let statusCode = httpResponse?.statusCode, statusCode == 201 {
+                print ("statusCode = \(statusCode)")
+                complition(data, statusCode)
+            } else {
+                print (httpResponse!.allHeaderFields)
+                complition(data, 0)
+            }
+        }
+        task.resume()
+    }
 }

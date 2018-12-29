@@ -26,6 +26,18 @@ class AdaptationDBJSON: AdaptationInformation {
         }
     }
     
+    func deleteContactFromDB (_ contact: ContactAccount) {
+        do {
+            realm.beginWrite()
+            let contact = realm.object(ofType: ContactAccount.self, forPrimaryKey: contact.uid)
+            realm.delete(contact!)
+            try realm.commitWrite()
+            print ("realm delete")
+        } catch {
+            print (error.localizedDescription)
+        }
+    }
+    
     func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String) {
         let smInfo = realm.objects(smTableDB.self).filter(filter)
         try! realm.write {
