@@ -12,29 +12,39 @@ class ApplicationSwitcherRC {
     
     static var rootVC: UIViewController!
     
-    enum ChoiceRootVC {
+    enum UploadVC {
         case login
         case tabbar
     }
     
-    static func choiseRootVC() {
-        let token = TokenService.getToken(forKey: "token")
-        if token != nil {
-            initVC(choiseVC: .tabbar)
+    static func choiceRootVC() {
+        if let token = TokenService.getToken(forKey: "token") {
+            NetworkServices.getSelfUser(token: token) { (json, statusCode) in
+                if statusCode == 200 {
+                    DataBase().saveSelfUser(json: json)
+                }
+                else {
+                    //На случай протухания токена
+                    CorrectionMethods().autoLogIn()
+                }
+                DispatchQueue.main.async {
+                    self.initVC(choiceVC: .tabbar)
+                }
+            }
         }
         else {
-            initVC(choiseVC: .login)
+            initVC(choiceVC: .login)
         }
     }
     
     static func ifServerDown() {
-        initVC(choiseVC: .tabbar)
+        initVC(choiceVC: .tabbar)
     }
     
-    static func initVC(choiseVC: ChoiceRootVC) {
+    static func initVC(choiceVC: UploadVC) {
         let initVC = UIStoryboard.init(name: "Login", bundle: nil)
         
-        switch choiseVC {
+        switch choiceVC {
         case .login:
             rootVC = initVC.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         case .tabbar:

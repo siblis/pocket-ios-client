@@ -50,7 +50,6 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         let digitSet = CharacterSet.decimalDigits
         
         if let token = TokenService.getToken(forKey: "token") {
-            print(token)
             if searchText.contains("@") {
                 print ("Searching by email...")
                 NetworkServices.getUserByEmail(email: searchText, token: token) { (data, statusCode) in
@@ -103,9 +102,8 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
                 NetworkServices.getUserByNickname(nickname: searchText, token: token) { (data, statusCode) in
                     if statusCode == 200 {
 //                        print (JSON(data))
-                        var json: [String: [String:String]] = [:]
                         do {
-                            json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: [String:String]]
+                            let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: [String:String]]
                             for element in json {
                                 let user = ContactAccount(uid: Int(element.key) ?? 0, accountName: element.value["account_name"] ?? "", email: element.value["email"] ?? "")
                                 self.users.append(user)
