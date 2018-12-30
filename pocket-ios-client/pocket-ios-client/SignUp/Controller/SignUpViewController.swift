@@ -24,9 +24,6 @@ class SignUpViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    var user = User()
-    var selfInfo = SelfAccount()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,23 +39,25 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        selfInfo.accountName = accountName
-        selfInfo.email = email
-        selfInfo.password = password
-        
         NetworkServices.signUp(accountName: accountName, email: email, password: password) { (json, statusCode) in
             if statusCode == 201 {
                 do {
                     let signUpInfo = try JSONDecoder().decode(SignUpResponse.self, from: json)
                     Token.token = signUpInfo.token
-                    self.selfInfo.uid = signUpInfo.uid
-                    AdaptationDBJSON().saveInDB([self.selfInfo])
+                    let selfInfo = SelfAccount.init(
+                        uid: signUpInfo.uid,
+                        accountName: accountName,
+                        email: email,
+                        password: password
+                    )
+                    
+                    AdaptationDBJSON().saveInDB([selfInfo])
                 }
                 catch let err {
                     print("Err", err)
                 }
                 DispatchQueue.main.async {
-                    ApplicationSwitcherRC.initVC(choiseVC: .tabbar)
+                    ApplicationSwitcherRC.initVC(choiceVC: .tabbar)
                 }
             } else {
                 self.showErrorAlert(message: String(describing: statusCode))

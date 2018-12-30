@@ -26,6 +26,12 @@ class AdaptationDBJSON: AdaptationInformation {
         }
     }
     
+    func deleteAllRecords() {
+        try! realm.write {
+            realm.deleteAll()
+        }
+    }
+    
     func deleteContactFromDB (_ contact: ContactAccount) {
         do {
             realm.beginWrite()

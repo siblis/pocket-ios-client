@@ -48,7 +48,7 @@ class NetworkServices {
         task.resume()
     }
     
-    static func login(accountName: String, password: String, complition: @escaping (String) -> Void) {
+    static func login(accountName: String, password: String, complition: @escaping (String?) -> Void) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -67,7 +67,6 @@ class NetworkServices {
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
-            print("jsondata: ", String(data: request.httpBody!, encoding: .utf8) ?? "No body data")
         }
         catch {
             print (error.localizedDescription)
@@ -83,15 +82,12 @@ class NetworkServices {
                 return}
             
             if let data = responseData, let uft8Representation = String(data: data, encoding: .utf8) {
-                print("Сообщение сервера: \(uft8Representation)")
-                
-                var json: [String: String] = [:]
                 do {
-                    json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
+                    let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: String]
                     complition(json["token"] ?? "")
                 } catch {
                     print(error.localizedDescription)
-                    complition("")
+                    complition(nil)
                 }
             }
             else {

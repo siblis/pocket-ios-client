@@ -158,7 +158,6 @@
                         <outlet property="scrollView" destination="sJT-ew-rbE" id="fV7-x8-GnR"/>
                         <outlet property="signInButton" destination="epA-e5-Stc" id="F8g-fb-S5E"/>
                         <outlet property="singUpButton" destination="87K-wJ-ABt" id="1fq-5K-FvS"/>
-                        <segue destination="KpO-BY-a84" kind="show" identifier="UserListSegue" id="PhZ-Q3-NTE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

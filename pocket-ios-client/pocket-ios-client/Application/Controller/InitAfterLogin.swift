@@ -16,18 +16,6 @@ class InitAfterLogin: UITabBarController {
 
         if let token = TokenService.getToken(forKey: "token") {
         //Блок инициализации начальных данных
-            NetworkServices.getSelfUser(token: token) { (json, statusCode) in
-                if statusCode == 200 {
-                    DataBase().saveSelfUser(json: json)
-                }
-                else {
-                    //Костыль на случай протухания токена
-                    TokenService.setToken(token: nil, forKey: "token")
-                    DispatchQueue.main.async {
-                        ApplicationSwitcherRC.initVC(choiseVC: .login)
-                    }
-                }
-            }
             NetworkServices.getContacts(token: token) { (json, statusCode) in
                 if statusCode == 200 {
                     WSS.initial.webSocketConnect()

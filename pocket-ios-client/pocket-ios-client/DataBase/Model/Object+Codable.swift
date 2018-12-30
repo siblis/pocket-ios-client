@@ -44,6 +44,19 @@ class SelfAccount: Object, Codable {
     public convenience init(
         uid: Int,
         accountName: String,
+        email: String,
+        password: String
+        ){
+        self.init()
+        self.uid = uid
+        self.accountName = accountName
+        self.email = email
+        self.password = password
+    }
+    
+    public convenience init(
+        uid: Int,
+        accountName: String,
         email: String
         ){
         self.init()
