@@ -22,7 +22,6 @@ class LoginViewController: UIViewController {
    
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var user: User!
     var selfInfo = SelfAccount()
 
     override func viewDidLoad() {
@@ -47,9 +46,7 @@ class LoginViewController: UIViewController {
             if token != "" {
                 AdaptationDBJSON().saveInDB([self.selfInfo])
                 Token.token = token
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "UserListSegue", sender: nil)
-                }
+                ApplicationSwitcherRC.choiceRootVC()
             }
         }
     }

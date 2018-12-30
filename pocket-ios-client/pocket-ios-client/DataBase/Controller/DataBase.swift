@@ -2,7 +2,7 @@
 //  DataBase.swift
 //  pocket-ios-client
 //
-//  Created by Damien on 13/11/2018.
+//  Created by Mak on 05/12/2018.
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
@@ -13,8 +13,15 @@ class DataBase {
     
     func saveSelfUser(json: Data) {
         do {
-            let selfInfo = try JSONDecoder().decode(SelfAccount.self, from: json)
-            AdaptationDBJSON().saveInDB([selfInfo])
+            let sJSON = try JSONDecoder().decode(SelfAccount.self, from: json)
+            let sDB = loadSelfUser()
+            let selfInf = SelfAccount.init(
+                uid: sJSON.uid,
+                accountName: sDB.accountName,
+                email: sJSON.email,
+                password: sDB.password
+            )
+            AdaptationDBJSON().saveInDB([selfInf])
         }
         catch let err {
             print("Err", err)

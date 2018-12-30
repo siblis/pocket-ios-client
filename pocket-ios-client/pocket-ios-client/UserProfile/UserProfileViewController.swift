@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class UserProfileViewController: UIViewController {
 
@@ -17,7 +18,7 @@ class UserProfileViewController: UIViewController {
         return button
     }()
     
-    let deleteButton:UIButton = {
+    let addDeleteButton:UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFill
         button.imageView?.layer.masksToBounds = true
@@ -100,6 +101,9 @@ class UserProfileViewController: UIViewController {
     let screenWidth = UIScreen.main.bounds.width
     
     var user = ContactAccount()
+    var contactArray: Results<ContactAccount>?
+    let myGroup = DispatchGroup()
+    var isContact = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,12 +113,20 @@ class UserProfileViewController: UIViewController {
         setUpStatusView()
         
         backButton.addTarget(self, action: #selector(back(_:)), for: .touchUpInside)
-        deleteButton.addTarget(self, action: #selector(deleteUser(_:)), for: .touchUpInside)
+        addDeleteButton.addTarget(self, action: #selector(addDeleteBtnTap(_:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        myGroup.enter()
+        self.contactArray = DataBase().loadContactsList()
+        print("load contacts")
+        myGroup.leave()
+        if contactArray!.contains(where: {$0.uid == user.uid}) {
+            isContact = true
+        } else {
+            isContact = false
+        }
         setUpTopViewContents()
         setUpStatusViewContents()
     }
@@ -127,10 +139,10 @@ class UserProfileViewController: UIViewController {
         self.view.addConstraintsWithFormat(format: "V:|-0-[v0(\(safeAreaTopInset + 267))]", views: backgroundView)
         
         backgroundView.addSubview(backButton)
-        backgroundView.addSubview(deleteButton)
-        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-\(screenWidth-60)-[v1(22)]-15-|", views: backButton, deleteButton)
+        backgroundView.addSubview(addDeleteButton)
+        self.view.addConstraintsWithFormat(format: "|-10-[v0(13)]-\(screenWidth-60)-[v1(22)]-15-|", views: backButton, addDeleteButton)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(21)]", views: backButton)
-        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 10)-[v0(24)]", views: deleteButton)
+        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 10)-[v0(24)]", views: addDeleteButton)
         
         backgroundView.addSubview(userPhoto)
         backgroundView.addConstraintsWithFormat(format: "[v0(86)]", views: userPhoto)
@@ -158,7 +170,14 @@ class UserProfileViewController: UIViewController {
     //настраиваем содержание элементов в верхней половине экрана
     func setUpTopViewContents () {
         backButton.setImage(UIImage(named: "back"), for: .normal)
-        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
+        if isContact {
+            addDeleteButton.setImage(UIImage(named: "trash"), for: .normal)
+            print ("trash")
+        } else {
+            addDeleteButton.setImage(UIImage(named: "add"), for: .normal)
+            print ("add")
+        }
+        
         userPhoto.image = UIImage(named: user.avatarImage)
         userName.text = user.accountName
         userEmail.text = user.email
@@ -190,8 +209,25 @@ class UserProfileViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func deleteUser (_ sender: UIButton) {
-        showDeleteAlert()
+    @objc func addDeleteBtnTap (_ sender: UIButton) {
+        if isContact {
+            showDeleteAlert()
+        } else {
+            if let token = TokenService.getToken(forKey: "token") {
+                NetworkServices.addUserByMail(user.email, token: token) { (data, statusCode) in
+                    if statusCode == 201 {
+                        print ("success")
+                    }
+                    else {
+                        print ("Status code: \(statusCode)")
+                    }
+                }
+            }
+            
+            let contacts: [Object] = [user]
+            AdaptationDBJSON().saveInDB(contacts)
+            showAddAlert()
+        }
     }
 
     //алерт с удалением
@@ -199,16 +235,35 @@ class UserProfileViewController: UIViewController {
         let alert = UIAlertController(title: "", message: "Вы действительно хотите удалить пользователя?", preferredStyle: .alert)
         
         let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
-//            let userContact = Contacts.list.firstIndex(where: {$0.id == self.user!.uid})!
-//            Contacts.list.remove(at: userContact)
+            if let token = TokenService.getToken(forKey: "token") {
+                NetworkServices.deleteUserByMail(self.user.email, token: token) { (data, statusCode) in
+                    if statusCode == 200 {
+                        print ("success")
+                    }
+                    else {
+                        print ("Status code: \(statusCode)")
+                    }
+                }
+            }
+
+            AdaptationDBJSON().deleteContactFromDB(self.user)
             
-            let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-            
-            self.present(tabBarVC, animated:true, completion:nil)
+//            let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+//
+//            self.present(tabBarVC, animated:true, completion:nil)
         })
         let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
         alert.addAction(actionYes)
         alert.addAction(actionNo)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    //алерт с добавлением
+    func showAddAlert () {
+        let alert = UIAlertController(title: "Пользователь добавлен", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
 }

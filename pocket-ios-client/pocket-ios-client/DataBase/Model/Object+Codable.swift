@@ -9,7 +9,6 @@
 import Foundation
 import RealmSwift
 
-
 struct Token {
     
     static var token = TokenService.getToken(forKey: "token") {
@@ -40,6 +39,19 @@ class SelfAccount: Object, Codable {
         case uid = "user_id"
         case accountName = "account_name"
         case email = "email"
+    }
+    
+    public convenience init(
+        uid: Int,
+        accountName: String,
+        email: String,
+        password: String
+        ){
+        self.init()
+        self.uid = uid
+        self.accountName = accountName
+        self.email = email
+        self.password = password
     }
     
     public convenience init(
@@ -97,6 +109,7 @@ class ContactAccount: Object, Codable {
         let email = try container.decode(String.self, forKey: .email)
         self.init(uid: uid, accountName: accountName, email: email)
     }
+
 }
 
 //MARK: Модель групп ()
