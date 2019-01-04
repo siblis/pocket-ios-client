@@ -26,7 +26,7 @@ class GroupProfileViewController: UIViewController {
     
     let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.98, green:0.98, blue:1.00, alpha:1.0)
+        view.backgroundColor = UIColor.backPrimary
         return view
     }()
     
@@ -42,7 +42,7 @@ class GroupProfileViewController: UIViewController {
     let groupName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -50,7 +50,7 @@ class GroupProfileViewController: UIViewController {
     let groupId: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textSecondary
         label.textAlignment = .center
         return label
     }()
@@ -58,7 +58,7 @@ class GroupProfileViewController: UIViewController {
     let participantsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -107,13 +107,13 @@ class GroupProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: groupName)
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: groupId)
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 176), endY:  Int(safeAreaTopInset + 176), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
+        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 176), endY:  Int(safeAreaTopInset + 176), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
         backgroundView.addSubview(participantsLabel)
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: participantsLabel)
         backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-3-[v2(15)]-19-[v3(24)]", views: groupPhoto, groupName, groupId, participantsLabel)
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 227), endY:  Int(safeAreaTopInset + 227), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
+        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 227), endY:  Int(safeAreaTopInset + 227), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
     }
     

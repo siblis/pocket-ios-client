@@ -17,7 +17,7 @@ class ChatListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        tableView.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = 100
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
@@ -38,7 +38,7 @@ class ChatListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return chatCell.count //FakeData.chatMessages.count
+        return chatCell.count
 
     }
 
@@ -51,24 +51,13 @@ class ChatListTableViewController: UITableViewController {
         let user = DataBase().loadOneContactsList(userId: chatMessage.id)
         cell.nameLabel.text = user[0].accountName
         cell.profileImageView.image = UIImage(named: user[0].avatarImage)
-        cell.messageLabel.text = chatMessage.messages.last?.text
+        if let sender = chatMessage.messages.last?.senderName, let msg = chatMessage.messages.last?.text {
+            cell.messageLabel.text = "\(sender): \(msg)"
+        }
         cell.messageCountLabel.text = String(describing: chatMessage.messageCount)
-//        if let date = chatMessage.time {
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "h:mm a"
-//            
-//            let elapsedTimeInSeconds = NSDate().timeIntervalSince(date as Date)
-//            let secondInDays: TimeInterval = 60 * 60 * 24
-//            
-//            if elapsedTimeInSeconds > 7 * secondInDays {
-//                dateFormatter.dateFormat = "dd/MM/yy"
-//            }else if elapsedTimeInSeconds > secondInDays {
-//                dateFormatter.dateFormat = "EEE"
-//            }
-//            
-//            cell.timeLabel.text = dateFormatter.string(from: date as Date)
-//        }
-        cell.timeLabel.text = chatMessage.messages.last?.time
+        if let date = chatMessage.messages.last?.time {
+            cell.timeLabel.text = CorrectionMethods().dateFormater(date)
+        }
         return cell
     }
 }

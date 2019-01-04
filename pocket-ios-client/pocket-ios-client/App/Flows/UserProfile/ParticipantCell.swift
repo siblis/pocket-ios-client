@@ -12,7 +12,7 @@ class ParticipantCell: UITableViewCell {
     
     let onlineStatusView: UIView = {
         let statusView = UIView()
-        statusView.backgroundColor = UIColor.gray
+        statusView.backgroundColor = UIColor.statusOffLine
         statusView.layer.cornerRadius = 5
         statusView.layer.masksToBounds = true
         return statusView
@@ -21,7 +21,7 @@ class ParticipantCell: UITableViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .left
         return label
     }()

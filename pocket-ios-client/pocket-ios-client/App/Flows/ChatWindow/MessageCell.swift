@@ -15,7 +15,7 @@ class MessageCell: BaseCell {
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.text = "Sample message"
         textView.isUserInteractionEnabled = false
-        textView.backgroundColor = UIColor.clear
+        textView.backgroundColor = UIColor.backPrimary
         return textView
     }()
     
@@ -38,8 +38,6 @@ class MessageCell: BaseCell {
     override func setupViews() {
         super.setupViews()
         
-
-        
         addSubview(textBubbleView)
         addSubview(messageTextView)
         textBubbleView.addSubview(bubbleImageView)
@@ -47,8 +45,6 @@ class MessageCell: BaseCell {
         textBubbleView.addConstraintsWithFormat(format: "V:|[v0]|", views: bubbleImageView)
 
     }
-    
-    
 }
 
 class BaseCell: UICollectionViewCell {

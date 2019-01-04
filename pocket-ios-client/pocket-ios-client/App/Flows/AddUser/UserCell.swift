@@ -26,14 +26,14 @@ class UserCell: UITableViewCell {
     
     let emailLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.textSecondary
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
     let idLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.textSecondary
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .right
         return label
