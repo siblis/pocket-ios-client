@@ -11,21 +11,16 @@ import RealmSwift
 
 class DataBase {
     
-    func saveSelfUser(json: Data) {
-        do {
-            let sJSON = try JSONDecoder().decode(SelfAccount.self, from: json)
-            let sDB = loadSelfUser()
-            let selfInf = SelfAccount.init(
-                uid: sJSON.uid,
-                accountName: sDB.accountName,
-                email: sJSON.email,
-                password: sDB.password
-            )
-            AdaptationDBJSON().saveInDB([selfInf])
-        }
-        catch let err {
-            print("Err", err)
-        }       
+    func saveSelfUser(info: SelfAccount) {
+        let sJSON = info
+        let sDB = loadSelfUser()
+        let selfInf = SelfAccount.init(
+            uid: sJSON.uid,
+            accountName: sJSON.accountName,
+            email: sJSON.email,
+            password: sDB.password
+        )
+        AdaptationDBJSON().saveInDB([selfInf])
     }
     
     func loadSelfUser() -> SelfAccount {
@@ -45,15 +40,10 @@ class DataBase {
         }
     }
     
-    func saveContacts(json: Data) {
+    func saveContacts(data: [ContactAccount]) {
         let selfInfo = loadSelfUser()
-        do {
-            let data = try JSONDecoder().decode([ContactAccount].self, from: json)
-            let contacts = data.filter { $0.email != selfInfo.email }
-            AdaptationDBJSON().saveInDB(contacts)
-        } catch {
-            print(error.localizedDescription)
-        }
+        let contacts = data.filter { $0.email != selfInfo.email }
+        AdaptationDBJSON().saveInDB(contacts)
     }
     
     func observerContacts(complition: @escaping (RealmCollectionChange<Results<ContactAccount>>) -> Void) -> NotificationToken? {
