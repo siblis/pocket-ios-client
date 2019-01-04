@@ -42,10 +42,10 @@ class LoginViewController: UIViewController {
         guard let password = passwordTextField.text, let accountName = loginTextField.text else {return}
         selfInfo.password = password
         selfInfo.accountName = accountName
-        NetworkServices.login(accountName: accountName, password: password) { (token) in
-            if token != "" {
+        URLServices().signIn(login: accountName, password: password) { (info) in
+            if info.token != "" {
                 AdaptationDBJSON().saveInDB([self.selfInfo])
-                Token.token = token
+                Token.token = info.token
                 ApplicationSwitcherRC.choiceRootVC()
             }
         }

@@ -52,22 +52,8 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         if let token = TokenService.getToken(forKey: "token") {
             if searchText.contains("@") {
                 print ("Searching by email...")
-                NetworkServices.getUserByEmail(email: searchText, token: token) { (data, statusCode) in
-                    if statusCode == 200 {
-                        do {
-                            let user = try JSONDecoder().decode(ContactAccount.self, from: data)
-                            print (user)
-                            self.users.append(user)
-                        }
-                        catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    else {
-                        print ("Status code: \(statusCode)")
-                    }
-                    
-                    print ("users: \(self.users)")
+                URLServices().getUserByEmail(email: searchText, token: token) { (contact) in
+                    self.users.append(contact)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -75,28 +61,13 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
             } else if digitSet.contains(searchText.unicodeScalars.first!) {
                 print ("Searching by id...")
                 if let id = Int(searchText) {
-                    NetworkServices.getUser(id: id, token: token) { (data, statusCode) in
-                        if statusCode == 200 {
-                            do {
-                                let user = try JSONDecoder().decode(ContactAccount.self, from: data)
-                                print (user)
-                                self.users.append(user)
-                            }
-                            catch {
-                                print(error.localizedDescription)
-                            }
-                        }
-                        else {
-                            print ("Status code: \(statusCode)")
-                        }
-                        
-                        print ("users: \(self.users)")
+                    URLServices().getUserID(id: id, token: token) { (contact) in
+                        self.users.append(contact)
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
                     }
                 }
-                
             } else {
                 print ("Searching by nickname...")
                 NetworkServices.getUserByNickname(nickname: searchText, token: token) { (data, statusCode) in

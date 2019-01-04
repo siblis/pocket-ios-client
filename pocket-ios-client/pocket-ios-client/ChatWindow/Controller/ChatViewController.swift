@@ -118,33 +118,13 @@ class ChatViewController: UIViewController {
     
     @objc func infoButtonTap (_ sender: UIButton) {
         performSegue(withIdentifier: "userDetailsSegue", sender: self)
-//        if (user?.participants.isEmpty)! {
-//            
-//        } else {
-//            for id in (user?.participants)! {
-//                getGroupUsers(id: id)
-//            }
-//            performSegue(withIdentifier: "groupDetailsSegue", sender: self)
-//        }
     }
     
     func getGroupUsers (id: Int) {
         myGroup.enter()
-        NetworkServices.getUser(id: id, token: token!, complition: {(json, statusCode) in
-            if statusCode == 200 {
-                do {
-                    let user = try JSONDecoder().decode(ContactAccount.self, from: json)
-                    self.groupContacts[id] = user
-                }
-                catch let err {
-                    print("Err", err)
-                }
-            } else {
-                self.groupContacts[id]?.uid = 0
-                self.groupContacts[id]?.accountName = "User not found"
-                self.groupContacts[id]?.email = "No email"
-            }
-        })
+        URLServices().getUserID(id: id, token: token!) { (info) in
+            self.groupContacts[id] = info
+        }
         myGroup.leave()
     }
     

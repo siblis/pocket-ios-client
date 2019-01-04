@@ -19,14 +19,8 @@ class ApplicationSwitcherRC {
     
     static func choiceRootVC() {
         if let token = TokenService.getToken(forKey: "token") {
-            NetworkServices.getSelfUser(token: token) { (json, statusCode) in
-                if statusCode == 200 {
-                    DataBase().saveSelfUser(json: json)
-                }
-                else {
-                    //На случай протухания токена
-                    CorrectionMethods().autoLogIn()
-                }
+            URLServices().getSelfUser(token: token) { (info) in
+                DataBase().saveSelfUser(info: info)
                 DispatchQueue.main.async {
                     self.initVC(choiceVC: .tabbar)
                 }

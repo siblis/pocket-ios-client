@@ -39,28 +39,17 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        NetworkServices.signUp(accountName: accountName, email: email, password: password) { (json, statusCode) in
-            if statusCode == 201 {
-                do {
-                    let signUpInfo = try JSONDecoder().decode(SignUpResponse.self, from: json)
-                    Token.token = signUpInfo.token
-                    let selfInfo = SelfAccount.init(
-                        uid: signUpInfo.uid,
-                        accountName: accountName,
-                        email: email,
-                        password: password
-                    )
-                    
-                    AdaptationDBJSON().saveInDB([selfInfo])
-                }
-                catch let err {
-                    print("Err", err)
-                }
-                DispatchQueue.main.async {
-                    ApplicationSwitcherRC.initVC(choiceVC: .tabbar)
-                }
-            } else {
-                self.showErrorAlert(message: String(describing: statusCode))
+        URLServices().signUp(accountName: accountName, email: email, password: password) { (info) in
+            Token.token = info.token
+            let selfInfo = SelfAccount.init(
+                uid: info.uid,
+                accountName: accountName,
+                email: email,
+                password: password
+            )
+            AdaptationDBJSON().saveInDB([selfInfo])
+            DispatchQueue.main.async {
+                ApplicationSwitcherRC.initVC(choiceVC: .tabbar)
             }
         }
     }
