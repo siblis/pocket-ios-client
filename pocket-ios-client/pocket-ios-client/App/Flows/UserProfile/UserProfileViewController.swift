@@ -27,7 +27,7 @@ class UserProfileViewController: UIViewController {
     
     let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.98, green:0.98, blue:1.00, alpha:1.0)
+        view.backgroundColor = UIColor.backPrimary
         return view
     }()
 
@@ -43,7 +43,7 @@ class UserProfileViewController: UIViewController {
     let userName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -51,7 +51,7 @@ class UserProfileViewController: UIViewController {
     let userEmail: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -59,7 +59,7 @@ class UserProfileViewController: UIViewController {
     let UserId: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -75,7 +75,7 @@ class UserProfileViewController: UIViewController {
     let chat: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        label.textColor = UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0)
+        label.textColor = UIColor.buttonSecondary
         label.textAlignment = .center
         return label
     }()
@@ -83,7 +83,7 @@ class UserProfileViewController: UIViewController {
     let status: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(red:0.55, green:0.55, blue:0.55, alpha:1.0)
+        label.textColor = UIColor.textSecondary
         label.textAlignment = .left
         return label
     }()
@@ -91,7 +91,7 @@ class UserProfileViewController: UIViewController {
     let statusField: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textSecondary
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -163,7 +163,7 @@ class UserProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: userPhoto, userName, userEmail, UserId, chatPhoto, chat)
         
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
+        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
     }
     

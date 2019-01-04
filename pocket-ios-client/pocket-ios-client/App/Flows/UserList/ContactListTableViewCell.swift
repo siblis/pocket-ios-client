@@ -20,7 +20,7 @@ class ContactListTableViewCell: UITableViewCell {
     
     let onlineStatusView: UIView = {
         let statusView = UIView()
-        statusView.backgroundColor = UIColor.gray
+        statusView.backgroundColor = UIColor.statusOffLine
         statusView.layer.cornerRadius = 5
         statusView.layer.masksToBounds = true
         return statusView
@@ -34,7 +34,7 @@ class ContactListTableViewCell: UITableViewCell {
     
     let statusLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.textSecondary
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()

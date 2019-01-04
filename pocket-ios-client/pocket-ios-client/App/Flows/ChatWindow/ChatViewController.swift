@@ -107,12 +107,12 @@ class ChatViewController: UIViewController {
     @objc func keyboardWillShow(notification: Notification) {
         guard let info = notification.userInfo as NSDictionary?, let value = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else { return }
 
-        //Добавить уменьшение вьюхи с чатом
+        //Уменьшение вьюхи с чатом
         setupElements(y: value.cgRectValue.height)
     }
     
     @objc func keyboardWillHide(notification: Notification) {
-        //Добавить возврат к обычному размеру чата
+        //Возврат к обычному размеру чата
         setupElements(y: downInset)
     }
     
@@ -164,13 +164,13 @@ extension ChatViewController: UICollectionViewDataSource {
             cell.messageTextView.frame = CGRect(x:15 + 8, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
             cell.textBubbleView.frame = CGRect(x:15 + 0, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
             cell.bubbleImageView.image = MessageCell.leftBubbleImage
-            cell.bubbleImageView.tintColor = #colorLiteral(red: 0.8973206878, green: 0.9018508792, blue: 0.9191583991, alpha: 1)
+            cell.bubbleImageView.tintColor = UIColor.chatBubbleEnemy
             cell.messageTextView.textColor = UIColor.black
         } else {
             cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
             cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 8 - 16, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
             cell.bubbleImageView.image = MessageCell.rightBubbleImage
-            cell.bubbleImageView.tintColor = #colorLiteral(red: 0.1881233156, green: 0.6438228488, blue: 0.9878250957, alpha: 1)
+            cell.bubbleImageView.tintColor = UIColor.chatBubbleSelf
             cell.messageTextView.textColor = UIColor.white
         }
         

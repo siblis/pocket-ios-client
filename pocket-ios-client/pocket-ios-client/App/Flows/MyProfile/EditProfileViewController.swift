@@ -16,7 +16,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     //определяем элементы экрана
     let cancelBtn:UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+        button.setTitleColor(UIColor.buttonPrimary, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.titleLabel?.textAlignment = .left
         return button
@@ -24,7 +24,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     let doneBtn:UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(red:0.59, green:0.59, blue:0.59, alpha:1.0), for: .normal)
+        button.setTitleColor(UIColor.buttonSecondary, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.titleLabel?.textAlignment = .right
         return button
@@ -33,7 +33,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     let editLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -167,14 +167,14 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
             value = ""
         }
         if textField.text != value {
-            doneBtn.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+            doneBtn.setTitleColor(UIColor.buttonPrimary, for: .normal)
             doneBtn.isEnabled = true
         } else {
             if (firstName.text == selfInfo.firstName)&&(lastName.text == selfInfo.lastName)&&(status.text == selfInfo.status) {
-                doneBtn.setTitleColor(UIColor(red:0.59, green:0.59, blue:0.59, alpha:1.0), for: .normal)
+                doneBtn.setTitleColor(UIColor.buttonSecondary, for: .normal)
                 doneBtn.isEnabled = false
             } else {
-                doneBtn.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+                doneBtn.setTitleColor(UIColor.buttonPrimary, for: .normal)
                 doneBtn.isEnabled = true
             }
         }

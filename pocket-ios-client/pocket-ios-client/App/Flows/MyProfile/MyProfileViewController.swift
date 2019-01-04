@@ -17,13 +17,13 @@ class MyProfileViewController: UIViewController {
     //определяем элементы экрана
     let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.98, green:0.98, blue:1.00, alpha:1.0)
+        view.backgroundColor = UIColor.backSecondary
         return view
     }()
     
     let editBtn:UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0), for: .normal)
+        button.setTitleColor(UIColor.buttonPrimary, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.titleLabel?.textAlignment = .right
         return button
@@ -40,7 +40,7 @@ class MyProfileViewController: UIViewController {
     let myName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -48,7 +48,7 @@ class MyProfileViewController: UIViewController {
     let myEmail: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -56,7 +56,7 @@ class MyProfileViewController: UIViewController {
     let myId: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.textPrimary
         label.textAlignment = .center
         return label
     }()
@@ -72,7 +72,7 @@ class MyProfileViewController: UIViewController {
     let chat: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        label.textColor = UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0)
+        label.textColor = UIColor.buttonSecondary
         label.textAlignment = .center
         return label
     }()
@@ -80,7 +80,7 @@ class MyProfileViewController: UIViewController {
     let status: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(red:0.55, green:0.55, blue:0.55, alpha:1.0)
+        label.textColor = UIColor.textSecondary
         label.textAlignment = .left
         return label
     }()
@@ -88,7 +88,7 @@ class MyProfileViewController: UIViewController {
     let statusField: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        label.textColor = UIColor(red:0.20, green:0.29, blue:0.37, alpha:1.0)
+        label.textColor = UIColor.backPrimary
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
