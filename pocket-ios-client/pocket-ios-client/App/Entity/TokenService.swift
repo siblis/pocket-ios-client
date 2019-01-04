@@ -18,3 +18,14 @@ class TokenService {
         UserDefaults.standard.set(token, forKey: forKey)
     }
 }
+
+struct Token {
+    
+    static var token = TokenService.getToken(forKey: "token") {
+        didSet {
+            TokenService.setToken(token: token, forKey: "token")
+            print ("set token = \(String(describing: TokenService.getToken(forKey: "token")))")
+        }
+    }
+}
+

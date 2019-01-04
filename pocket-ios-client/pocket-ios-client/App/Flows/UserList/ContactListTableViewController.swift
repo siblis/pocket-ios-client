@@ -28,7 +28,7 @@ class ContactListTableViewController: UITableViewController {
                 print(error)
             }
         }
-        tableView.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = 60
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)

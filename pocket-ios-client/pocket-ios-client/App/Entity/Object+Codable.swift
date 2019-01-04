@@ -9,16 +9,6 @@
 import Foundation
 import RealmSwift
 
-struct Token {
-    
-    static var token = TokenService.getToken(forKey: "token") {
-        didSet {
-            TokenService.setToken(token: token, forKey: "token")
-            print ("set token = \(String(describing: TokenService.getToken(forKey: "token")))")
-        }
-    }
-}
-
 //MARK: Модель собственного профиля (Login, SignUp, MyProfile)
 class SelfAccount: Object, Codable {
     @objc dynamic var uid: Int = 0
@@ -181,12 +171,8 @@ class Message: Object, Codable {
     @objc dynamic var text: String = ""
     @objc dynamic var senderid: Int = 0
     @objc dynamic var senderName: String  = ""
-    @objc dynamic var time: String  = ""
+    @objc dynamic var time: Double  = 0
     @objc dynamic var isEnemy: Bool = true
-    
-    override class func primaryKey() -> String? {
-        return "time"
-    }
     
     private enum CodingKeys: String, CodingKey {
         case receiver = "receiver"
@@ -209,7 +195,7 @@ class Message: Object, Codable {
         self.text = text
         self.senderid = senderid
         self.senderName = senderName
-        self.time = dateFormater(time)
+        self.time = time
         self.isEnemy = isEnemy
     }
     
@@ -221,15 +207,5 @@ class Message: Object, Codable {
         let senderName = try container.decode(String.self, forKey: .senderName)
         let time = try container.decode(Double.self, forKey: .time)
         self.init(receiver: receiver, text: text, senderid: senderid, senderName: senderName, time: time)
-    }
-    
-    private func dateFormater(_ time: Double) -> String {
-        let date = NSDate(timeIntervalSince1970: TimeInterval(time))
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-        dateFormatter.timeZone = TimeZone.current
-        let localDate = dateFormatter.string(from: date as Date)
-        return localDate
     }
 }

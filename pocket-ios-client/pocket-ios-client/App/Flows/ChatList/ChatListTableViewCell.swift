@@ -27,7 +27,7 @@ class ChatListTableViewCell: UITableViewCell {
     let messageLabel: UILabel = {
         let label = UILabel()
         label.text = "Your friend's message and something else..."
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.textSecondary
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
@@ -40,7 +40,7 @@ class ChatListTableViewCell: UITableViewCell {
     }()
     let messageCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.white
+        label.textColor = UIColor.unreadMessageCountText
         label.text = "24"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.textAlignment = .center
@@ -65,7 +65,7 @@ class ChatListTableViewCell: UITableViewCell {
     private func setupMessageCountView() {
         let messageCountView = UIView()
         addSubview(messageCountView)
-            messageCountView.backgroundColor = #colorLiteral(red: 0.9584740996, green: 0.405867219, blue: 0.4054445624, alpha: 1)
+            messageCountView.backgroundColor = UIColor.unreadMessageCounter
             messageCountView.contentMode = .scaleAspectFill
             messageCountView.layer.cornerRadius = 14
             messageCountView.layer.masksToBounds = true

@@ -17,7 +17,7 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
-        searchBar.layer.borderColor = UIColor.lightGray.cgColor
+        searchBar.layer.borderColor = UIColor.backSearchBar.cgColor
         searchBar.layer.borderWidth = 1
 
         tableView.rowHeight = 50
