@@ -77,7 +77,7 @@
 		6DA1112E2166737900C2AA45 /* ContactListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewCell.swift; sourceTree = "<group>"; };
 		6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
 		6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewController.swift; sourceTree = "<group>"; };
-		6DA1113A216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationSwitcherRC.swift; path = "pocket-ios-client/Test/ApplicationSwitcherRC.swift"; sourceTree = SOURCE_ROOT; };
+		6DA1113A216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationSwitcherRC.swift; path = "pocket-ios-client/App/BusinessLogic/ApplicationSwitcherRC.swift"; sourceTree = SOURCE_ROOT; };
 		6DD41E402120C5C8002EE1F3 /* pocket-ios-client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pocket-ios-client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -119,23 +119,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		242481EC217C61D700F708C6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		242481ED217C61E600F708C6 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				245617412178BDB8007A9103 /* ChatViewController.swift */,
-				245DE7B62196294D002596FF /* MessageCell.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		2438D52E21C6E061002FCF20 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,8 +130,8 @@
 		2456173C21768A04007A9103 /* ChatWindow */ = {
 			isa = PBXGroup;
 			children = (
-				242481ED217C61E600F708C6 /* Controller */,
-				242481EC217C61D700F708C6 /* Model */,
+				245617412178BDB8007A9103 /* ChatViewController.swift */,
+				245DE7B62196294D002596FF /* MessageCell.swift */,
 			);
 			path = ChatWindow;
 			sourceTree = "<group>";
@@ -156,6 +139,7 @@
 		24A6809521DEDEED003C4D21 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BC35488821BE9EB700DE15CB /* CustomColors.swift */,
 				6DD41E4A2120C5C9002EE1F3 /* Assets.xcassets */,
 				6DD41E4C2120C5C9002EE1F3 /* LaunchScreen.storyboard */,
 			);
@@ -202,6 +186,15 @@
 		24A680A421DEE05D003C4D21 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				6DD41E562120C5EF002EE1F3 /* Application */,
+				6DD41E552120C5DD002EE1F3 /* Login */,
+				C18963FF218B80F300CE4ABE /* SignUp */,
+				6DA1112B216672D300C2AA45 /* UserList */,
+				6DA11131216B8C1000C2AA45 /* ChatList */,
+				BCFAA5F321A9C4FB009E41EE /* AddUser */,
+				C189640621997EC000CE4ABE /* MyProfile */,
+				2456173C21768A04007A9103 /* ChatWindow */,
+				C189640F219E9B1200CE4ABE /* UserProfile */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -210,6 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				2438D53021C6E0E1002FCF20 /* CodableJSON.swift */,
+				6D2E38CC219B68A300059DD3 /* Object+Codable.swift */,
+				6D2988EF21935F590004199F /* TokenService.swift */,
+				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -218,7 +214,10 @@
 			isa = PBXGroup;
 			children = (
 				6DD41E432120C5C8002EE1F3 /* AppDelegate.swift */,
+				6DA1113A216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift */,
+				24A6803821D90763003C4D21 /* CorrectionMethods.swift */,
 				24A680AC21DEE101003C4D21 /* Error */,
+				24A680B221DF9CEE003C4D21 /* DB */,
 				24A680A921DEE0D5003C4D21 /* Network */,
 			);
 			path = BusinessLogic;
@@ -228,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				24A680AA21DEE0F2003C4D21 /* FullRequestFactory.swift */,
+				242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -241,63 +241,13 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		24AD50AE219B143600619ED6 /* Controller */ = {
+		24A680B221DF9CEE003C4D21 /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */,
-				6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		24AD50AF219B165300619ED6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		6D2988ED21935F270004199F /* TokenService */ = {
-			isa = PBXGroup;
-			children = (
-				6D2988EE21935F380004199F /* Controller */,
-			);
-			path = TokenService;
-			sourceTree = "<group>";
-		};
-		6D2988EE21935F380004199F /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				6D2988EF21935F590004199F /* TokenService.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		6D2E38CB219B688000059DD3 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				6D2E38CC219B68A300059DD3 /* Object+Codable.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		6D8FB1D3219B0BFA00E90D89 /* DataBase */ = {
-			isa = PBXGroup;
-			children = (
-				6D2E38CB219B688000059DD3 /* Model */,
-				6D8FB1D4219B0C4500E90D89 /* Controller */,
-			);
-			path = DataBase;
-			sourceTree = "<group>";
-		};
-		6D8FB1D4219B0C4500E90D89 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				6D8FB1D5219B0C7100E90D89 /* DataBase.swift */,
 				24392F8321B873B1003C444C /* AdaptationDBJSON.swift */,
+				6D8FB1D5219B0C7100E90D89 /* DataBase.swift */,
 			);
-			path = Controller;
+			path = DB;
 			sourceTree = "<group>";
 		};
 		6DA111282163E8DC00C2AA45 /* NetworkServices */ = {
@@ -320,8 +270,8 @@
 		6DA11131216B8C1000C2AA45 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
-				24AD50AE219B143600619ED6 /* Controller */,
-				24AD50AF219B165300619ED6 /* Model */,
+				6DA11132216B8C2E00C2AA45 /* ChatListTableViewCell.swift */,
+				6DA11134216B8C6D00C2AA45 /* ChatListTableViewController.swift */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -352,19 +302,7 @@
 				24A6809721DEDFC0003C4D21 /* Core */,
 				24A6809621DEDF5C003C4D21 /* Environments */,
 				24A6809521DEDEED003C4D21 /* Resources */,
-				6D8FB1D3219B0BFA00E90D89 /* DataBase */,
-				6D2988ED21935F270004199F /* TokenService */,
 				6DA111282163E8DC00C2AA45 /* NetworkServices */,
-				6DD41E562120C5EF002EE1F3 /* Application */,
-				6DD41E552120C5DD002EE1F3 /* Login */,
-				C18963FF218B80F300CE4ABE /* SignUp */,
-				6DA1112B216672D300C2AA45 /* UserList */,
-				6DA11131216B8C1000C2AA45 /* ChatList */,
-				BCFAA5F321A9C4FB009E41EE /* AddUser */,
-				C189640621997EC000CE4ABE /* MyProfile */,
-				2456173C21768A04007A9103 /* ChatWindow */,
-				C189640F219E9B1200CE4ABE /* UserProfile */,
-				BC35488821BE9EB700DE15CB /* CustomColors.swift */,
 			);
 			path = "pocket-ios-client";
 			sourceTree = "<group>";
@@ -372,7 +310,7 @@
 		6DD41E552120C5DD002EE1F3 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				6DD41E572120C5F9002EE1F3 /* Controller */,
+				6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -380,27 +318,16 @@
 		6DD41E562120C5EF002EE1F3 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				6DD41E5C2120C645002EE1F3 /* Model */,
 				6DD41E5B2120C63F002EE1F3 /* View */,
 				6DD41E5A2120C636002EE1F3 /* Controller */,
 			);
 			path = Application;
 			sourceTree = "<group>";
 		};
-		6DD41E572120C5F9002EE1F3 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		6DD41E5A2120C636002EE1F3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6DA1113A216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift */,
 				24392F7521A1E48C003C444C /* InitAfterLogin.swift */,
-				24A6803821D90763003C4D21 /* CorrectionMethods.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -411,13 +338,6 @@
 				6DD41E472120C5C8002EE1F3 /* Login.storyboard */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		6DD41E5C2120C645002EE1F3 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		6E5D3DDCC012328B616E8B53 /* Frameworks */ = {
