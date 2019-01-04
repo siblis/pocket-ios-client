@@ -11,9 +11,9 @@ import Foundation
 class CorrectionMethods {
     func autoLogIn() {
         let selfInfo = DataBase().loadSelfUser()
-        NetworkServices.login(accountName: selfInfo.accountName, password: selfInfo.password) { (token) in
-            if token != "" {
-                Token.token = token
+        URLServices().signIn(login: selfInfo.accountName, password: selfInfo.password) { (info) in
+            if info.token != "" {
+                Token.token = info.token
             } else {
                 self.logOut()
             }

@@ -214,13 +214,8 @@ class UserProfileViewController: UIViewController {
             showDeleteAlert()
         } else {
             if let token = TokenService.getToken(forKey: "token") {
-                NetworkServices.addUserByMail(user.email, token: token) { (data, statusCode) in
-                    if statusCode == 201 {
-                        print ("success")
-                    }
-                    else {
-                        print ("Status code: \(statusCode)")
-                    }
+                URLServices().addUserByMail(user.email, token: token) { (contact) in
+                    print ("success")
                 }
             }
             
@@ -236,21 +231,12 @@ class UserProfileViewController: UIViewController {
         
         let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
             if let token = TokenService.getToken(forKey: "token") {
-                NetworkServices.deleteUserByMail(self.user.email, token: token) { (data, statusCode) in
-                    if statusCode == 200 {
-                        print ("success")
-                    }
-                    else {
-                        print ("Status code: \(statusCode)")
-                    }
+                URLServices().deleteUserByMail(self.user.email, token: token) { (contact) in
+                    print("success: \(contact)")
                 }
             }
 
             AdaptationDBJSON().deleteContactFromDB(self.user)
-            
-//            let tabBarVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
-//
-//            self.present(tabBarVC, animated:true, completion:nil)
         })
         let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
         alert.addAction(actionYes)
