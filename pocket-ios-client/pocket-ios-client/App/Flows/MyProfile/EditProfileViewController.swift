@@ -18,7 +18,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.setTitleColor(UIColor.buttonPrimary, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.textAlignment = .right
         return button
     }()
     
@@ -26,7 +26,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.setTitleColor(UIColor.buttonSecondary, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .right
+        button.titleLabel?.textAlignment = .left
         return button
     }()
     
@@ -111,14 +111,14 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     func setUpHeader () {
         self.view.addSubview(cancelBtn)
-        self.view.addSubview(doneBtn)
         self.view.addSubview(editLabel)
+        self.view.addSubview(doneBtn)
         
         self.view.addConstraintsWithFormat(format: "|-15-[v0(55)]-[v1(150)]-[v2(55)]-15-|", views: cancelBtn, editLabel, doneBtn)
         editLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: cancelBtn)
-        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: editLabel)
         self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: doneBtn)
+        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: editLabel)
+        self.view.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: cancelBtn)
         
     }
     
@@ -141,9 +141,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         self.view.addConstraintsWithFormat(format: "|-37-[v0]-15-|", views: status)
         self.view.addConstraintsWithFormat(format: "V:[v0]-44-[v1(20)]-15-[v2(20)]-36-[v3(20)]", views: editLabel, firstName, lastName, status)
         
-        MyProfileViewController.drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 102), endY: Int(safeAreaTopInset + 102), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 1, inView: self.view)
-        MyProfileViewController.drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 137), endY: Int(safeAreaTopInset + 137), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 1, inView: self.view)
-        MyProfileViewController.drawLine(startX: 29, endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 193), endY: Int(safeAreaTopInset + 193), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 1, inView: self.view)
+        MyProfileViewController.drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 102), endY: Int(safeAreaTopInset + 102), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
+        MyProfileViewController.drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 137), endY: Int(safeAreaTopInset + 137), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
+        MyProfileViewController.drawLine(startX: 29, endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 193), endY: Int(safeAreaTopInset + 193), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
     }
     
     func setUpBodyContents () {
