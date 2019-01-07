@@ -25,6 +25,14 @@ class MyProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitleColor(UIColor.buttonPrimary, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        button.titleLabel?.textAlignment = .left
+        return button
+    }()
+    
+    let logOutBtn:UIButton = {
+        let button = UIButton()
+        button.setTitleColor(UIColor.buttonPrimary, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.titleLabel?.textAlignment = .right
         return button
     }()
@@ -105,6 +113,7 @@ class MyProfileViewController: UIViewController {
         setUpTopView()
         setUpStatusView()
         
+        logOutBtn.addTarget(self, action: #selector(self.accountLogOut(_:)), for: .touchUpInside)
         editBtn.addTarget(self, action: #selector(self.editDetails(_:)), for: .touchUpInside)
     }
     
@@ -141,16 +150,20 @@ class MyProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: myPhoto, myName, myEmail, myId, chatPhoto, chat)
         
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor(red:0.78, green:0.78, blue:0.80, alpha:1.0), lineWidth: 0.5, inView: backgroundView)
+        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
         backgroundView.addSubview(editBtn)
-        backgroundView.addConstraintsWithFormat(format: "[v0(55)]-15-|", views: editBtn)
-        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 12)-[v0(20)]", views: editBtn)
+        backgroundView.addSubview(logOutBtn)
+        backgroundView.addConstraintsWithFormat(format: "|-3-[v0(55)]", views: editBtn)
+        backgroundView.addConstraintsWithFormat(format: "[v0(55)]-3-|", views: logOutBtn)
+        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 13)-[v0(20)]", views: editBtn)
+        backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 13)-[v0(20)]", views: logOutBtn)
     }
     
     //настраиваем содержание элементов в верхней половине экрана
     func setUpTopViewContents () {
         editBtn.setTitle("Edit", for: .normal)
+        logOutBtn.setTitle("Exit", for: .normal)
 
         myPhoto.image = UIImage(named: "myProfile")
         
@@ -202,6 +215,10 @@ class MyProfileViewController: UIViewController {
     
     @objc func editDetails(_ sender: UIButton) {
         performSegue(withIdentifier: "editDetailsSegue", sender: sender)
+    }
+    
+    @objc func accountLogOut(_ sender: UIButton) {
+        CorrectionMethods().logOut()
     }
 }
 
