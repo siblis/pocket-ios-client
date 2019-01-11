@@ -226,6 +226,7 @@
 		24A680A921DEE0D5003C4D21 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				6DA111282163E8DC00C2AA45 /* NetworkServices */,
 				24A680AA21DEE0F2003C4D21 /* FullRequestFactory.swift */,
 				242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */,
 			);
@@ -302,7 +303,6 @@
 				24A6809721DEDFC0003C4D21 /* Core */,
 				24A6809621DEDF5C003C4D21 /* Environments */,
 				24A6809521DEDEED003C4D21 /* Resources */,
-				6DA111282163E8DC00C2AA45 /* NetworkServices */,
 			);
 			path = "pocket-ios-client";
 			sourceTree = "<group>";

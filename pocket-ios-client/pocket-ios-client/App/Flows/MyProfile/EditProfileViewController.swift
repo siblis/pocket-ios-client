@@ -184,7 +184,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         selfInfo.firstName = firstName.text ?? ""
         selfInfo.lastName = lastName.text ?? ""
         selfInfo.status = status.text ?? ""
-        AdaptationDBJSON().saveInDB([selfInfo])
+        DataBase().saveSelfUser(info: selfInfo)
         print  ("saving changes")
         self.dismiss(animated: true, completion: nil)
     }

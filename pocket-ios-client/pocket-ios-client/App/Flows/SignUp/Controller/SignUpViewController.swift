@@ -40,14 +40,14 @@ class SignUpViewController: UIViewController {
         }
         
         URLServices().signUp(accountName: accountName, email: email, password: password) { (info) in
-            Token.token = info.token
+            Token.main = info.token
             let selfInfo = SelfAccount.init(
                 uid: info.uid,
                 accountName: accountName,
                 email: email,
                 password: password
             )
-            AdaptationDBJSON().saveInDB([selfInfo])
+            DataBase().saveSelfUser(info: selfInfo)
             DispatchQueue.main.async {
                 ApplicationSwitcherRC.initVC(choiceVC: .tabbar)
             }

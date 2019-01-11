@@ -13,6 +13,7 @@ class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
     var chatCell = DataBase().loadChatList()
+    var oserverChatList: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +22,26 @@ class ChatListTableViewController: UITableViewController {
         tableView.rowHeight = 100
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
-
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        oserverChatList = DataBase().observerChatList() { (changes) in
+            switch changes {
+            case .initial, .update:
+                self.chatCell = DataBase().loadChatList()
+                self.tableView.reloadData()
+            case .error(let error):
+                print(error)
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        oserverChatList = nil
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -31,7 +49,7 @@ class ChatListTableViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             let user = DataBase().loadOneContactsList(userId: chatCell[indexPath.item].id)
-            chatField?.user = user[0]
+            chatField?.chatInformation = user[0]
         }
     }
 

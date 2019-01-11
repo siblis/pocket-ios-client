@@ -2,29 +2,18 @@
 //  TokenService.swift
 //  pocket-ios-client
 //
-//  Created by Damien on 07/11/2018.
+//  Created by Mak on 11/01/2019.
 //  Copyright © 2018 Damien Inc. All rights reserved.
 //
 
 import Foundation
 
-class TokenService {
-    
-    static func getToken(forKey: String) -> String? {
-        return UserDefaults.standard.string(forKey: forKey)
-    }
-    
-    static func setToken(token: String?, forKey: String) {
-        UserDefaults.standard.set(token, forKey: forKey)
-    }
-}
-
 struct Token {
     
-    static var token = TokenService.getToken(forKey: "token") {
+    static var main = UserDefaults.standard.string(forKey: "token") {
         didSet {
-            TokenService.setToken(token: token, forKey: "token")
-            print ("set token = \(String(describing: TokenService.getToken(forKey: "token")))")
+            UserDefaults.standard.set(main, forKey: "token")
+            print ("set token = \(String(describing: main))")
         }
     }
 }

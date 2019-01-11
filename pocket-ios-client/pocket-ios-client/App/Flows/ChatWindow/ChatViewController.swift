@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ChatViewController: UIViewController {
     
@@ -15,17 +16,16 @@ class ChatViewController: UIViewController {
     let insets: CGFloat = 15
     let downInset: CGFloat = 30
     let cellReuseIdentifier = "MessageCell"
-    var user = ContactAccount()
+    var chatInformation = ContactAccount()
     var groupContacts: [Int: ContactAccount] = [:]
-    let token = TokenService.getToken(forKey: "token")
+    let token = Token.main
     let myGroup = DispatchGroup()
     var chat: [Message] = []
-    
-    
+    var oserverMessageInDB: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = user.accountName
+        title = chatInformation.accountName
         //кнопка перехода на экран с деталями пользователя
         let infoButton = UIButton(type: .infoLight)
         infoButton.addTarget(self, action: #selector(infoButtonTap(_:)), for: .touchUpInside)
@@ -35,7 +35,6 @@ class ChatViewController: UIViewController {
         self.chatField.register(MessageCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         chatField.dataSource = self
         chatField.delegate = self
-        
     }
     
     @IBOutlet weak var chatField: UICollectionView! {
@@ -60,9 +59,15 @@ class ChatViewController: UIViewController {
     @IBAction func sendButton(_ sender: Any) {
         
         if let msg = message.text, msg != "" {
-            let selfMsg = WSS.initial.sendMessage(receiver: user, message: msg)
-            AdaptationDBJSON().saveInDB([selfMsg])
+            let selfMsg = WSS.initial.sendMessage(receiver: chatInformation, message: msg)
+            DataBase().saveMessages(
+                isOpenChat: chatInformation.uid,
+                chatId: chatInformation.uid,
+                chatName: chatInformation.accountName,
+                message: selfMsg
+            )
             message.text = ""
+            chatField.reloadData()
         }
     }
 
@@ -70,8 +75,18 @@ class ChatViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupElements(y: downInset)
+        WSS.initial.id = chatInformation.uid
         
-        WSS.initial.vc = self
+        DataBase().messageCounterZeroing(chatId: chatInformation.uid)
+        oserverMessageInDB = DataBase().observerMessages(chatId: chatInformation.uid) { (changes, id) in
+            switch changes {
+            case .initial, .update:
+                self.chat = DataBase().loadMsgsFromChat(chatId: id)
+                self.chatField.reloadData()
+            case .error(let error):
+                print(error)
+            }
+        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -96,7 +111,8 @@ class ChatViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        WSS.initial.vc = nil
+        WSS.initial.id = nil
+        oserverMessageInDB = nil
     }
     
     @IBAction func viewTapped(_ sender: Any) {
@@ -131,7 +147,7 @@ class ChatViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
-            userDetailsVC.user = self.user
+            userDetailsVC.user = self.chatInformation
         }
 //        } else if segue.identifier == "groupDetailsSegue" {
 //            let groupDetailsVC = segue.destination as! GroupProfileViewController
@@ -142,7 +158,7 @@ class ChatViewController: UIViewController {
 }
 
 
-//MARK: Table
+//MARK: Chat area
 extension ChatViewController: UICollectionViewDataSource {
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -165,13 +181,13 @@ extension ChatViewController: UICollectionViewDataSource {
             cell.textBubbleView.frame = CGRect(x:15 + 0, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
             cell.bubbleImageView.image = MessageCell.leftBubbleImage
             cell.bubbleImageView.tintColor = UIColor.chatBubbleEnemy
-            cell.messageTextView.textColor = UIColor.black
+            cell.messageTextView.textColor = UIColor.textEnemyMsg
         } else {
             cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
             cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 16 - 8 - 16, y: 0, width: estimatedFrame.width + 16 + 8, height: estimatedFrame.height + 20)
             cell.bubbleImageView.image = MessageCell.rightBubbleImage
             cell.bubbleImageView.tintColor = UIColor.chatBubbleSelf
-            cell.messageTextView.textColor = UIColor.white
+            cell.messageTextView.textColor = UIColor.textSelfMsg
         }
         
         return cell

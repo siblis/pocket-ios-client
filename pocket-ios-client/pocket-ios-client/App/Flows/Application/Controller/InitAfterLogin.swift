@@ -14,7 +14,7 @@ class InitAfterLogin: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let token = TokenService.getToken(forKey: "token") {
+        if let token = Token.main {
         //Блок инициализации начальных данных
             URLServices().getContacts(token: token) { (contacts) in
                 WSS.initial.webSocketConnect()

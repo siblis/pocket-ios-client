@@ -213,14 +213,12 @@ class UserProfileViewController: UIViewController {
         if isContact {
             showDeleteAlert()
         } else {
-            if let token = TokenService.getToken(forKey: "token") {
+            if let token = Token.main {
                 URLServices().addUserByMail(user.email, token: token) { (contact) in
                     print ("success")
                 }
             }
-            
-            let contacts: [Object] = [user]
-            AdaptationDBJSON().saveInDB(contacts)
+            DataBase().saveContacts(data: [user])
             showAddAlert()
         }
     }
@@ -230,7 +228,7 @@ class UserProfileViewController: UIViewController {
         let alert = UIAlertController(title: "", message: "Вы действительно хотите удалить пользователя?", preferredStyle: .alert)
         
         let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
-            if let token = TokenService.getToken(forKey: "token") {
+            if let token = Token.main {
                 URLServices().deleteUserByMail(self.user.email, token: token) { (contact) in
                     print("success: \(contact)")
                 }

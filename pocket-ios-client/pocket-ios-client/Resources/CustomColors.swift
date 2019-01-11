@@ -18,6 +18,8 @@ extension UIColor {
     static let statusOffLine = gray
     static let textPrimary = #colorLiteral(red: 0.1309435666, green: 0.1451481879, blue: 0.1666977704, alpha: 1)
     static let textSecondary = #colorLiteral(red: 0.2035453022, green: 0.2869238853, blue: 0.3680307567, alpha: 1)
+    static let textEnemyMsg = textPrimary
+    static let textSelfMsg = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let interfaceColorPrimary = #colorLiteral(red: 0.1551264226, green: 0.5039589405, blue: 0.7243673205, alpha: 1)
     static let interfaceColorSecondary = #colorLiteral(red: 0.2071147859, green: 0.5941259265, blue: 0.8571158051, alpha: 1)
     static let buttonPrimary = #colorLiteral(red: 0.01864526048, green: 0.4776622653, blue: 1, alpha: 1)

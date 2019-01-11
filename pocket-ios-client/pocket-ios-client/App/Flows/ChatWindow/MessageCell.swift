@@ -15,7 +15,7 @@ class MessageCell: BaseCell {
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.text = "Sample message"
         textView.isUserInteractionEnabled = false
-        textView.backgroundColor = UIColor.backPrimary
+        textView.backgroundColor = UIColor.clear
         return textView
     }()
     
@@ -31,7 +31,7 @@ class MessageCell: BaseCell {
     let bubbleImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.image = MessageCell.leftBubbleImage
-        imageView.tintColor = UIColor(white: 0.95, alpha: 1)
+        imageView.tintColor = UIColor.chatBubbleEnemy
         return imageView
     }()
     
