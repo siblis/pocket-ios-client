@@ -176,7 +176,7 @@ class Message: Object, Codable {
     
     private enum CodingKeys: String, CodingKey {
         case receiver = "receiver"
-        case text = "message"
+        case text = "text"
         case senderid = "senderid"
         case senderName = "sender_name"
         case time = "timestamp"

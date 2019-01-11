@@ -13,7 +13,7 @@ class CorrectionMethods {
         let selfInfo = DataBase().loadSelfUser()
         URLServices().signIn(login: selfInfo.accountName, password: selfInfo.password) { (info) in
             if info.token != "" {
-                Token.token = info.token
+                Token.main = info.token
             } else {
                 self.logOut()
             }
@@ -21,7 +21,7 @@ class CorrectionMethods {
     }
     
     func logOut() {
-        Token.token = nil
+        Token.main = nil
         AdaptationDBJSON().deleteAllRecords()
         ApplicationSwitcherRC.initVC(choiceVC: .login)
     }

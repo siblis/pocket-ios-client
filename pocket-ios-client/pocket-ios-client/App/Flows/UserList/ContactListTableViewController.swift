@@ -12,7 +12,7 @@ import RealmSwift
 class ContactListTableViewController: UITableViewController {
     
     let contactArray = DataBase().loadContactsList()
-    var notificationDB: NotificationToken?
+    var observerContactInDB: NotificationToken?
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
@@ -20,7 +20,7 @@ class ContactListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationDB = DataBase().observerContacts() { (changes) in
+        observerContactInDB = DataBase().observerContacts() { (changes) in
             switch changes {
             case .initial, .update:
                 self.tableView.reloadData()
@@ -61,7 +61,7 @@ class ContactListTableViewController: UITableViewController {
         
         let chatField = segue.destination as? ChatViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            chatField?.user = contactArray[indexPath.row]
+            chatField?.chatInformation = contactArray[indexPath.row]
         }
     }
 }

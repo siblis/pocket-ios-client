@@ -44,8 +44,8 @@ class LoginViewController: UIViewController {
         selfInfo.accountName = accountName
         URLServices().signIn(login: accountName, password: password) { (info) in
             if info.token != "" {
-                AdaptationDBJSON().saveInDB([self.selfInfo])
-                Token.token = info.token
+                DataBase().saveSelfUser(info: self.selfInfo)
+                Token.main = info.token
                 ApplicationSwitcherRC.choiceRootVC()
             }
         }
