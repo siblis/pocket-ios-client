@@ -12,7 +12,7 @@ import Starscream
 final class MessageAndWebSocket: WebSocketDelegate {
     
     var socket: WebSocket!
-    var vc: ChatViewController!
+    var id: Int? = nil
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
@@ -28,13 +28,12 @@ final class MessageAndWebSocket: WebSocketDelegate {
         guard let jsonData = text.data(using: .utf8) else { return }
         do {
             let messageInOut = try JSONDecoder().decode(Message.self, from: jsonData)
-            let chat = Chat.init(
-                id: messageInOut.senderid,
+            DataBase().saveMessages(
+                isOpenChat: id,
+                chatId: messageInOut.senderid,
                 chatName: messageInOut.senderName,
-                messageCount: 20,
-                messages: [messageInOut]
+                message: messageInOut
             )
-            AdaptationDBJSON().saveInDB([chat])
         }
         catch let err {
             print("Err", err)
@@ -47,21 +46,15 @@ final class MessageAndWebSocket: WebSocketDelegate {
     }
     
     //MARK: Message sending
-    func sendMessage (receiver: ContactAccount, message: String) -> Chat {
-        
+    func sendMessage (receiver: ContactAccount, message: String) -> Message {
+        let myPersInf = DataBase().loadSelfUser()
         let msg = Message.init(
             receiver: receiver.uid,
             text: message,
-            senderid: 78,
-            senderName: "MaxSyt",
+            senderid: myPersInf.uid,
+            senderName: myPersInf.accountName,
             time: NSDate().timeIntervalSince1970,
             isEnemy: false
-        )
-        let chat = Chat.init(
-            id: receiver.uid,
-            chatName: receiver.accountName,
-            messageCount: 15,
-            messages: [msg]
         )
         do {
             let jsonData = try JSONEncoder().encode(msg)
@@ -70,7 +63,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
         catch {
             print (error.localizedDescription)
         }
-        return chat
+        return msg
     }
     
     //MARK: WebSocket connecting
@@ -79,7 +72,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
         let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
-        request.setValue(TokenService.getToken(forKey: "token"), forHTTPHeaderField: "token")
+        request.setValue(Token.main, forHTTPHeaderField: "token")
         
         self.socket = WebSocket(request: request)
         socket.delegate = self

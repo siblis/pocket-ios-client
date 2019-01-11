@@ -49,7 +49,7 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         let searchText = searchBar.text!
         let digitSet = CharacterSet.decimalDigits
         
-        if let token = TokenService.getToken(forKey: "token") {
+        if let token = Token.main {
             if searchText.contains("@") {
                 print ("Searching by email...")
                 URLServices().getUserByEmail(email: searchText, token: token) { (contact) in

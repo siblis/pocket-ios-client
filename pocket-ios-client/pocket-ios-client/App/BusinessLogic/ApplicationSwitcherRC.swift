@@ -18,7 +18,7 @@ class ApplicationSwitcherRC {
     }
     
     static func choiceRootVC() {
-        if let token = TokenService.getToken(forKey: "token") {
+        if let token = Token.main {
             URLServices().getSelfUser(token: token) { (info) in
                 DataBase().saveSelfUser(info: info)
                 DispatchQueue.main.async {

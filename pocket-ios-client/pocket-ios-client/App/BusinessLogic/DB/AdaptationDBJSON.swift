@@ -11,6 +11,7 @@ import RealmSwift
 
 protocol AdaptationInformation {
     func saveInDB(_ smElements: [Object])
+    func deleteAllRecords()
 //    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String)
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
     func realmObserver<A: Object>(smTableDB: Results<A>, complition: @escaping (RealmCollectionChange<Results<A>>) -> Void) -> NotificationToken?
