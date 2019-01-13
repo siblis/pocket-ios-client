@@ -21,6 +21,8 @@
 		24A680AB21DEE0F2003C4D21 /* FullRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A680AA21DEE0F2003C4D21 /* FullRequestFactory.swift */; };
 		24A680AF21DEE114003C4D21 /* AbstractErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A680AD21DEE114003C4D21 /* AbstractErrorHandler.swift */; };
 		24A680B021DEE114003C4D21 /* AbstractErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A680AE21DEE114003C4D21 /* AbstractErrorParser.swift */; };
+		24EC579121EB57A6008A4E4F /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC579021EB57A6008A4E4F /* UnitTests.swift */; };
+		24EC579F21EB57C4008A4E4F /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC579E21EB57C4008A4E4F /* UITests.swift */; };
 		6D2988F021935F590004199F /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2988EF21935F590004199F /* TokenService.swift */; };
 		6D2E38CD219B68A300059DD3 /* Object+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E38CC219B68A300059DD3 /* Object+Codable.swift */; };
 		6D6AA39F2136DED600635BB4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6D6AA39E2136DED600635BB4 /* .gitignore */; };
@@ -50,6 +52,23 @@
 		CA7F3602D8378932351022B8 /* Pods_pocket_ios_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		24EC579321EB57A6008A4E4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DD41E382120C5C8002EE1F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DD41E3F2120C5C8002EE1F3;
+			remoteInfo = "pocket-ios-client";
+		};
+		24EC57A121EB57C4008A4E4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DD41E382120C5C8002EE1F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DD41E3F2120C5C8002EE1F3;
+			remoteInfo = "pocket-ios-client";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0D38D52F6933133B10642D50 /* Pods-pocket-ios-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.debug.xcconfig"; sourceTree = "<group>"; };
 		242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAndWebSocket.swift; sourceTree = "<group>"; };
@@ -66,6 +85,12 @@
 		24A680AA21DEE0F2003C4D21 /* FullRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullRequestFactory.swift; sourceTree = "<group>"; };
 		24A680AD21DEE114003C4D21 /* AbstractErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractErrorHandler.swift; sourceTree = "<group>"; };
 		24A680AE21DEE114003C4D21 /* AbstractErrorParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractErrorParser.swift; sourceTree = "<group>"; };
+		24EC578E21EB57A6008A4E4F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24EC579021EB57A6008A4E4F /* UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
+		24EC579221EB57A6008A4E4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24EC579C21EB57C4008A4E4F /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24EC579E21EB57C4008A4E4F /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
+		24EC57A021EB57C4008A4E4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_ios_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3196F743F6A858E70F1D8C /* Pods-pocket-ios-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.release.xcconfig"; sourceTree = "<group>"; };
 		6D2988EF21935F590004199F /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
@@ -99,6 +124,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		24EC578B21EB57A6008A4E4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24EC579921EB57C4008A4E4F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6DD41E3D2120C5C8002EE1F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,6 +290,24 @@
 			path = DB;
 			sourceTree = "<group>";
 		};
+		24EC578F21EB57A6008A4E4F /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				24EC579021EB57A6008A4E4F /* UnitTests.swift */,
+				24EC579221EB57A6008A4E4F /* Info.plist */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		24EC579D21EB57C4008A4E4F /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				24EC579E21EB57C4008A4E4F /* UITests.swift */,
+				24EC57A021EB57C4008A4E4F /* Info.plist */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
 		6DA111282163E8DC00C2AA45 /* NetworkServices */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +339,8 @@
 			children = (
 				6D6AA39E2136DED600635BB4 /* .gitignore */,
 				6DD41E422120C5C8002EE1F3 /* pocket-ios-client */,
+				24EC578F21EB57A6008A4E4F /* UnitTests */,
+				24EC579D21EB57C4008A4E4F /* UITests */,
 				6DD41E412120C5C8002EE1F3 /* Products */,
 				23CE2D0AB62A7D3715539640 /* Pods */,
 				6E5D3DDCC012328B616E8B53 /* Frameworks */,
@@ -292,6 +351,8 @@
 			isa = PBXGroup;
 			children = (
 				6DD41E402120C5C8002EE1F3 /* pocket-ios-client.app */,
+				24EC578E21EB57A6008A4E4F /* UnitTests.xctest */,
+				24EC579C21EB57C4008A4E4F /* UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,6 +465,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		24EC578D21EB57A6008A4E4F /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24EC579721EB57A6008A4E4F /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				24EC578A21EB57A6008A4E4F /* Sources */,
+				24EC578B21EB57A6008A4E4F /* Frameworks */,
+				24EC578C21EB57A6008A4E4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24EC579421EB57A6008A4E4F /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 24EC578E21EB57A6008A4E4F /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		24EC579B21EB57C4008A4E4F /* UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24EC57A321EB57C4008A4E4F /* Build configuration list for PBXNativeTarget "UITests" */;
+			buildPhases = (
+				24EC579821EB57C4008A4E4F /* Sources */,
+				24EC579921EB57C4008A4E4F /* Frameworks */,
+				24EC579A21EB57C4008A4E4F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24EC57A221EB57C4008A4E4F /* PBXTargetDependency */,
+			);
+			name = UITests;
+			productName = UITests;
+			productReference = 24EC579C21EB57C4008A4E4F /* UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		6DD41E3F2120C5C8002EE1F3 /* pocket-ios-client */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6DD41E522120C5C9002EE1F3 /* Build configuration list for PBXNativeTarget "pocket-ios-client" */;
@@ -429,10 +526,18 @@
 		6DD41E382120C5C8002EE1F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Damien Inc.";
 				TargetAttributes = {
+					24EC578D21EB57A6008A4E4F = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 6DD41E3F2120C5C8002EE1F3;
+					};
+					24EC579B21EB57C4008A4E4F = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 6DD41E3F2120C5C8002EE1F3;
+					};
 					6DD41E3F2120C5C8002EE1F3 = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1000;
@@ -453,11 +558,27 @@
 			projectRoot = "";
 			targets = (
 				6DD41E3F2120C5C8002EE1F3 /* pocket-ios-client */,
+				24EC578D21EB57A6008A4E4F /* UnitTests */,
+				24EC579B21EB57C4008A4E4F /* UITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		24EC578C21EB57A6008A4E4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24EC579A21EB57C4008A4E4F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6DD41E3E2120C5C8002EE1F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -518,6 +639,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		24EC578A21EB57A6008A4E4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24EC579121EB57A6008A4E4F /* UnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24EC579821EB57C4008A4E4F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24EC579F21EB57C4008A4E4F /* UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6DD41E3C2120C5C8002EE1F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -562,6 +699,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		24EC579421EB57A6008A4E4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DD41E3F2120C5C8002EE1F3 /* pocket-ios-client */;
+			targetProxy = 24EC579321EB57A6008A4E4F /* PBXContainerItemProxy */;
+		};
+		24EC57A221EB57C4008A4E4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DD41E3F2120C5C8002EE1F3 /* pocket-ios-client */;
+			targetProxy = 24EC57A121EB57C4008A4E4F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		6DD41E472120C5C8002EE1F3 /* Login.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -582,6 +732,94 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		24EC579521EB57A6008A4E4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B2H4W42259;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Home.UnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pocket-ios-client.app/pocket-ios-client";
+			};
+			name = Debug;
+		};
+		24EC579621EB57A6008A4E4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B2H4W42259;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Home.UnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pocket-ios-client.app/pocket-ios-client";
+			};
+			name = Release;
+		};
+		24EC57A421EB57C4008A4E4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B2H4W42259;
+				INFOPLIST_FILE = UITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Home.UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "pocket-ios-client";
+			};
+			name = Debug;
+		};
+		24EC57A521EB57C4008A4E4F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B2H4W42259;
+				INFOPLIST_FILE = UITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Home.UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "pocket-ios-client";
+			};
+			name = Release;
+		};
 		6DD41E502120C5C9002EE1F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -737,6 +975,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		24EC579721EB57A6008A4E4F /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24EC579521EB57A6008A4E4F /* Debug */,
+				24EC579621EB57A6008A4E4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24EC57A321EB57C4008A4E4F /* Build configuration list for PBXNativeTarget "UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24EC57A421EB57C4008A4E4F /* Debug */,
+				24EC57A521EB57C4008A4E4F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6DD41E3B2120C5C8002EE1F3 /* Build configuration list for PBXProject "pocket-ios-client" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
