@@ -1,0 +1,26 @@
+PODS:
+  - Realm (3.12.0):
+    - Realm/Headers (= 3.12.0)
+  - Realm/Headers (3.12.0)
+  - RealmSwift (3.12.0):
+    - Realm (= 3.12.0)
+  - Starscream (3.0.6)
+
+DEPENDENCIES:
+  - RealmSwift
+  - Starscream
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Realm
+    - RealmSwift
+    - Starscream
+
+SPEC CHECKSUMS:
+  Realm: cdaef23c4ddb36ab1ddffed23f5a7f3332fc5585
+  RealmSwift: 5576324033f0aa5ef1e0a839a3da2281dff47a7f
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+
+PODFILE CHECKSUM: 552f033e1092a52a3f0d0956784ea44fad603e20
+
+COCOAPODS: 1.5.3
