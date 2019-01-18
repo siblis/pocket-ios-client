@@ -12,20 +12,21 @@ import RealmSwift
 class DataBase {
     
     func saveSelfUser(info: SelfAccount) {
-        let sDB = loadSelfUser()
+        var password: String = info.password
+        if let sDB = loadSelfUser() {
+            password = sDB.password
+        }
         let selfInf = SelfAccount.init(
             uid: info.uid,
             accountName: info.accountName,
             email: info.email,
-            password: sDB.password
+            password: password
         )
         AdaptationDBJSON().saveInDB([selfInf])
     }
     
-    func loadSelfUser() -> SelfAccount {
-        let smInfoFromDB = AdaptationDBJSON().loadFromDB(smTableDB: SelfAccount.self)
-        guard let myInfo = smInfoFromDB.first else { return SelfAccount() }
-        return myInfo
+    func loadSelfUser() -> SelfAccount? {
+        return AdaptationDBJSON().loadFromDB(smTableDB: SelfAccount.self).first
     }
     
     func observerSelfUser() -> NotificationToken? {
@@ -41,9 +42,10 @@ class DataBase {
     }
     
     func saveContacts(data: [ContactAccount]) {
-        let selfInfo = loadSelfUser()
-        let contacts = data.filter { $0.email != selfInfo.email }
-        AdaptationDBJSON().saveInDB(contacts)
+        if let selfInfo = loadSelfUser() {
+            let contacts = data.filter { $0.email != selfInfo.email }
+            AdaptationDBJSON().saveInDB(contacts)
+        }
     }
     
     func observerContacts(complition: @escaping (RealmCollectionChange<Results<ContactAccount>>) -> Void) -> NotificationToken? {

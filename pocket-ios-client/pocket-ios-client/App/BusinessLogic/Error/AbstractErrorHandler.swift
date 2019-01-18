@@ -15,6 +15,11 @@ protocol AbstractErrorHandler {
 
 final class ErrorHandler: AbstractErrorHandler {
     func handle(error: AppError) {
-        print(error)
+        switch error {
+        case .badToken:
+            CorrectionMethods().autoLogIn()
+        default:
+            print(error)
+        }
     }
 }

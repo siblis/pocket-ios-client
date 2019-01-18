@@ -10,30 +10,12 @@ import UIKit
 
 class MessageCell: BaseCell {
     
-    let messageTextView: UITextView = {
-       let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 18)
-        textView.text = "Sample message"
-        textView.isUserInteractionEnabled = false
-        textView.backgroundColor = UIColor.clear
-        return textView
-    }()
-    
-    let textBubbleView: UIView = {
-       let view = UIView()
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
     static let leftBubbleImage = UIImage(named: "leftBubble")!.resizableImage(withCapInsets: UIEdgeInsets(top: 22, left: 26, bottom: 22, right: 26)).withRenderingMode(.alwaysTemplate)
     static let rightBubbleImage = UIImage(named: "rightBubble")!.resizableImage(withCapInsets: UIEdgeInsets(top: 22, left: 26, bottom: 22, right: 26)).withRenderingMode(.alwaysTemplate)
     
-    let bubbleImageView: UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = MessageCell.leftBubbleImage
-        imageView.tintColor = UIColor.chatBubbleEnemy
-        return imageView
-    }()
+    let messageTextView = ElementUI().txtViewIni()
+    let textBubbleView = ElementUI().viewIni()
+    let bubbleImageView = ElementUI().imgBubbleIni(image: MessageCell.leftBubbleImage)
     
     override func setupViews() {
         super.setupViews()
