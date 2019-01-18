@@ -42,6 +42,7 @@
 		BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9AC6A02193059F00348948 /* ChatListModel.swift */; };
 		C16E1CBE21D0D9F3006E697D /* AddUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16E1CBD21D0D9F3006E697D /* AddUserController.swift */; };
 		C16E1CC021D0DCFD006E697D /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16E1CBF21D0DCFD006E697D /* UserCell.swift */; };
+		C16E1CC221F08B10006E697D /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16E1CC121F08B10006E697D /* GroupCell.swift */; };
 		C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1896401218B80F300CE4ABE /* SignUpViewController.swift */; };
 		C1896405218B80F300CE4ABE /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1896403218B80F300CE4ABE /* SignUp.storyboard */; };
 		C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189640721997FB700CE4ABE /* MyProfileViewController.swift */; };
@@ -114,6 +115,7 @@
 		BC9AC6A02193059F00348948 /* ChatListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListModel.swift; sourceTree = "<group>"; };
 		C16E1CBD21D0D9F3006E697D /* AddUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserController.swift; sourceTree = "<group>"; };
 		C16E1CBF21D0DCFD006E697D /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		C16E1CC121F08B10006E697D /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		C1896401218B80F300CE4ABE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		C1896403218B80F300CE4ABE /* SignUp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
 		C189640721997FB700CE4ABE /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 			children = (
 				C16E1CBD21D0D9F3006E697D /* AddUserController.swift */,
 				C16E1CBF21D0DCFD006E697D /* UserCell.swift */,
+				C16E1CC121F08B10006E697D /* GroupCell.swift */,
 			);
 			path = AddUser;
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */,
 				24A680A221DEDFF9003C4D21 /* AbstractRequestFactory.swift in Sources */,
 				BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */,
+				C16E1CC221F08B10006E697D /* GroupCell.swift in Sources */,
 				C18F9D30219ABCA30039D51C /* EditProfileViewController.swift in Sources */,
 				24A680A121DEDFF9003C4D21 /* RequestRouter.swift in Sources */,
 				245617422178BDB8007A9103 /* ChatViewController.swift in Sources */,

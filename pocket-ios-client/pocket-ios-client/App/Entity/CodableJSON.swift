@@ -53,3 +53,23 @@ struct DeleteContact: Codable {
         self.username = try container.decode(String.self, forKey: .username)
     }
 }
+
+struct GroupInfo: Codable {
+    var gid: Int
+    var groupName: String
+    var users:[Int]
+    
+    enum CodingKeys: String, CodingKey {
+        case gid = "gid"
+        case groupName = "group_name"
+        case users = "users"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.gid = try container.decode(Int.self, forKey: .gid)
+        self.groupName = try container.decode(String.self, forKey: .groupName)
+        self.users = try container.decode([Int].self, forKey: .users)
+    }
+}
+
