@@ -35,18 +35,20 @@ class BaseRequestFatory: AbstractRequestFatory {
                         print("Ошибка: \(error?.localizedDescription ?? "Error")")
                         return
                     }
+                    let httpResponse = response as? HTTPURLResponse
+                    if let statusCode = httpResponse?.statusCode {
+                        if let err = self?.errorParser.parse(statusCode: statusCode) {
+                            self?.errorHandler.handle(error: err)
+                        }
+                    } else {
+                        print (httpResponse!.allHeaderFields)
+                    }
                     do {
                         let resultInfo = try JSONDecoder().decode(T.self, from: data)
                         completion(resultInfo)
                     }
-                    catch {
-                        print(self?.errorParser.parse(error))
-                    }
-                    let httpResponse = response as? HTTPURLResponse
-                    if let statusCode = httpResponse?.statusCode {
-                        print(statusCode)
-                    } else {
-                        print (httpResponse!.allHeaderFields)
+                    catch let errDecod{
+                        print(self?.errorParser.parse(errDecod))
                     }
                 }.resume()
     }

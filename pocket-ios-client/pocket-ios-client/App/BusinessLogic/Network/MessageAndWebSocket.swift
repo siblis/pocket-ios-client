@@ -47,7 +47,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
     
     //MARK: Message sending
     func sendMessage (receiver: ContactAccount, message: String) -> Message {
-        let myPersInf = DataBase().loadSelfUser()
+        guard let myPersInf = DataBase().loadSelfUser() else { return Message() }
         let msg = Message.init(
             receiver: receiver.uid,
             text: message,

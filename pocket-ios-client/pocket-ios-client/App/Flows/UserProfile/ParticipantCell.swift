@@ -10,21 +10,13 @@ import UIKit
 
 class ParticipantCell: UITableViewCell {
     
-    let onlineStatusView: UIView = {
-        let statusView = UIView()
-        statusView.backgroundColor = UIColor.statusOffLine
-        statusView.layer.cornerRadius = 5
-        statusView.layer.masksToBounds = true
-        return statusView
-    }()
+    let onlineStatusView = ElementUI().viewIni(color: UIColor.statusOffLine, radius: 5)
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .left
-        return label
-    }()
+    let nameLabel = ElementUI().lblIni(
+        font: UIFont.partCellName,
+        textColor: UIColor.textPrimary,
+        textAlignment: .left
+    )
     
     override func awakeFromNib() {
         super.awakeFromNib()
