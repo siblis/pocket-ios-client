@@ -11,7 +11,6 @@ import UIKit
 
 extension UIColor {
     
-    
     static let unreadMessageCounter = #colorLiteral(red: 0.9584740996, green: 0.405867219, blue: 0.4054445624, alpha: 1)
     static let unreadMessageCountText = white
     static let statusOnLine = #colorLiteral(red: 0.05141130835, green: 0.9985559583, blue: 0, alpha: 1)

@@ -14,64 +14,19 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     var selfInfo = SelfAccount()
 
     //определяем элементы экрана
-    let cancelBtn:UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.buttonPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .right
-        return button
-    }()
+    let cancelBtn = ElementUI().btnIni(textAlignment: .right)
+    let doneBtn = ElementUI().btnIni(textAlignment: .left)
+    let myPhoto = ElementUI().imgRoundIni()
+    let firstName = ElementUI().txtFldIni(holder: "Имя", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 1)
+    let lastName = ElementUI().txtFldIni(holder: "Фамилия", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 2)
+    let status = ElementUI().txtFldIni(holder: "Статус:", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 3)
     
-    let doneBtn:UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.buttonSecondary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .left
-        return button
-    }()
+    let editLabel = ElementUI().lblIni(
+        font: UIFont.edtProfEdit,
+        textColor: UIColor.textPrimary,
+        textAlignment: .center
+    )
     
-    let editLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let myPhoto: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = image.frame.size.width/2
-        return image
-    }()
-    
-    let firstName: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Имя"
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.returnKeyType = .done
-        textField.tag = 1
-        return textField
-    }()
-    
-    let lastName: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Фамилия"
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.returnKeyType = .done
-        textField.tag = 2
-        return textField
-    }()
-    
-    let status: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Статус:"
-        textField.returnKeyType = .done
-        textField.tag = 3
-        return textField
-    }()
-
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
     let screenWidth = UIScreen.main.bounds.width
     
@@ -103,7 +58,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        selfInfo = DataBase().loadSelfUser()
+        selfInfo = DataBase().loadSelfUser() ?? SelfAccount()
         firstName.text = selfInfo.firstName
         lastName.text = selfInfo.lastName
         status.text = selfInfo.status

@@ -10,34 +10,10 @@ import UIKit
 
 class UserCell: UITableViewCell {
 
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 20
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
-    
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    
-    let emailLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.textSecondary
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
-    
-    let idLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.textSecondary
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .right
-        return label
-    }()
+    let profileImageView = ElementUI().imgIni(radius: 20)
+    let nameLabel = ElementUI().lblIni(font: UIFont.addUserName)
+    let emailLabel = ElementUI().lblIni(font: UIFont.addUserEmail, textColor: UIColor.textSecondary)
+    let idLabel = ElementUI().lblIni(font: UIFont.addUserId, textColor: UIColor.textSecondary, textAlignment: .right)
     
     func setUp() {
         

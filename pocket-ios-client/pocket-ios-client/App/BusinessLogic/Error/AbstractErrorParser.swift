@@ -11,11 +11,13 @@ import Foundation
 protocol AbstractErrorParser {
     func parse(_ result: Error) -> Error
     func parse(response: HTTPURLResponse?, data: Data?, error: Error?) -> Error?
+    func parse(statusCode: Int) -> AppError
 }
 
 enum AppError: Error {
     case serverError
     case undefinedError
+    case badToken
 }
 
 class ErrorParser: AbstractErrorParser {
@@ -28,5 +30,14 @@ class ErrorParser: AbstractErrorParser {
     
     func parse(response: HTTPURLResponse?, data: Data?, error: Error?) -> Error? {
         return AppError.undefinedError
+    }
+    
+    func parse(statusCode: Int) -> AppError {
+        switch statusCode {
+        case 401:
+            return AppError.badToken
+        default:
+            return AppError.undefinedError
+        }
     }
 }

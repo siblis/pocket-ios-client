@@ -15,92 +15,32 @@ class MyProfileViewController: UIViewController {
     var observerMyProfile: NotificationToken?
     
     //определяем элементы экрана
-    let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.backSecondary
-        return view
-    }()
+    let backgroundView = ElementUI().viewIni(color: UIColor.backSecondary)
+    let editBtn = ElementUI().btnIni(textAlignment: .left)
+    let logOutBtn = ElementUI().btnIni(textAlignment: .right)
+    let myPhoto = ElementUI().imgIni(radius: 43)
+    let chatPhoto = ElementUI().imgRoundIni()
+    let myName = ElementUI().lblIni(font: UIFont.myProfName, textColor: UIColor.textPrimary, textAlignment: .center)
+    let myId = ElementUI().lblIni(font: UIFont.myProfId, textColor: UIColor.textPrimary, textAlignment: .center)
+    let status = ElementUI().lblIni(font: UIFont.myProfStat, textColor: UIColor.textSecondary, textAlignment: .left)
     
-    let editBtn:UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.buttonPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .left
-        return button
-    }()
+    let myEmail = ElementUI().lblIni(
+        font: UIFont.myProfEmail,
+        textColor: UIColor.textPrimary,
+        textAlignment: .center
+    )
     
-    let logOutBtn:UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.buttonPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.titleLabel?.textAlignment = .right
-        return button
-    }()
+    let chat = ElementUI().lblIni(
+        font: UIFont.myProfChat,
+        textColor: UIColor.buttonSecondary,
+        textAlignment: .center
+    )
     
-    let myPhoto: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = 43 
-        return image
-    }()
-    
-    let myName: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let myEmail: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let myId: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let chatPhoto: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = image.frame.size.width/2
-        return image
-    }()
-    
-    let chat: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        label.textColor = UIColor.buttonSecondary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let status: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor.textSecondary
-        label.textAlignment = .left
-        return label
-    }()
-    
-    let statusField: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        label.textColor = UIColor.backPrimary
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        return label
-    }()
+    let statusField = ElementUI().lblIni(
+        font: UIFont.myProfStFld,
+        textColor: UIColor.backPrimary,
+        textAlignment: .left
+    )
     
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
     let screenWidth = UIScreen.main.bounds.width
@@ -108,7 +48,7 @@ class MyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selfInfo = DataBase().loadSelfUser()
+        selfInfo = DataBase().loadSelfUser() ?? SelfAccount()
         observerMyProfile = DataBase().observerSelfUser()
         setUpTopView()
         setUpStatusView()
