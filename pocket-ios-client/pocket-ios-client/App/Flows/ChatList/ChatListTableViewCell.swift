@@ -10,42 +10,11 @@ import UIKit
 
 class ChatListTableViewCell: UITableViewCell {
     
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 34
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
-   
-    let nameLabel: UILabel = {
-      let label = UILabel()
-        label.text = "Steve Jobs"
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    let messageLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Your friend's message and something else..."
-        label.textColor = UIColor.textSecondary
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
-    let timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "12.03 pm"
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textAlignment = .right
-        return label
-    }()
-    let messageCountLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.unreadMessageCountText
-        label.text = "24"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.textAlignment = .center
-        return label
-    }()
+    let profileImageView = ElementUI().imgIni(radius: 34)
+    let nameLabel = ElementUI().lblIni(font: UIFont.chatListName)
+    let messageLabel = ElementUI().lblIni(font: UIFont.chatListMessage, textColor: UIColor.textSecondary)
+    let timeLabel = ElementUI().lblIni(font: UIFont.chatListTime, textAlignment: .right)
+    let messageCountLabel = ElementUI().lblIni(font: UIFont.chatListMessageCount, textAlignment: .center)
     
 
     func setup() {

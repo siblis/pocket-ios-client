@@ -10,7 +10,7 @@ import Foundation
 
 class CorrectionMethods {
     func autoLogIn() {
-        let selfInfo = DataBase().loadSelfUser()
+        guard let selfInfo = DataBase().loadSelfUser() else { return }
         URLServices().signIn(login: selfInfo.accountName, password: selfInfo.password) { (info) in
             if info.token != "" {
                 Token.main = info.token
