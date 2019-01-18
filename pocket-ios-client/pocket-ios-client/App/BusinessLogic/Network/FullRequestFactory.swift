@@ -17,6 +17,7 @@ protocol FullRequestFactory {
     func getUserID(id: Int, token: String, completion: @escaping (ContactAccount) -> Void)
     func getUserByNickname(nickname: String, token: String, completion: @escaping ([ContactAccount]) -> Void)
     func getUserByEmail(email: String, token: String, completion: @escaping (ContactAccount) -> Void)
+    func getGroupInfo(info: String, token: String, completion: @escaping (GroupInfo) -> Void)
     func getContacts(token: String, completion: @escaping ([ContactAccount]) -> Void)
     func addUserByMail(_ email: String, token: String, completion: @escaping (ContactAccount) -> Void)
     func deleteUserByMail(_ email: String, token: String, completion: @escaping (DeleteContact) -> Void)
@@ -72,6 +73,13 @@ class URLServices: BaseRequestFatory, FullRequestFactory {
     func getUserByEmail(email: String, token: String, completion: @escaping (ContactAccount) -> Void) {
         contactRequest.header = ["token": token]
         contactRequest.path = "/v1/users/" + email
+        let rqst = try! contactRequest.asURLRequest()
+        self.request(ask: rqst, completion: completion)
+    }
+    
+    func getGroupInfo(info: String, token: String, completion: @escaping (GroupInfo) -> Void) {
+        contactRequest.header = ["token": token]
+        contactRequest.path = "/v1/chats/" + info
         let rqst = try! contactRequest.asURLRequest()
         self.request(ask: rqst, completion: completion)
     }
