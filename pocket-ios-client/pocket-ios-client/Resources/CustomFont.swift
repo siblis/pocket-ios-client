@@ -10,31 +10,44 @@ import UIKit
 
 extension UIFont {
     
-    static let userListName = systemFont(ofSize: 18)
-    static let userListStatus = systemFont(ofSize: 14)
-    static let chatListName = systemFont(ofSize: 18)
-    static let chatListMessage = systemFont(ofSize: 14)
-    static let chatListTime = systemFont(ofSize: 16)
-    static let chatListMessageCount = boldSystemFont(ofSize: 12)
-    static let addUserName = systemFont(ofSize: 18)
-    static let addUserEmail = systemFont(ofSize: 14)
-    static let addUserId = systemFont(ofSize: 14)
-    static let myProfName = systemFont(ofSize: 18, weight: .medium)
-    static let myProfEmail = systemFont(ofSize: 12, weight: .light)
-    static let myProfId = systemFont(ofSize: 12, weight: .light)
-    static let myProfChat = systemFont(ofSize: 11, weight: .regular)
-    static let myProfStat = systemFont(ofSize: 13, weight: .regular)
-    static let myProfStFld = systemFont(ofSize: 15, weight: .light)
-    static let edtProfEdit = systemFont(ofSize: 17, weight: .medium)
-    static let usrProfName = systemFont(ofSize: 18, weight: .medium)
-    static let usrProfEmail = systemFont(ofSize: 12, weight: .light)
-    static let usrProfId = systemFont(ofSize: 12, weight: .light)
-    static let usrProfChat = systemFont(ofSize: 11, weight: .regular)
-    static let usrProfStat = systemFont(ofSize: 13, weight: .regular)
-    static let usrProfStFld = systemFont(ofSize: 15, weight: .light)
-    static let groupProfName = systemFont(ofSize: 18, weight: .medium)
-    static let groupProfId = systemFont(ofSize: 12, weight: .light)
-    static let groupProfPart = systemFont(ofSize: 16)
-    static let partCellName = systemFont(ofSize: 14)
+    //MARK: Общий перечень шрифтов, которые используются в интерфейсе
+    static let custF18 = systemFont(ofSize: 18)
+    static let custF18M = systemFont(ofSize: 18, weight: .medium)
+    static let custF17M = systemFont(ofSize: 17, weight: .medium)
+    static let custF16 = systemFont(ofSize: 16)
+    static let custF15L = systemFont(ofSize: 15, weight: .light)
+    static let custF14 = systemFont(ofSize: 14)
+    static let custF13R = systemFont(ofSize: 13, weight: .regular)
+    static let custF12L = systemFont(ofSize: 12, weight: .light)
+    static let custF11R = systemFont(ofSize: 11, weight: .regular)
+    static let custFB12 = boldSystemFont(ofSize: 12)
+    
+    //MARK: Привязка шрифтов к местам где они использованы
+    static let userListName = custF18
+    static let userListStatus = custF14
+    static let chatListName = custF18
+    static let chatListMessage = custF14
+    static let chatListTime = custF16
+    static let chatListMessageCount = custFB12
+    static let addUserName = custF18
+    static let addUserEmail = custF14
+    static let addUserId = custF14
+    static let myProfName = custF18M
+    static let myProfEmail = custF12L
+    static let myProfId = custF12L
+    static let myProfChat = custF11R
+    static let myProfStat = custF13R
+    static let myProfStFld = custF15L
+    static let edtProfEdit = custF17M
+    static let usrProfName = custF18M
+    static let usrProfEmail = custF12L
+    static let usrProfId = custF12L
+    static let usrProfChat = custF11R
+    static let usrProfStat = custF13R
+    static let usrProfStFld = custF15L
+    static let groupProfName = custF18M
+    static let groupProfId = custF12L
+    static let groupProfPart = custF16
+    static let partCellName = custF14
     
 }
