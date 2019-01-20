@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
             if info.token != "" {
                 DataBase().saveSelfUser(info: self.selfInfo)
                 Token.main = info.token
-                ApplicationSwitcherRC.choiceRootVC()
+                ApplicationSwitcherRC().choiceRootVC()
             }
         }
     }
