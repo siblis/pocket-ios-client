@@ -8,12 +8,13 @@
 
 import Foundation
 
-class CorrectionMethods {
+class CorrectionMethods: ApplicationSwitcherRC {
     func autoLogIn() {
         guard let selfInfo = DataBase().loadSelfUser() else { return }
         URLServices().signIn(login: selfInfo.accountName, password: selfInfo.password) { (info) in
             if info.token != "" {
                 Token.main = info.token
+                self.choiceRootVC()
             } else {
                 self.logOut()
             }
@@ -22,8 +23,8 @@ class CorrectionMethods {
     
     func logOut() {
         Token.main = nil
-        AdaptationDBJSON().deleteAllRecords()
-        ApplicationSwitcherRC.initVC(choiceVC: .login)
+        DataBase().deleteAllRecords()
+        ApplicationSwitcherRC().initVC(choiceVC: .login)
     }
     
     func dateFormater(_ time: Double) -> String {

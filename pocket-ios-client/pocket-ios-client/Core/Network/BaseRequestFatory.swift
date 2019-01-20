@@ -20,7 +20,7 @@ class BaseRequestFatory: AbstractRequestFatory {
         errorParser: AbstractErrorParser = ErrorParser(),
         sessionManager: URLSession = URLSession(configuration: URLSessionConfiguration.default),
         queue: DispatchQueue? = DispatchQueue.global()
-        ) {
+    ) {
         
         self.errorHandler = errorHandler
         self.errorParser = errorParser
@@ -30,25 +30,21 @@ class BaseRequestFatory: AbstractRequestFatory {
     
     public func request<T: Decodable>(ask: URLRequest, completion: @escaping (T) -> Void) {
             return sessionManager
-                .dataTask(with: ask) { [weak self] (responseData, response, error) in
+                .dataTask(with: ask) { (responseData, response, error) in
                     guard let data = responseData, error == nil else {
                         print("Ошибка: \(error?.localizedDescription ?? "Error")")
                         return
                     }
-                    let httpResponse = response as? HTTPURLResponse
-                    if let statusCode = httpResponse?.statusCode {
-                        if let err = self?.errorParser.parse(statusCode: statusCode) {
-                            self?.errorHandler.handle(error: err)
-                        }
-                    } else {
-                        print (httpResponse!.allHeaderFields)
+                    if let err = self.errorParser.parse(response: response as? HTTPURLResponse, error: error) {
+                        self.errorHandler.handle(error: err)
                     }
+                    
                     do {
                         let resultInfo = try JSONDecoder().decode(T.self, from: data)
                         completion(resultInfo)
                     }
                     catch let errDecod{
-                        print(self?.errorParser.parse(errDecod))
+                        print(self.errorParser.parse(errDecod))
                     }
                 }.resume()
     }

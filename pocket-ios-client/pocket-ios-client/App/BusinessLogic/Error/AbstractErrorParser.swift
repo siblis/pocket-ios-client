@@ -10,34 +10,46 @@ import Foundation
 
 protocol AbstractErrorParser {
     func parse(_ result: Error) -> Error
-    func parse(response: HTTPURLResponse?, data: Data?, error: Error?) -> Error?
-    func parse(statusCode: Int) -> AppError
+    func parse(response: HTTPURLResponse?, error: Error?) -> Error?
 }
 
 enum AppError: Error {
-    case serverError
-    case undefinedError
-    case badToken
+    
+    case serverError(String)
+    case badToken(String)
+    case undefinedError(String)
+    
+    var description: String {
+        switch self {
+        case .serverError(let description):
+            return description
+        case .badToken(let description):
+            return description
+        case .undefinedError(let description):
+            return description
+        }
+    }
 }
 
 class ErrorParser: AbstractErrorParser {
+    
     func parse(_ result: Error) -> Error {
         if result is DecodingError {
-            return AppError.serverError
+            return AppError.serverError("Server error")
         }
-        return AppError.undefinedError
+        return AppError.undefinedError("Undefined error")
     }
     
-    func parse(response: HTTPURLResponse?, data: Data?, error: Error?) -> Error? {
-        return AppError.undefinedError
-    }
-    
-    func parse(statusCode: Int) -> AppError {
-        switch statusCode {
-        case 401:
-            return AppError.badToken
-        default:
-            return AppError.undefinedError
+    func parse(response: HTTPURLResponse?, error: Error?) -> Error? {
+        if let err = error {
+            return AppError.undefinedError(err.localizedDescription)
+        } else {
+            switch response?.statusCode {
+            case 401:
+                return AppError.badToken("Bad token. 401")
+            default:
+                return AppError.undefinedError("Undefined error")
+            }
         }
     }
 }

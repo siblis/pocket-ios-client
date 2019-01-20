@@ -14,9 +14,12 @@ class ChatListTableViewCell: UITableViewCell {
     let nameLabel = ElementUI().lblIni(font: UIFont.chatListName)
     let messageLabel = ElementUI().lblIni(font: UIFont.chatListMessage, textColor: UIColor.textSecondary)
     let timeLabel = ElementUI().lblIni(font: UIFont.chatListTime, textAlignment: .right)
-    let messageCountLabel = ElementUI().lblIni(font: UIFont.chatListMessageCount, textAlignment: .center)
+    let messageCountLabel = ElementUI().lblIni(
+        font: UIFont.chatListMessageCount,
+        textColor: UIColor.unreadMessageCountText,
+        textAlignment: .center
+    )
     
-
     func setup() {
          
         addSubview(profileImageView)
@@ -66,15 +69,4 @@ class ChatListTableViewCell: UITableViewCell {
         containerView.addConstraintsWithFormat(format: "V:|[v0(24)]", views: timeLabel)
     }
     
-}
-extension UIView {
-    func addConstraintsWithFormat(format: String, views: UIView...){
-        var viewsDictionary = [String: UIView]()
-        for (index, view) in views.enumerated(){
-            let key = "v\(index)"
-            viewsDictionary[key] = view
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
-    }
 }

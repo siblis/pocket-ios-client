@@ -10,17 +10,18 @@ import UIKit
 
 class ApplicationSwitcherRC {
     
-    static var rootVC: UIViewController!
+    var rootVC: UIViewController!
     
     enum UploadVC {
         case login
         case tabbar
     }
     
-    static func choiceRootVC() {
+    func choiceRootVC() {
         if let token = Token.main {
-            URLServices().getSelfUser(token: token) { (info) in
-                DataBase().saveSelfUser(info: info)
+            URLServices().getContacts(token: token) { (contacts) in
+                WSS.initial.webSocketConnect()
+                DataBase().saveContacts(data: contacts)
                 DispatchQueue.main.async {
                     self.initVC(choiceVC: .tabbar)
                 }
@@ -31,18 +32,18 @@ class ApplicationSwitcherRC {
         }
     }
     
-    static func ifServerDown() {
+    func ifServerDown() {
         initVC(choiceVC: .tabbar)
     }
     
-    static func initVC(choiceVC: UploadVC) {
+    func initVC(choiceVC: UploadVC) {
         let initVC = UIStoryboard.init(name: "Login", bundle: nil)
         
         switch choiceVC {
         case .login:
             rootVC = initVC.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         case .tabbar:
-            rootVC = initVC.instantiateViewController(withIdentifier: "TabBarController") as! InitAfterLogin            
+            rootVC = initVC.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         }
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
