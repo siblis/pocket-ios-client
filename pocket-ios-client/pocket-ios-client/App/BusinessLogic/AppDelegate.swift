@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        CorrectionMethods().logOut()
 //        Token.main = "123456"
-        ApplicationSwitcherRC.choiceRootVC()
+        ApplicationSwitcherRC().choiceRootVC()
         
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         print(documentsDirectory!)

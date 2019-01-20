@@ -49,7 +49,7 @@ class SignUpViewController: UIViewController {
             )
             DataBase().saveSelfUser(info: selfInfo)
             DispatchQueue.main.async {
-                ApplicationSwitcherRC.initVC(choiceVC: .tabbar)
+                ApplicationSwitcherRC().initVC(choiceVC: .tabbar)
             }
         }
     }

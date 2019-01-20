@@ -1,5 +1,5 @@
 //
-//  AdaptationDBJSON.swift
+//  AbstractRequestDB.swift
 //  pocket-ios-client
 //
 //  Created by Мак on 05/12/2018.
@@ -9,15 +9,16 @@
 import UIKit
 import RealmSwift
 
-protocol AdaptationInformation {
+protocol AbstractRequestDB {
     func saveInDB(_ smElements: [Object])
     func deleteAllRecords()
-//    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String)
+    func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int)
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
+    func loadOneRecordFromDB<A: Object>(smTableDB: A.Type, filter: String) -> Results<A>
     func realmObserver<A: Object>(smTableDB: Results<A>, complition: @escaping (RealmCollectionChange<Results<A>>) -> Void) -> NotificationToken?
 }
 
-class AdaptationDBJSON: AdaptationInformation {
+class RequestDB: AbstractRequestDB {
     
     let realm = try! Realm()
     
@@ -33,22 +34,17 @@ class AdaptationDBJSON: AdaptationInformation {
         }
     }
     
-    func deleteContactFromDB (_ contact: ContactAccount) {
-        do {
-            realm.beginWrite()
-            let contact = realm.object(ofType: ContactAccount.self, forPrimaryKey: contact.uid)
-            realm.delete(contact!)
-            try realm.commitWrite()
-            print ("realm delete")
-        } catch {
-            print (error.localizedDescription)
-        }
-    }
-    
-    func editRecord<A: Object>(smTableDB: A.Type, smRecord: A, filter: String) {
-        let smInfo = realm.objects(smTableDB.self).filter(filter)
-        try! realm.write {
-            realm.add(smRecord, update: true)
+    func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int) {
+        realm.beginWrite()
+        if let smElement = realm.object(ofType: smTableDB.self, forPrimaryKey: forPrimaryKey) {
+            realm.delete(smElement)
+            do {
+                try realm.commitWrite()
+                print ("realm delete")
+            }
+            catch {
+                print (error.localizedDescription)
+            }
         }
     }
     

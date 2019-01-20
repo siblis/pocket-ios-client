@@ -38,32 +38,33 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        var rows = 0
-        if section == 0 {
-            rows = users.count
-        } else if section == 1 {
-            rows = groups.count
+        switch section {
+        case 0:
+            return users.count
+        case 1:
+            return groups.count
+        default:
+            return 0
         }
-        return rows
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
             
             cell.setUp()
             cell.configure(user: users[indexPath.row])
-            
             return cell
-        } else if indexPath.section == 1 {
+        case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
             
             cell.setUp()
             cell.configure(group: groups[indexPath.row])
-            
             return cell
+        default:
+            return UITableViewCell()
         }
-        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -90,10 +91,10 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             performSegue(withIdentifier: "showSelectedUserDetails", sender: self)
-        }
-        if indexPath.section == 1 {
+        case 1:
             selectedGroup.gid = groups[indexPath.row].gid
             selectedGroup.groupName = groups[indexPath.row].groupName
             selectedGroup.users = List<ContactAccount>()
@@ -110,6 +111,8 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
                     self.performSegue(withIdentifier: "showSelectedGroupDetails", sender: self)
                 }
             }
+        default:
+            print ("default")
         }
     }
     

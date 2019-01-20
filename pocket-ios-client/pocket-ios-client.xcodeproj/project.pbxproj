@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */; };
 		2438D53121C6E0E1002FCF20 /* CodableJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438D53021C6E0E1002FCF20 /* CodableJSON.swift */; };
-		24392F7621A1E48C003C444C /* InitAfterLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F7521A1E48C003C444C /* InitAfterLogin.swift */; };
-		24392F8421B873B1003C444C /* AdaptationDBJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F8321B873B1003C444C /* AdaptationDBJSON.swift */; };
+		24392F8421B873B1003C444C /* AbstractRequestDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F8321B873B1003C444C /* AbstractRequestDB.swift */; };
 		245617422178BDB8007A9103 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245617412178BDB8007A9103 /* ChatViewController.swift */; };
 		245DE7B72196294D002596FF /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DE7B62196294D002596FF /* MessageCell.swift */; };
 		24A6803921D90763003C4D21 /* CorrectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6803821D90763003C4D21 /* CorrectionMethods.swift */; };
@@ -25,6 +24,7 @@
 		24EC579F21EB57C4008A4E4F /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC579E21EB57C4008A4E4F /* UITests.swift */; };
 		24EC57A821EE8A9B008A4E4F /* ElementUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC57A721EE8A9B008A4E4F /* ElementUI.swift */; };
 		24EC57AA21EEF05A008A4E4F /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC57A921EEF05A008A4E4F /* CustomFont.swift */; };
+		24EC57AD21F3CCFA008A4E4F /* Constraints+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC57AC21F3CCFA008A4E4F /* Constraints+UIView.swift */; };
 		6D2988F021935F590004199F /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2988EF21935F590004199F /* TokenService.swift */; };
 		6D2E38CD219B68A300059DD3 /* Object+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E38CC219B68A300059DD3 /* Object+Codable.swift */; };
 		6D6AA39F2136DED600635BB4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6D6AA39E2136DED600635BB4 /* .gitignore */; };
@@ -76,8 +76,7 @@
 		0D38D52F6933133B10642D50 /* Pods-pocket-ios-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.debug.xcconfig"; sourceTree = "<group>"; };
 		242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAndWebSocket.swift; sourceTree = "<group>"; };
 		2438D53021C6E0E1002FCF20 /* CodableJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableJSON.swift; sourceTree = "<group>"; };
-		24392F7521A1E48C003C444C /* InitAfterLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitAfterLogin.swift; sourceTree = "<group>"; };
-		24392F8321B873B1003C444C /* AdaptationDBJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptationDBJSON.swift; sourceTree = "<group>"; };
+		24392F8321B873B1003C444C /* AbstractRequestDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractRequestDB.swift; sourceTree = "<group>"; };
 		245617412178BDB8007A9103 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		245DE7B62196294D002596FF /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		24A6803821D90763003C4D21 /* CorrectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionMethods.swift; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		24EC57A021EB57C4008A4E4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24EC57A721EE8A9B008A4E4F /* ElementUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUI.swift; sourceTree = "<group>"; };
 		24EC57A921EEF05A008A4E4F /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		24EC57AC21F3CCFA008A4E4F /* Constraints+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constraints+UIView.swift"; sourceTree = "<group>"; };
 		27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_ios_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3196F743F6A858E70F1D8C /* Pods-pocket-ios-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.release.xcconfig"; sourceTree = "<group>"; };
 		6D2988EF21935F590004199F /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				6DA1113A216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift */,
-				24EC57A721EE8A9B008A4E4F /* ElementUI.swift */,
+				24EC57AB21F3CC85008A4E4F /* UI */,
 				24A6809821DEDFD6003C4D21 /* Network */,
 			);
 			path = Core;
@@ -235,7 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				6DD41E472120C5C8002EE1F3 /* Login.storyboard */,
-				6DD41E562120C5EF002EE1F3 /* Application */,
 				6DD41E552120C5DD002EE1F3 /* Login */,
 				C18963FF218B80F300CE4ABE /* SignUp */,
 				6DA1112B216672D300C2AA45 /* UserList */,
@@ -293,7 +292,7 @@
 		24A680B221DF9CEE003C4D21 /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				24392F8321B873B1003C444C /* AdaptationDBJSON.swift */,
+				24392F8321B873B1003C444C /* AbstractRequestDB.swift */,
 				6D8FB1D5219B0C7100E90D89 /* DataBase.swift */,
 			);
 			path = DB;
@@ -315,6 +314,15 @@
 				24EC57A021EB57C4008A4E4F /* Info.plist */,
 			);
 			path = UITests;
+			sourceTree = "<group>";
+		};
+		24EC57AB21F3CC85008A4E4F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				24EC57A721EE8A9B008A4E4F /* ElementUI.swift */,
+				24EC57AC21F3CCFA008A4E4F /* Constraints+UIView.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		6DA111282163E8DC00C2AA45 /* NetworkServices */ = {
@@ -383,14 +391,6 @@
 				6DD41E452120C5C8002EE1F3 /* LoginViewController.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		6DD41E562120C5EF002EE1F3 /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				24392F7521A1E48C003C444C /* InitAfterLogin.swift */,
-			);
-			path = Application;
 			sourceTree = "<group>";
 		};
 		6E5D3DDCC012328B616E8B53 /* Frameworks */ = {
@@ -657,6 +657,7 @@
 				C1DAE22121A28DFF00F33112 /* ParticipantCell.swift in Sources */,
 				C16E1CBE21D0D9F3006E697D /* AddUserController.swift in Sources */,
 				C1896411219E9B4D00CE4ABE /* UserProfileViewController.swift in Sources */,
+				24EC57AD21F3CCFA008A4E4F /* Constraints+UIView.swift in Sources */,
 				6DA11133216B8C2E00C2AA45 /* ChatListTableViewCell.swift in Sources */,
 				242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */,
 				6DA1112F2166737900C2AA45 /* ContactListTableViewCell.swift in Sources */,
@@ -667,7 +668,7 @@
 				6DA1112D2166732000C2AA45 /* ContactListTableViewController.swift in Sources */,
 				6D2988F021935F590004199F /* TokenService.swift in Sources */,
 				6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */,
-				24392F8421B873B1003C444C /* AdaptationDBJSON.swift in Sources */,
+				24392F8421B873B1003C444C /* AbstractRequestDB.swift in Sources */,
 				24A680B021DEE114003C4D21 /* AbstractErrorParser.swift in Sources */,
 				C1896404218B80F300CE4ABE /* SignUpViewController.swift in Sources */,
 				C16E1CC021D0DCFD006E697D /* UserCell.swift in Sources */,
@@ -688,7 +689,6 @@
 				2438D53121C6E0E1002FCF20 /* CodableJSON.swift in Sources */,
 				24A680A021DEDFF9003C4D21 /* ParametersSetup.swift in Sources */,
 				6DA1112A2163E8FA00C2AA45 /* NetworkServices.swift in Sources */,
-				24392F7621A1E48C003C444C /* InitAfterLogin.swift in Sources */,
 				245DE7B72196294D002596FF /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

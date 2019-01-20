@@ -253,10 +253,10 @@
             </objects>
             <point key="canvasLocation" x="4685" y="-414"/>
         </scene>
-        <!--Init After Login-->
+        <!--Tab Bar Controller-->
         <scene sceneID="Ezn-gm-rEN">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="KpO-BY-a84" customClass="InitAfterLogin" customModule="pocket_ios_client" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="KpO-BY-a84" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MWg-px-JLJ">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

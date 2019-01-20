@@ -180,7 +180,7 @@ class UserProfileViewController: UIViewController {
                 }
             }
 
-            AdaptationDBJSON().deleteContactFromDB(self.user)
+            DataBase().deleteContactFromDB(self.user)
         })
         let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
         alert.addAction(actionYes)

@@ -9,15 +9,18 @@
 import Foundation
 
 protocol AbstractErrorHandler {
-    func handle (error: AppError)
+    func handle (error: Error?)
 }
 
 
 final class ErrorHandler: AbstractErrorHandler {
-    func handle(error: AppError) {
-        switch error {
+    
+    func handle(error: Error?) {
+        switch error as! AppError {
         case .badToken:
-            CorrectionMethods().autoLogIn()
+            DispatchQueue.main.async {
+                CorrectionMethods().autoLogIn()
+            }
         default:
             print(error)
         }
