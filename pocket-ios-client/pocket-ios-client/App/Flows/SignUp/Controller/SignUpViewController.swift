@@ -11,24 +11,48 @@ import RealmSwift
 
 class SignUpViewController: UIViewController {
     
-    
+    //MARK: - Properties
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     
-    
-    @IBAction func backButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWasShown),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWasShown(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
+    
+    //MARK: - IBAction
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func SignUpButtonPress(_ sender: Any) {
@@ -54,7 +78,7 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    //алерт с ошибкой
+    //MARK: - Alert is error (алерт с ошибкой)
     func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
         
@@ -73,24 +97,9 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func keyboardWillBeHidden(notification: Notification) {
-        
         let contentInsets = UIEdgeInsets.zero
         scrollView?.contentInset = contentInsets
         scrollView?.scrollIndicatorInsets = contentInsets
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func hideKeyboard() {

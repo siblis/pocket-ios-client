@@ -11,19 +11,16 @@ import RealmSwift
 
 class LoginViewController: UIViewController {
     
-   
+    //MARK: - Properties
     @IBOutlet weak var pocketLable: UILabel!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var singUpButton: UIButton!
-    
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
-   
     @IBOutlet weak var scrollView: UIScrollView!
-    
     var selfInfo = SelfAccount()
 
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         loginTextField.attributedPlaceholder = NSAttributedString(string: "Login / Email",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -33,6 +30,30 @@ class LoginViewController: UIViewController {
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWasShown),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWasShown(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -67,24 +88,9 @@ class LoginViewController: UIViewController {
     }
     
     @objc func keyboardWillBeHidden(notification: Notification) {
-        
         let contentInsets = UIEdgeInsets.zero
         scrollView?.contentInset = contentInsets
         scrollView?.scrollIndicatorInsets = contentInsets
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func hideKeyboard() {
