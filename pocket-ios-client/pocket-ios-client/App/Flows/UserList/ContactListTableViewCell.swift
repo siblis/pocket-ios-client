@@ -10,34 +10,10 @@ import UIKit
 
 class ContactListTableViewCell: UITableViewCell {
     
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 20
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
-    
-    let onlineStatusView: UIView = {
-        let statusView = UIView()
-        statusView.backgroundColor = UIColor.statusOffLine
-        statusView.layer.cornerRadius = 5
-        statusView.layer.masksToBounds = true
-        return statusView
-    }()
-    
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    
-    let statusLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.textSecondary
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
+    let profileImageView = ElementUI().imgIni(radius: 20)
+    let onlineStatusView = ElementUI().viewIni(color: UIColor.statusOffLine, radius: 5)
+    let nameLabel = ElementUI().lblIni(font: UIFont.userListName)
+    let statusLabel = ElementUI().lblIni(font: UIFont.userListStatus, textColor: UIColor.textSecondary)
     
     func setUp() {
         

@@ -11,91 +11,37 @@ import RealmSwift
 
 class UserProfileViewController: UIViewController {
 
-    let backButton:UIButton = {
-        let button = UIButton()
-        button.imageView?.contentMode = .scaleAspectFill
-        button.imageView?.layer.masksToBounds = true
-        return button
-    }()
+    let backButton = ElementUI().btnIni()
+    let addDeleteButton = ElementUI().btnIni()
+    let backgroundView = ElementUI().viewIni(color: UIColor.backPrimary)
+    let userPhoto = ElementUI().imgIni(radius: 43)
+    let chatPhoto = ElementUI().imgRoundIni()
+    let UserId = ElementUI().lblIni(font: UIFont.usrProfId, textColor: UIColor.textPrimary, textAlignment: .center)
+    let status = ElementUI().lblIni(font: UIFont.usrProfStat, textColor: UIColor.textSecondary, textAlignment: .left)
     
-    let addDeleteButton:UIButton = {
-        let button = UIButton()
-        button.imageView?.contentMode = .scaleAspectFill
-        button.imageView?.layer.masksToBounds = true
-        return button
-    }()
+    let userName = ElementUI().lblIni(
+        font: UIFont.usrProfName,
+        textColor: UIColor.textPrimary,
+        textAlignment: .center
+    )
     
-    let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.backPrimary
-        return view
-    }()
-
+    let userEmail = ElementUI().lblIni(
+        font: UIFont.usrProfEmail,
+        textColor: UIColor.textPrimary,
+        textAlignment: .center
+    )
     
-    let userPhoto: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 43
-        image.layer.masksToBounds = true
-        return image
-    }()
+    let chat = ElementUI().lblIni(
+        font: UIFont.usrProfChat,
+        textColor: UIColor.buttonSecondary,
+        textAlignment: .center
+    )
     
-    let userName: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let userEmail: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let UserId: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let chatPhoto: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = image.frame.size.width/2
-        return image
-    }()
-    
-    let chat: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        label.textColor = UIColor.buttonSecondary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let status: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor.textSecondary
-        label.textAlignment = .left
-        return label
-    }()
-    
-    let statusField: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        label.textColor = UIColor.textSecondary
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        return label
-    }()
+    let statusField = ElementUI().lblIni(
+        font: UIFont.usrProfStFld,
+        textColor: UIColor.textSecondary,
+        textAlignment: .left
+    )
     
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
     let screenWidth = UIScreen.main.bounds.width
@@ -234,7 +180,7 @@ class UserProfileViewController: UIViewController {
                 }
             }
 
-            AdaptationDBJSON().deleteContactFromDB(self.user)
+            DataBase().deleteContactFromDB(self.user)
         })
         let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
         alert.addAction(actionYes)

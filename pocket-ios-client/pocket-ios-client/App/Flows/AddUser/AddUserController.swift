@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddUserController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     var users: [ContactAccount] = []
+    var groups: [GroupInfo] = []
+    var selectedGroup = Group()
+    let sectionTitles = ["Участники", "Группы"]
+    let myGroup = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,31 +26,99 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         searchBar.layer.borderWidth = 1
 
         tableView.rowHeight = 50
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count
+        switch section {
+        case 0:
+            return users.count
+        case 1:
+            return groups.count
+        default:
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
-
-        cell.setUp()
-        cell.configure(user: users[indexPath.row])
-
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
+            
+            cell.setUp()
+            cell.configure(user: users[indexPath.row])
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
+            
+            cell.setUp()
+            cell.configure(group: groups[indexPath.row])
+            return cell
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            if users.count == 0 {
+                return 0
+            } else {
+                return 30
+            }
+        case 1:
+            if groups.count == 0 {
+                return 0
+            } else {
+                return 30
+            }
+        default:
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            performSegue(withIdentifier: "showSelectedUserDetails", sender: self)
+        case 1:
+            selectedGroup.gid = groups[indexPath.row].gid
+            selectedGroup.groupName = groups[indexPath.row].groupName
+            selectedGroup.users = List<ContactAccount>()
+            if let token = Token.main {
+                for id in groups[indexPath.row].users {
+                    myGroup.enter()
+                    URLServices().getUserID(id: Int(id), token: token) { (contact) in
+                        self.selectedGroup.users.append(contact)
+                        print ("add contact")
+                        self.myGroup.leave()
+                    }
+                }
+                myGroup.notify(queue: .main) {
+                    self.performSegue(withIdentifier: "showSelectedGroupDetails", sender: self)
+                }
+            }
+        default:
+            print ("default")
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         users.removeAll()
+        groups.removeAll()
         let searchText = searchBar.text!
         let digitSet = CharacterSet.decimalDigits
         
@@ -94,6 +167,13 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
                 }
             }
             
+            print ("Searching group")
+            URLServices().getGroupInfo(info: searchText, token: token) { (group) in
+                self.groups.append(group)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
         
     }
@@ -104,6 +184,10 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
             if let indexPath = tableView.indexPathForSelectedRow {
                 userDetails!.user = users[indexPath.row]
             }
+        }
+        else if segue.identifier == "showSelectedGroupDetails" {
+            let groupDetails = segue.destination as? GroupProfileViewController
+            groupDetails!.group = selectedGroup
         }
     }
 

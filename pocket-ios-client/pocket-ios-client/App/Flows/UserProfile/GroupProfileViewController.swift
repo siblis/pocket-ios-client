@@ -10,58 +10,28 @@ import UIKit
 
 class GroupProfileViewController: UIViewController {
 
-    let backButton:UIButton = {
-        let button = UIButton()
-        button.imageView?.contentMode = .scaleAspectFill
-        button.imageView?.layer.masksToBounds = true
-        return button
-    }()
+    let backButton = ElementUI().btnIni()
+    let exitButton = ElementUI().btnIni()
+    let backgroundView = ElementUI().viewIni(color: UIColor.backPrimary)
+    let groupPhoto = ElementUI().imgIni(radius: 43)
     
-    let exitButton:UIButton = {
-        let button = UIButton()
-        button.imageView?.contentMode = .scaleAspectFill
-        button.imageView?.layer.masksToBounds = true
-        return button
-    }()
+    let groupName = ElementUI().lblIni(
+        font: UIFont.groupProfName,
+        textColor: UIColor.textPrimary,
+        textAlignment: .center
+    )
     
-    let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.backPrimary
-        return view
-    }()
+    let groupId = ElementUI().lblIni(
+        font: UIFont.groupProfId,
+        textColor: UIColor.textSecondary,
+        textAlignment: .center
+    )
     
-    
-    let groupPhoto: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 43
-        image.layer.masksToBounds = true
-        return image
-    }()
-    
-    let groupName: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let groupId: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = UIColor.textSecondary
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let participantsLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.textPrimary
-        label.textAlignment = .center
-        return label
-    }()
+    let participantsLabel = ElementUI().lblIni(
+        font: UIFont.groupProfPart,
+        textColor: UIColor.textPrimary,
+        textAlignment: .center
+    )
     
     var group = Group()
     
@@ -146,8 +116,7 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
-        
+        return group.users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -162,7 +131,7 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 35.0
+        return 44.0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
