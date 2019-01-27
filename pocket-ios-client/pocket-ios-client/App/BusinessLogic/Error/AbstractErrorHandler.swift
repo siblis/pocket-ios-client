@@ -22,7 +22,7 @@ final class ErrorHandler: AbstractErrorHandler {
                 CorrectionMethods().autoLogIn()
             }
         default:
-            print(error)
+            print(error as Any)
         }
     }
 }

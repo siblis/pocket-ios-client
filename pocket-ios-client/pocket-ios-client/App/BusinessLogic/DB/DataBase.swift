@@ -84,6 +84,10 @@ class DataBase {
         return requestDB.loadOneRecordFromDB(smTableDB: Chat.self, filter: "id == \(chatId)")
     }
     
+    func deleteChatFromDB (_ element: Chat) {
+        requestDB.deleteOneRecord(smTableDB: Chat.self, forPrimaryKey: element.id)
+    }
+    
     func observerChatList(complition: @escaping (RealmCollectionChange<Results<Chat>>) -> Void) -> NotificationToken? {
         
         let smInfoFromDB = requestDB.loadFromDB(smTableDB: Chat.self)

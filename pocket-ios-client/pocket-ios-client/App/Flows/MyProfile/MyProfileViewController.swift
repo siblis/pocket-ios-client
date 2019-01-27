@@ -15,28 +15,28 @@ class MyProfileViewController: UIViewController {
     var observerMyProfile: NotificationToken?
     
     //определяем элементы экрана
-    let backgroundView = ElementUI().viewIni(color: UIColor.backSecondary)
-    let editBtn = ElementUI().btnIni(textAlignment: .left)
-    let logOutBtn = ElementUI().btnIni(textAlignment: .right)
-    let myPhoto = ElementUI().imgIni(radius: 43)
-    let chatPhoto = ElementUI().imgRoundIni()
-    let myName = ElementUI().lblIni(font: UIFont.myProfName, textColor: UIColor.textPrimary, textAlignment: .center)
-    let myId = ElementUI().lblIni(font: UIFont.myProfId, textColor: UIColor.textPrimary, textAlignment: .center)
-    let status = ElementUI().lblIni(font: UIFont.myProfStat, textColor: UIColor.textSecondary, textAlignment: .left)
+    let backgroundView = Interface().viewIni(color: UIColor.backSecondary)
+    let editBtn = Interface().btnIni(textAlignment: .left)
+    let logOutBtn = Interface().btnIni(textAlignment: .right)
+    let myPhoto = Interface().imgIni(radius: 43)
+    let chatPhoto = Interface().imgRoundIni()
+    let myName = Interface().lblIni(font: UIFont.myProfName, textColor: UIColor.textPrimary, textAlignment: .center)
+    let myId = Interface().lblIni(font: UIFont.myProfId, textColor: UIColor.textPrimary, textAlignment: .center)
+    let status = Interface().lblIni(font: UIFont.myProfStat, textColor: UIColor.textSecondary, textAlignment: .left)
     
-    let myEmail = ElementUI().lblIni(
+    let myEmail = Interface().lblIni(
         font: UIFont.myProfEmail,
         textColor: UIColor.textPrimary,
         textAlignment: .center
     )
     
-    let chat = ElementUI().lblIni(
+    let chat = Interface().lblIni(
         font: UIFont.myProfChat,
         textColor: UIColor.buttonSecondary,
         textAlignment: .center
     )
     
-    let statusField = ElementUI().lblIni(
+    let statusField = Interface().lblIni(
         font: UIFont.myProfStFld,
         textColor: UIColor.backPrimary,
         textAlignment: .left
@@ -90,7 +90,7 @@ class MyProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: myPhoto, myName, myEmail, myId, chatPhoto, chat)
         
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
+        Interface().drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
         backgroundView.addSubview(editBtn)
         backgroundView.addSubview(logOutBtn)
@@ -136,21 +136,6 @@ class MyProfileViewController: UIViewController {
     func setUpStatusViewContents () {
         status.text = "Статус:"
         statusField.text = selfInfo.status
-    }
-    
-    //рисуем горизонтальную линию
-    static func drawLine(startX: Int, endX: Int, startY: Int, endY: Int, lineColor: UIColor, lineWidth: CGFloat, inView view: UIView) {
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: startX, y: startY))
-        path.addLine(to: CGPoint(x: endX, y: endY))
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.strokeColor = lineColor.cgColor
-        shapeLayer.lineWidth = lineWidth
-        
-        view.layer.addSublayer(shapeLayer)
     }
     
     @objc func editDetails(_ sender: UIButton) {

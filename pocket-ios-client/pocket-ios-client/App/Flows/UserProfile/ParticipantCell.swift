@@ -10,9 +10,9 @@ import UIKit
 
 class ParticipantCell: UITableViewCell {
     
-    let onlineStatusView = ElementUI().viewIni(color: UIColor.statusOffLine, radius: 5)
+    let onlineStatusView = Interface().viewIni(color: UIColor.statusOffLine, radius: 5)
     
-    let nameLabel = ElementUI().lblIni(
+    let nameLabel = Interface().lblIni(
         font: UIFont.partCellName,
         textColor: UIColor.textPrimary,
         textAlignment: .left
