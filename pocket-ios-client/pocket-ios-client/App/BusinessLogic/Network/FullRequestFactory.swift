@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol FullRequestFactory {
     
     func signIn(login: String, password: String, completion: @escaping (SignInResponse) -> Void)

@@ -58,6 +58,7 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    //MARK: - Action
     @IBAction func signIn(_ sender: Any) {
         
         guard let password = passwordTextField.text, let accountName = loginTextField.text else {return}

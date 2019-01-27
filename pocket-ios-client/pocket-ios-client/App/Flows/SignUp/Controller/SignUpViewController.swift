@@ -12,11 +12,14 @@ import RealmSwift
 class SignUpViewController: UIViewController {
     
     //MARK: - Properties
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var screenImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -105,4 +108,6 @@ class SignUpViewController: UIViewController {
     @objc func hideKeyboard() {
         self.scrollView?.endEditing(true)
     }
+    
+    
 }

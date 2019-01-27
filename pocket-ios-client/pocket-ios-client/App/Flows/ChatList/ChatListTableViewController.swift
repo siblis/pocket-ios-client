@@ -9,12 +9,15 @@
 import UIKit
 import RealmSwift
 
+//MARK: - Класс отвечающий за список чатов с пользователями
 class ChatListTableViewController: UITableViewController {
     
+    //MARK: - Properties
     let cellReuseIdentifier = "ChatCell"
     var chatCell = DataBase().loadChatList()
     var oserverChatList: NotificationToken?
 
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -43,6 +46,7 @@ class ChatListTableViewController: UITableViewController {
         oserverChatList = nil
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let chatField = segue.destination as? ChatViewController
@@ -53,13 +57,12 @@ class ChatListTableViewController: UITableViewController {
         }
     }
 
-
+    //MARK: - Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         return chatCell.count
 
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatListTableViewCell
@@ -78,4 +81,13 @@ class ChatListTableViewController: UITableViewController {
         }
         return cell
     }
+    
+    //MARK: - Метод удаления ячейки (при удалении программа вылетает)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    
 }
