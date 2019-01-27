@@ -14,14 +14,14 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     var selfInfo = SelfAccount()
 
     //определяем элементы экрана
-    let cancelBtn = ElementUI().btnIni(textAlignment: .right)
-    let doneBtn = ElementUI().btnIni(textAlignment: .left)
-    let myPhoto = ElementUI().imgRoundIni()
-    let firstName = ElementUI().txtFldIni(holder: "Имя", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 1)
-    let lastName = ElementUI().txtFldIni(holder: "Фамилия", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 2)
-    let status = ElementUI().txtFldIni(holder: "Статус:", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 3)
+    let cancelBtn = Interface().btnIni(textAlignment: .right)
+    let doneBtn = Interface().btnIni(textAlignment: .left)
+    let myPhoto = Interface().imgRoundIni()
+    let firstName = Interface().txtFldIni(holder: "Имя", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 1)
+    let lastName = Interface().txtFldIni(holder: "Фамилия", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 2)
+    let status = Interface().txtFldIni(holder: "Статус:", clearButtonMode: UITextField.ViewMode.whileEditing, tag: 3)
     
-    let editLabel = ElementUI().lblIni(
+    let editLabel = Interface().lblIni(
         font: UIFont.edtProfEdit,
         textColor: UIColor.textPrimary,
         textAlignment: .center
@@ -96,9 +96,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         self.view.addConstraintsWithFormat(format: "|-37-[v0]-15-|", views: status)
         self.view.addConstraintsWithFormat(format: "V:[v0]-44-[v1(20)]-15-[v2(20)]-36-[v3(20)]", views: editLabel, firstName, lastName, status)
         
-        MyProfileViewController.drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 102), endY: Int(safeAreaTopInset + 102), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
-        MyProfileViewController.drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 137), endY: Int(safeAreaTopInset + 137), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
-        MyProfileViewController.drawLine(startX: 29, endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 193), endY: Int(safeAreaTopInset + 193), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
+        Interface().drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 102), endY: Int(safeAreaTopInset + 102), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
+        Interface().drawLine(startX: (28+67+17), endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 137), endY: Int(safeAreaTopInset + 137), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
+        Interface().drawLine(startX: 29, endX: Int(screenWidth-14), startY: Int(safeAreaTopInset + 193), endY: Int(safeAreaTopInset + 193), lineColor: UIColor.line, lineWidth: 1, inView: self.view)
     }
     
     func setUpBodyContents () {

@@ -11,33 +11,33 @@ import RealmSwift
 
 class UserProfileViewController: UIViewController {
 
-    let backButton = ElementUI().btnIni()
-    let addDeleteButton = ElementUI().btnIni()
-    let backgroundView = ElementUI().viewIni(color: UIColor.backPrimary)
-    let userPhoto = ElementUI().imgIni(radius: 43)
-    let chatPhoto = ElementUI().imgRoundIni()
-    let UserId = ElementUI().lblIni(font: UIFont.usrProfId, textColor: UIColor.textPrimary, textAlignment: .center)
-    let status = ElementUI().lblIni(font: UIFont.usrProfStat, textColor: UIColor.textSecondary, textAlignment: .left)
+    let backButton = Interface().btnIni()
+    let addDeleteButton = Interface().btnIni()
+    let backgroundView = Interface().viewIni(color: UIColor.backPrimary)
+    let userPhoto = Interface().imgIni(radius: 43)
+    let chatPhoto = Interface().imgRoundIni()
+    let UserId = Interface().lblIni(font: UIFont.usrProfId, textColor: UIColor.textPrimary, textAlignment: .center)
+    let status = Interface().lblIni(font: UIFont.usrProfStat, textColor: UIColor.textSecondary, textAlignment: .left)
     
-    let userName = ElementUI().lblIni(
+    let userName = Interface().lblIni(
         font: UIFont.usrProfName,
         textColor: UIColor.textPrimary,
         textAlignment: .center
     )
     
-    let userEmail = ElementUI().lblIni(
+    let userEmail = Interface().lblIni(
         font: UIFont.usrProfEmail,
         textColor: UIColor.textPrimary,
         textAlignment: .center
     )
     
-    let chat = ElementUI().lblIni(
+    let chat = Interface().lblIni(
         font: UIFont.usrProfChat,
         textColor: UIColor.buttonSecondary,
         textAlignment: .center
     )
     
-    let statusField = ElementUI().lblIni(
+    let statusField = Interface().lblIni(
         font: UIFont.usrProfStFld,
         textColor: UIColor.textSecondary,
         textAlignment: .left
@@ -109,7 +109,7 @@ class UserProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-2-[v2(15)]-3-[v3(15)]-10-[v4(38)]-6-[v5(12)]", views: userPhoto, userName, userEmail, UserId, chatPhoto, chat)
         
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
+        Interface().drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 267), endY:  Int(safeAreaTopInset + 267), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
     }
     

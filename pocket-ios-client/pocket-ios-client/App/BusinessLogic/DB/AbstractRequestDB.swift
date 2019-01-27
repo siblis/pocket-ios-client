@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-protocol AbstractRequestDB {
+protocol AbstractRequestDB: class {
     func saveInDB(_ smElements: [Object])
     func deleteAllRecords()
     func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int)
