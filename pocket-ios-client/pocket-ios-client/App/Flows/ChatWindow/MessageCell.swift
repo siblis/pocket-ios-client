@@ -13,9 +13,9 @@ class MessageCell: BaseCell {
     static let leftBubbleImage = UIImage(named: "leftBubble")!.resizableImage(withCapInsets: UIEdgeInsets(top: 22, left: 26, bottom: 22, right: 26)).withRenderingMode(.alwaysTemplate)
     static let rightBubbleImage = UIImage(named: "rightBubble")!.resizableImage(withCapInsets: UIEdgeInsets(top: 22, left: 26, bottom: 22, right: 26)).withRenderingMode(.alwaysTemplate)
     
-    let messageTextView = ElementUI().txtViewIni()
-    let textBubbleView = ElementUI().viewIni()
-    let bubbleImageView = ElementUI().imgBubbleIni(image: MessageCell.leftBubbleImage)
+    let messageTextView = Interface().txtViewIni()
+    let textBubbleView = Interface().viewIni()
+    let bubbleImageView = Interface().imgBubbleIni(image: MessageCell.leftBubbleImage)
     
     override func setupViews() {
         super.setupViews()

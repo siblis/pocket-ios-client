@@ -10,10 +10,10 @@ import UIKit
 
 class ContactListTableViewCell: UITableViewCell {
     
-    let profileImageView = ElementUI().imgIni(radius: 20)
-    let onlineStatusView = ElementUI().viewIni(color: UIColor.statusOffLine, radius: 5)
-    let nameLabel = ElementUI().lblIni(font: UIFont.userListName)
-    let statusLabel = ElementUI().lblIni(font: UIFont.userListStatus, textColor: UIColor.textSecondary)
+    let profileImageView = Interface().imgIni(radius: 20)
+    let onlineStatusView = Interface().viewIni(color: UIColor.statusOffLine, radius: 5)
+    let nameLabel = Interface().lblIni(font: UIFont.userListName)
+    let statusLabel = Interface().lblIni(font: UIFont.userListStatus, textColor: UIColor.textSecondary)
     
     func setUp() {
         

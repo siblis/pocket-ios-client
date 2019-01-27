@@ -10,9 +10,9 @@ import UIKit
 
 class GroupCell: UITableViewCell {
 
-    let nameLabel = ElementUI().lblIni(font: UIFont.addUserName)
-    let participantsLabel = ElementUI().lblIni(font: UIFont.addUserEmail, textColor: UIColor.textSecondary)
-    let idLabel = ElementUI().lblIni(font: UIFont.addUserId, textColor: UIColor.textSecondary, textAlignment: .right)
+    let nameLabel = Interface().lblIni(font: UIFont.addUserName)
+    let participantsLabel = Interface().lblIni(font: UIFont.addUserEmail, textColor: UIColor.textSecondary)
+    let idLabel = Interface().lblIni(font: UIFont.addUserId, textColor: UIColor.textSecondary, textAlignment: .right)
     
     func setUp() {
         
