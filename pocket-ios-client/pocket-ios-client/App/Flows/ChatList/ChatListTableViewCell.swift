@@ -10,11 +10,11 @@ import UIKit
 
 class ChatListTableViewCell: UITableViewCell {
     
-    let profileImageView = ElementUI().imgIni(radius: 34)
-    let nameLabel = ElementUI().lblIni(font: UIFont.chatListName)
-    let messageLabel = ElementUI().lblIni(font: UIFont.chatListMessage, textColor: UIColor.textSecondary)
-    let timeLabel = ElementUI().lblIni(font: UIFont.chatListTime, textAlignment: .right)
-    let messageCountLabel = ElementUI().lblIni(
+    let profileImageView = Interface().imgIni(radius: 34)
+    let nameLabel = Interface().lblIni(font: UIFont.chatListName)
+    let messageLabel = Interface().lblIni(font: UIFont.chatListMessage, textColor: UIColor.textSecondary)
+    let timeLabel = Interface().lblIni(font: UIFont.chatListTime, textAlignment: .right)
+    let messageCountLabel = Interface().lblIni(
         font: UIFont.chatListMessageCount,
         textColor: UIColor.unreadMessageCountText,
         textAlignment: .center
@@ -35,12 +35,10 @@ class ChatListTableViewCell: UITableViewCell {
     }
   
     private func setupMessageCountView() {
-        let messageCountView = UIView()
+        let messageCountView = Interface().viewIni(color: UIColor.unreadMessageCounter, radius: 14)
         addSubview(messageCountView)
-            messageCountView.backgroundColor = UIColor.unreadMessageCounter
-            messageCountView.contentMode = .scaleAspectFill
-            messageCountView.layer.cornerRadius = 14
-            messageCountView.layer.masksToBounds = true
+        messageCountView.contentMode = .scaleAspectFill
+        
         addConstraintsWithFormat(format: "H:[v0(28)]-12-|", views: messageCountView)
         addConstraintsWithFormat(format: "V:[v0(28)]-12-|", views: messageCountView)
         

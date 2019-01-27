@@ -10,24 +10,24 @@ import UIKit
 
 class GroupProfileViewController: UIViewController {
 
-    let backButton = ElementUI().btnIni()
-    let exitButton = ElementUI().btnIni()
-    let backgroundView = ElementUI().viewIni(color: UIColor.backPrimary)
-    let groupPhoto = ElementUI().imgIni(radius: 43)
+    let backButton = Interface().btnIni()
+    let exitButton = Interface().btnIni()
+    let backgroundView = Interface().viewIni(color: UIColor.backPrimary)
+    let groupPhoto = Interface().imgIni(radius: 43)
     
-    let groupName = ElementUI().lblIni(
+    let groupName = Interface().lblIni(
         font: UIFont.groupProfName,
         textColor: UIColor.textPrimary,
         textAlignment: .center
     )
     
-    let groupId = ElementUI().lblIni(
+    let groupId = Interface().lblIni(
         font: UIFont.groupProfId,
         textColor: UIColor.textSecondary,
         textAlignment: .center
     )
     
-    let participantsLabel = ElementUI().lblIni(
+    let participantsLabel = Interface().lblIni(
         font: UIFont.groupProfPart,
         textColor: UIColor.textPrimary,
         textAlignment: .center
@@ -77,13 +77,13 @@ class GroupProfileViewController: UIViewController {
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: groupName)
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: groupId)
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 176), endY:  Int(safeAreaTopInset + 176), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
+        Interface().drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 176), endY:  Int(safeAreaTopInset + 176), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
         backgroundView.addSubview(participantsLabel)
         backgroundView.addConstraintsWithFormat(format: "|-30-[v0]-30-|", views: participantsLabel)
         backgroundView.addConstraintsWithFormat(format: "V:|-\(safeAreaTopInset + 38)-[v0(86)]-7-[v1(20)]-3-[v2(15)]-19-[v3(24)]", views: groupPhoto, groupName, groupId, participantsLabel)
         
-        MyProfileViewController.drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 227), endY:  Int(safeAreaTopInset + 227), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
+        Interface().drawLine(startX: 0, endX: Int(screenWidth), startY: Int(safeAreaTopInset + 227), endY:  Int(safeAreaTopInset + 227), lineColor: UIColor.line, lineWidth: 0.5, inView: backgroundView)
         
     }
     

@@ -22,7 +22,7 @@ class ChatListTableViewController: UITableViewController {
         super.viewDidLoad()
       
         tableView.backgroundColor = UIColor.backPrimary
-        tableView.rowHeight = 100
+        tableView.rowHeight = SetupElementsUI().chatLstRowH
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
     }
@@ -59,9 +59,7 @@ class ChatListTableViewController: UITableViewController {
 
     //MARK: - Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return chatCell.count
-
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

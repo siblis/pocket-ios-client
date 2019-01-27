@@ -29,21 +29,18 @@ class ContactListTableViewController: UITableViewController {
             }
         }
         tableView.backgroundColor = UIColor.backPrimary
-        tableView.rowHeight = 60
+        tableView.rowHeight = SetupElementsUI().usrLstRowH
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return contactArray.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactListTableViewCell
