@@ -41,12 +41,14 @@ class LoginViewController: UIViewController {
         
         guard let password = passwordTextField.text, let accountName = loginTextField.text else {return}
         selfInfo.password = password
-        selfInfo.accountName = accountName
         URLServices().signIn(login: accountName, password: password) { (info) in
             if info.token != "" {
-                DataBase().saveSelfUser(info: self.selfInfo)
                 Token.main = info.token
-                ApplicationSwitcherRC().choiceRootVC()
+                URLServices().getSelfUser(token: info.token) { (myAcc) in
+                    myAcc.password = self.selfInfo.password
+                    DataBase().saveSelfUser(info: myAcc)
+                    ApplicationSwitcherRC().choiceRootVC()
+                }
             }
         }
     }
