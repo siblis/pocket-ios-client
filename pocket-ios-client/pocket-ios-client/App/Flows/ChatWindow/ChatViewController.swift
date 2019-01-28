@@ -67,7 +67,6 @@ class ChatViewController: UIViewController {
                 message: selfMsg
             )
             message.text = ""
-            chatField.reloadData()
         }
     }
 
