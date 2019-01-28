@@ -310,7 +310,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Chats" id="Tl1-19-FvD">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="cOB-iH-rcJ"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="N55-EU-Kox"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6c-OF-tc3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -497,6 +496,7 @@
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="nUZ-D0-koa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Stp-r7-WtX">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -515,6 +515,7 @@
                     <tabBarItem key="tabBarItem" systemItem="bookmarks" id="5vi-WT-pUm"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bN0-Te-tfG">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

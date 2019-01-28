@@ -21,7 +21,7 @@ class DataBase {
         requestDB.deleteAllRecords()
     }
     
-    func deleteContactFromDB (_ contact: ContactAccount) {
+    func deleteContactFromDB(_ contact: ContactAccount) {
         requestDB.deleteOneRecord(smTableDB: ContactAccount.self, forPrimaryKey: contact.uid)
     }
     
@@ -84,7 +84,7 @@ class DataBase {
         return requestDB.loadOneRecordFromDB(smTableDB: Chat.self, filter: "id == \(chatId)")
     }
     
-    func deleteChatFromDB (_ element: Chat) {
+    func deleteChatFromDB(_ element: Chat) {
         requestDB.deleteOneRecord(smTableDB: Chat.self, forPrimaryKey: element.id)
     }
     
