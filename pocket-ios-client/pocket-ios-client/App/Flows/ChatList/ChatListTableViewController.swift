@@ -13,7 +13,7 @@ class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
     var chatCell = DataBase().loadChatList()
-    var oserverChatList: NotificationToken?
+    var observerChatList: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class ChatListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        oserverChatList = DataBase().observerChatList() { (changes) in
+        observerChatList = DataBase().observerChatList() { (changes) in
             switch changes {
             case .initial, .update:
                 self.chatCell = DataBase().loadChatList()
@@ -40,7 +40,7 @@ class ChatListTableViewController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        oserverChatList = nil
+        observerChatList = nil
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,5 +73,11 @@ class ChatListTableViewController: UITableViewController {
             cell.timeLabel.text = CorrectionMethods().dateFormater(date)
         }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            DataBase().deleteChatFromDB(chatCell[indexPath.row])
+        }
     }
 }
