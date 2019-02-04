@@ -46,7 +46,13 @@ class ChatListTableViewController: UITableViewController {
         oserverChatList = nil
     }
     
+    //MARK: - Actions
+    @IBAction func editButton(_ sender: UIBarButtonItem) {
+        tableView.isEditing = !tableView.isEditing
+//        self.tableView.setEditing(true, animated: true)
+    }
     
+    //MARK: - Methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let chatField = segue.destination as? ChatViewController
@@ -56,8 +62,7 @@ class ChatListTableViewController: UITableViewController {
             chatField?.chatInformation = user[0]
         }
     }
-
-    //MARK: - Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatCell.count
     }
@@ -77,15 +82,23 @@ class ChatListTableViewController: UITableViewController {
         if let date = chatMessage.messages.last?.time {
             cell.timeLabel.text = CorrectionMethods().dateFormater(date)
         }
+        
         return cell
     }
     
-    //MARK: - Метод удаления ячейки (при удалении программа вылетает)
+    //MARK: - Delete cell (при удалении программа вылетает)
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.deleteRows(at: [indexPath], with: .fade)
+//            DataBase().deleteChatFromDB(chatCell[indexPath.row])
         }
     }
     
-    
+//    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+
+//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+//        return UITableViewCell.EditingStyle(rawValue: 3)!
+//    }
 }
