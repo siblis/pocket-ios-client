@@ -289,11 +289,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dkh-94-qRq">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dkh-94-qRq">
                                             <rect key="frame" x="26" y="0.0" width="333" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -309,12 +309,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Chats" id="Tl1-19-FvD">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="cOB-iH-rcJ">
-                            <connections>
-                                <action selector="editButton:" destination="G1o-ox-aFE" id="C8c-g9-Pwc"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="N55-EU-Kox"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="cOB-iH-rcJ"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6c-OF-tc3" userLabel="First Responder" sceneMemberID="firstResponder"/>

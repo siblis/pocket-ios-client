@@ -15,7 +15,7 @@ class ChatListTableViewController: UITableViewController {
     //MARK: - Properties
     let cellReuseIdentifier = "ChatCell"
     var chatCell = DataBase().loadChatList()
-    var oserverChatList: NotificationToken?
+    var observerChatList: NotificationToken?
 
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -30,7 +30,7 @@ class ChatListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        oserverChatList = DataBase().observerChatList() { (changes) in
+        observerChatList = DataBase().observerChatList() { (changes) in
             switch changes {
             case .initial, .update:
                 self.chatCell = DataBase().loadChatList()
@@ -43,7 +43,7 @@ class ChatListTableViewController: UITableViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        oserverChatList = nil
+        observerChatList = nil
     }
     
     //MARK: - Actions
@@ -89,8 +89,7 @@ class ChatListTableViewController: UITableViewController {
     //MARK: - Delete cell (при удалении программа вылетает)
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tableView.deleteRows(at: [indexPath], with: .fade)
-//            DataBase().deleteChatFromDB(chatCell[indexPath.row])
+            DataBase().deleteChatFromDB(chatCell[indexPath.row])
         }
     }
     

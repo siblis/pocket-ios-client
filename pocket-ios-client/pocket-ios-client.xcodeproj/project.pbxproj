@@ -10,6 +10,7 @@
 		242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */; };
 		2438D53121C6E0E1002FCF20 /* CodableJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438D53021C6E0E1002FCF20 /* CodableJSON.swift */; };
 		24392F8421B873B1003C444C /* AbstractRequestDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F8321B873B1003C444C /* AbstractRequestDB.swift */; };
+		244753F62204FCE5000E2EE3 /* Obj+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244753F52204FCE5000E2EE3 /* Obj+Codable.swift */; };
 		245617422178BDB8007A9103 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245617412178BDB8007A9103 /* ChatViewController.swift */; };
 		245DE7B72196294D002596FF /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DE7B62196294D002596FF /* MessageCell.swift */; };
 		24A6803921D90763003C4D21 /* CorrectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6803821D90763003C4D21 /* CorrectionMethods.swift */; };
@@ -79,6 +80,7 @@
 		242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAndWebSocket.swift; sourceTree = "<group>"; };
 		2438D53021C6E0E1002FCF20 /* CodableJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableJSON.swift; sourceTree = "<group>"; };
 		24392F8321B873B1003C444C /* AbstractRequestDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractRequestDB.swift; sourceTree = "<group>"; };
+		244753F52204FCE5000E2EE3 /* Obj+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Obj+Codable.swift"; sourceTree = "<group>"; };
 		245617412178BDB8007A9103 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		245DE7B62196294D002596FF /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		24A6803821D90763003C4D21 /* CorrectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionMethods.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				6D2E38CC219B68A300059DD3 /* Object+Codable.swift */,
 				6D2988EF21935F590004199F /* TokenService.swift */,
 				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
+				244753F52204FCE5000E2EE3 /* Obj+Codable.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				6D2E38CD219B68A300059DD3 /* Object+Codable.swift in Sources */,
 				C189640821997FB700CE4ABE /* MyProfileViewController.swift in Sources */,
 				24A680A221DEDFF9003C4D21 /* AbstractRequestFactory.swift in Sources */,
+				244753F62204FCE5000E2EE3 /* Obj+Codable.swift in Sources */,
 				BC9AC6A12193059F00348948 /* ChatListModel.swift in Sources */,
 				24EC57B121F4E643008A4E4F /* Interface.swift in Sources */,
 				C16E1CC221F08B10006E697D /* GroupCell.swift in Sources */,
