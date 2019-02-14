@@ -13,23 +13,72 @@ import RealmSwift
 class ChatListTableViewController: UITableViewController {
     
     //MARK: - Properties
-    let cellReuseIdentifier = "ChatCell"
+    private let segueId = "SegueToChatFromChatList"
+    private let cellReuseIdentifier = "ChatCell"
     var chatCell = DataBase().loadChatList()
     var observerChatList: NotificationToken?
+    private var isEditingBtn: Bool = true // Да(true) - мы не редактируем / Нет(false) - мы редактируем
+    private var deleteBarBtnItem = UIButton() //right button is top bar
+    private var editBarBtnItem = UIButton() //left button is top bar
 
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        editingTableView()
+        createBarButtonItem()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        observerChatListNSToken()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        observerChatList = nil
+    }
+    
+    //MARK: - Methods
+    private func createBarButtonItem() {
+        
+        //Left Bar Button Item
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: editBarBtnItem)
+        self.editBarBtnItem.setTitle("Edit", for: .normal)
+        self.editBarBtnItem.setTitleColor(UIColor.buttonPrimary, for: .normal)
+        self.editBarBtnItem.addTarget(self, action: #selector(clickLeftBarBtnItem(_:)), for: .touchUpInside)
+        
+        //Right Bar Button Item
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: deleteBarBtnItem)
+        self.deleteBarBtnItem.isHidden = true
+        self.deleteBarBtnItem.setTitle("Delete", for: .normal)
+        self.deleteBarBtnItem.setTitleColor(UIColor.red, for: .normal)
+        self.deleteBarBtnItem.addTarget(self, action: #selector(clickRightBarBtnItem(_:)), for: .touchUpInside)
+    }
+    
+    @objc func clickLeftBarBtnItem(_ sender: UIButton) {
+        
+        isEditingBtn = isEditingBtn ? false : true
+        tableView.isEditing = !tableView.isEditing
+        self.tableView.setEditing(true, animated: true)
+        self.deleteBarBtnItem.isHidden = false
+    }
+    
+    @objc func clickRightBarBtnItem(_ sender: UIButton) {
+        
+        self.tableView.setEditing(false, animated: true)
+        self.deleteBarBtnItem.isHidden = true
+    }
+    
+    private func editingTableView() {
         tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = SetupElementsUI().chatLstRowH
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    private func observerChatListNSToken() {
         observerChatList = DataBase().observerChatList() { (changes) in
             switch changes {
             case .initial, .update:
@@ -40,21 +89,13 @@ class ChatListTableViewController: UITableViewController {
             }
         }
     }
+//    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+//        if isEditingBtn {
+//
+//        }
+//    }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        observerChatList = nil
-    }
-    
-    //MARK: - Actions
-    @IBAction func editButton(_ sender: UIBarButtonItem) {
-        tableView.isEditing = !tableView.isEditing
-//        self.tableView.setEditing(true, animated: true)
-    }
-    
-    //MARK: - Methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
@@ -86,18 +127,42 @@ class ChatListTableViewController: UITableViewController {
         return cell
     }
     
-    //MARK: - Delete cell (при удалении программа вылетает)
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            DataBase().deleteChatFromDB(chatCell[indexPath.row])
+    //MARK: - Delete cell
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            DataBase().deleteChatFromDB(chatCell[indexPath.row])
+//        }
+//    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let shareAction = UITableViewRowAction(style: .default, title: "Поделиться") {
+            _, indexPath in
+            let alert = UIAlertController(title: "Опция", message: "Здесь будут разные полезные функции", preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Понятно", style: .default) { (sender: UIAlertAction) -> Void in
+            })
+            
+            self.present(alert, animated: true, completion: nil)
         }
+        
+        shareAction.backgroundColor = UIColor.buttonPrimary
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Удалить") {
+            _, indexPath in
+            DataBase().deleteChatFromDB(self.chatCell[indexPath.row])
+        }
+        
+        return [deleteAction, shareAction]
     }
     
 //    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
 //        return true
 //    }
-
-//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        return UITableViewCell.EditingStyle(rawValue: 3)!
-//    }
+    
+    //MARK: - Check out cell
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return UITableViewCell.EditingStyle(rawValue: 3)!
+    }
+    
 }
