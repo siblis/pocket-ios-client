@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class AddUserController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
@@ -95,13 +95,16 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         case 0:
             performSegue(withIdentifier: "showSelectedUserDetails", sender: self)
         case 1:
-            selectedGroup.gid = groups[indexPath.row].gid
-            selectedGroup.groupName = groups[indexPath.row].groupName
-            selectedGroup.users = List<ContactAccount>()
-            if let token = Token.main {
+            selectedGroup = Group.init(
+                gid: groups[indexPath.row].gid,
+                groupName: groups[indexPath.row].groupName,
+                users: [ContactAccount]()
+            )
+            
+            if !Account.token.isEmpty {
                 for id in groups[indexPath.row].users {
                     myGroup.enter()
-                    URLServices().getUserID(id: Int(id), token: token) { (contact) in
+                    URLServices().getUserID(id: Int(id), token: Account.token) { (contact) in
                         self.selectedGroup.users.append(contact)
                         print ("add contact")
                         self.myGroup.leave()
@@ -122,10 +125,10 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         let searchText = searchBar.text!
         let digitSet = CharacterSet.decimalDigits
         
-        if let token = Token.main {
+        if !Account.token.isEmpty {
             if searchText.contains("@") {
                 print ("Searching by email...")
-                URLServices().getUserByEmail(email: searchText, token: token) { (contact) in
+                URLServices().getUserByEmail(email: searchText, token: Account.token) { (contact) in
                     self.users.append(contact)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -134,7 +137,7 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
             } else if digitSet.contains(searchText.unicodeScalars.first!) {
                 print ("Searching by id...")
                 if let id = Int(searchText) {
-                    URLServices().getUserID(id: id, token: token) { (contact) in
+                    URLServices().getUserID(id: id, token: Account.token) { (contact) in
                         self.users.append(contact)
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -143,7 +146,7 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
                 }
             } else {
                 print ("Searching by nickname...")
-                NetworkServices.getUserByNickname(nickname: searchText, token: token) { (data, statusCode) in
+                NetworkServices.getUserByNickname(nickname: searchText, token: Account.token) { (data, statusCode) in
                     if statusCode == 200 {
 //                        print (JSON(data))
                         do {
@@ -168,7 +171,7 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
             }
             
             print ("Searching group")
-            URLServices().getGroupInfo(info: searchText, token: token) { (group) in
+            URLServices().getGroupInfo(info: searchText, token: Account.token) { (group) in
                 self.groups.append(group)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

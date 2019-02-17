@@ -7,17 +7,17 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class ChatListTableViewController: UITableViewController {
     
     let cellReuseIdentifier = "ChatCell"
-    var chatCell = DataBase().loadChatList()
-    var observerChatList: NotificationToken?
+    var chatCell = DataBase(.myData).loadChatList()
+    var observerChatList: RealmNotification?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = SetupElementsUI().chatLstRowH
         tableView.alwaysBounceVertical = true
@@ -27,13 +27,9 @@ class ChatListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        observerChatList = DataBase().observerChatList() { (changes) in
-            switch changes {
-            case .initial, .update:
-                self.chatCell = DataBase().loadChatList()
+        observerChatList = DataBase(.myData).observerChatList() { (changes) in
+            if changes {
                 self.tableView.reloadData()
-            case .error(let error):
-                print(error)
             }
         }
     }
@@ -48,7 +44,7 @@ class ChatListTableViewController: UITableViewController {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let user = DataBase().loadOneContactsList(userId: chatCell[indexPath.item].id)
+            let user = DataBase(.myData).loadOneContactsList(userId: chatCell[indexPath.item].id)
             chatField?.chatInformation = user[0]
         }
     }
@@ -62,7 +58,7 @@ class ChatListTableViewController: UITableViewController {
         cell.setup()
         
         let chatMessage = chatCell[indexPath.item]
-        let user = DataBase().loadOneContactsList(userId: chatMessage.id)
+        let user = DataBase(.myData).loadOneContactsList(userId: chatMessage.id)
         cell.nameLabel.text = user[0].accountName
         cell.profileImageView.image = UIImage(named: user[0].avatarImage)
         if let sender = chatMessage.messages.last?.senderName, let msg = chatMessage.messages.last?.text {
@@ -77,7 +73,7 @@ class ChatListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            DataBase().deleteChatFromDB(chatCell[indexPath.row])
+            DataBase(.myData).deleteChatFromDB(chatCell[indexPath.row])
         }
     }
 }

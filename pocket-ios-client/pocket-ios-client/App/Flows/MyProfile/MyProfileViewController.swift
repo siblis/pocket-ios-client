@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class MyProfileViewController: UIViewController {
     
-    var selfInfo = SelfAccount()
-    var observerMyProfile: NotificationToken?
+    var selfInfo = DataBase(.accounts).loadSelfUser()
     
     //определяем элементы экрана
     let backgroundView = Interface().viewIni(color: UIColor.backSecondary)
@@ -48,8 +47,6 @@ class MyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selfInfo = DataBase().loadSelfUser() ?? SelfAccount()
-        observerMyProfile = DataBase().observerSelfUser()
         setUpTopView()
         setUpStatusView()
         

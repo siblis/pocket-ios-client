@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class ChatViewController: UIViewController {
     
@@ -18,10 +18,10 @@ class ChatViewController: UIViewController {
     let cellReuseIdentifier = "MessageCell"
     var chatInformation = ContactAccount()
     var groupContacts: [Int: ContactAccount] = [:]
-    let token = Token.main
+    let token = Account.token
     let myGroup = DispatchGroup()
     var chat: [Message] = []
-    var oserverMessageInDB: NotificationToken?
+    var oserverMessageInDB: RealmNotification?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class ChatViewController: UIViewController {
         
         if let msg = message.text, msg != "" {
             let selfMsg = WSS.initial.sendMessage(receiver: chatInformation, message: msg)
-            DataBase().saveMessages(
+            DataBase(.myData).saveMessages(
                 isOpenChat: chatInformation.uid,
                 chatId: chatInformation.uid,
                 chatName: chatInformation.accountName,
@@ -76,14 +76,11 @@ class ChatViewController: UIViewController {
         setupElements(y: downInset)
         WSS.initial.id = chatInformation.uid
         
-        DataBase().messageCounterZeroing(chatId: chatInformation.uid)
-        oserverMessageInDB = DataBase().observerMessages(chatId: chatInformation.uid) { (changes, id) in
-            switch changes {
-            case .initial, .update:
-                self.chat = DataBase().loadMsgsFromChat(chatId: id)
+        DataBase(.myData).messageCounterZeroing(chatId: chatInformation.uid)
+        oserverMessageInDB = DataBase(.myData).observerMessages(chatId: chatInformation.uid) { (action, id) in
+            if action {
+                self.chat = DataBase(.myData).loadMsgsFromChat(chatId: id)
                 self.chatField.reloadData()
-            case .error(let error):
-                print(error)
             }
         }
         
@@ -137,7 +134,7 @@ class ChatViewController: UIViewController {
     
     func getGroupUsers (id: Int) {
         myGroup.enter()
-        URLServices().getUserID(id: id, token: token!) { (info) in
+        URLServices().getUserID(id: id, token: Account.token) { (info) in
             self.groupContacts[id] = info
         }
         myGroup.leave()

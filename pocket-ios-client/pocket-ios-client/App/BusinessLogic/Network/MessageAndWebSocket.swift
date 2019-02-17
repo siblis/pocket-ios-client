@@ -28,7 +28,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
         guard let jsonData = text.data(using: .utf8) else { return }
         do {
             let messageInOut = try JSONDecoder().decode(Message.self, from: jsonData)
-            DataBase().saveMessages(
+            DataBase(.myData).saveMessages(
                 isOpenChat: id,
                 chatId: messageInOut.senderid,
                 chatName: messageInOut.senderName,
@@ -47,7 +47,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
     
     //MARK: Message sending
     func sendMessage (receiver: ContactAccount, message: String) -> Message {
-        guard let myPersInf = DataBase().loadSelfUser() else { return Message() }
+        let myPersInf = DataBase(.accounts).loadSelfUser()
         let msg = Message.init(
             receiver: receiver.uid,
             text: message,
@@ -72,7 +72,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
         let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
         var request = URLRequest(url: url!)
         request.timeoutInterval = 5
-        request.setValue(Token.main, forHTTPHeaderField: "token")
+        request.setValue(Account.token, forHTTPHeaderField: "token")
         
         self.socket = WebSocket(request: request)
         socket.delegate = self
