@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class SignUpViewController: UIViewController {
     
@@ -40,17 +40,15 @@ class SignUpViewController: UIViewController {
         }
         
         URLServices().signUp(accountName: accountName, email: email, password: password) { (info) in
-            Token.main = info.token
+            Account.token = info.token
+            Account.name = accountName
             let selfInfo = SelfAccount.init(
                 uid: info.uid,
                 accountName: accountName,
                 email: email,
                 password: password
             )
-            DataBase().saveSelfUser(info: selfInfo)
-            DispatchQueue.main.async {
-                ApplicationSwitcherRC().initVC(choiceVC: .tabbar)
-            }
+            CorrectionMethods().sign(for: selfInfo)
         }
     }
     

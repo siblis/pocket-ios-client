@@ -57,7 +57,7 @@ struct DeleteContact: Codable {
 struct GroupInfo: Codable {
     var gid: Int
     var groupName: String
-    var users:[Int]
+    var users: [Int]
     
     enum CodingKeys: String, CodingKey {
         case gid = "gid"
