@@ -11,10 +11,25 @@ import RealmSwift
 
 class DataBase {
     
+    enum LoadFile {
+        case accounts
+        case myData
+    }
+    
     let requestDB: AbstractRequestDB
     
-    init(requestDB: AbstractRequestDB = RequestDB()) {
-        self.requestDB = requestDB
+    init(_ file: LoadFile) {
+        var fileName: String
+        var baseElements: [Object.Type]
+        switch file {
+        case .accounts:
+            fileName = "accounts"
+            baseElements = [SelfAccount.self]
+        case .myData:
+            fileName = Account.name
+            baseElements = [Chat.self, ContactAccount.self, Group.self, Message.self]
+        }
+        self.requestDB = RequestDB(fileName: fileName, with: baseElements)
     }
     
     func deleteAllRecords() {
@@ -25,47 +40,25 @@ class DataBase {
         requestDB.deleteOneRecord(smTableDB: ContactAccount.self, forPrimaryKey: contact.uid)
     }
     
+    //MARK: - Information about my profile
     func saveSelfUser(info: SelfAccount) {
-        var password: String = info.password
-        if let sDB = loadSelfUser() {
-            password = sDB.password
-        }
-        let selfInf = SelfAccount.init(
-            uid: info.uid,
-            accountName: info.accountName,
-            email: info.email,
-            password: password
-        )
-        requestDB.saveInDB([selfInf])
+        requestDB.saveInDB([info])
     }
     
-    func loadSelfUser() -> SelfAccount? {
-        return requestDB.loadFromDB(smTableDB: SelfAccount.self).first
+    func loadSelfUser() -> SelfAccount {
+        let selector = "accountName LIKE '\(Account.name)'"
+        let myAccount = requestDB.loadOneRecordFromDB(smTableDB: SelfAccount.self, filter: selector)
+        return myAccount[0]
     }
     
-    func observerSelfUser() -> NotificationToken? {
-        let smInfoFromDB = requestDB.loadFromDB(smTableDB: SelfAccount.self)
-        return requestDB.realmObserver(smTableDB: smInfoFromDB) { (changes) in
-            switch changes {
-            case .initial, .update:
-                print("Load self data")
-            case .error(let error):
-                print(error)
-            }
-        }
-    }
-    
+    //MARK: - My contacts
     func saveContacts(data: [ContactAccount]) {
-        if let selfInfo = loadSelfUser() {
-            let contacts = data.filter { $0.email != selfInfo.email }
-            requestDB.saveInDB(contacts)
-        }
+        requestDB.saveInDB(data)
     }
     
-    func observerContacts(complition: @escaping (RealmCollectionChange<Results<ContactAccount>>) -> Void) -> NotificationToken? {
-        
+    func observerContacts(complition: @escaping (Bool) -> Void) -> RealmNotification? {
         let smInfoFromDB = requestDB.loadFromDB(smTableDB: ContactAccount.self)
-        return requestDB.realmObserver(smTableDB: smInfoFromDB, complition: complition)
+        return requestDB.realmObserver(for: smInfoFromDB, complition: complition)
     }
     
     func loadContactsList() -> Results<ContactAccount> {
@@ -76,6 +69,7 @@ class DataBase {
         return requestDB.loadOneRecordFromDB(smTableDB: ContactAccount.self, filter: "uid == \(userId)")
     }
     
+    //MARK: - Chat list
     func loadChatList() -> Results<Chat> {
         return requestDB.loadFromDB(smTableDB: Chat.self)
     }
@@ -88,12 +82,12 @@ class DataBase {
         requestDB.deleteOneRecord(smTableDB: Chat.self, forPrimaryKey: element.id)
     }
     
-    func observerChatList(complition: @escaping (RealmCollectionChange<Results<Chat>>) -> Void) -> NotificationToken? {
-        
+    func observerChatList(complition: @escaping (Bool) -> Void) -> RealmNotification? {
         let smInfoFromDB = requestDB.loadFromDB(smTableDB: Chat.self)
-        return requestDB.realmObserver(smTableDB: smInfoFromDB, complition: complition)
+        return requestDB.realmObserver(for: smInfoFromDB, complition: complition)
     }
     
+    //MARK: - Chat with messages
     func loadMsgsFromChat(chatId: Int) -> [Message] {
         var msgs: [Message] = []
         if let chatFromDB = loadChat(chatId: chatId).first {
@@ -137,9 +131,8 @@ class DataBase {
         requestDB.saveInDB([saveChat])
     }
     
-    func observerMessages(chatId: Int, complition: @escaping (RealmCollectionChange<Results<Chat>>, Int) -> Void) -> NotificationToken? {
-        
-        let smInfoFromDB = loadChat(chatId: chatId)
-        return requestDB.realmObserver(smTableDB: smInfoFromDB) { complition($0, chatId) }
+    func observerMessages(chatId: Int, complition: @escaping (Bool, Int) -> Void) -> RealmNotification? {
+        let chat = loadChat(chatId: chatId)
+        return requestDB.realmObserver(for: chat) { complition($0, chatId) }
     }
 }

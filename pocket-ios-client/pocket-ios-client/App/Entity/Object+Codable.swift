@@ -9,6 +9,9 @@
 import Foundation
 import RealmSwift
 
+
+var shemaDB: UInt64 = 1
+
 //MARK: Модель собственного профиля (Login, SignUp, MyProfile)
 class SelfAccount: Object, Codable {
     @objc dynamic var uid: Int = 0
@@ -121,21 +124,19 @@ class Group: Object, Decodable {
     public required convenience init(
         gid: Int,
         groupName: String,
-        users: List<ContactAccount>
+        users: [ContactAccount]
         ){
         self.init()
         self.gid = gid
         self.groupName = groupName
-        self.users = users
+        self.users.append(objectsIn: users)
     }
     
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let gid = try container.decode(Int.self, forKey: .gid)
         let groupName = try container.decode(String.self, forKey: .groupName)
-        let usersArray = try container.decode([ContactAccount].self, forKey: .users)
-        let users = List<ContactAccount>()
-        users.append(objectsIn: usersArray)
+        let users = try container.decode([ContactAccount].self, forKey: .users)
         self.init(gid: gid, groupName: groupName, users: users)
     }
 }
