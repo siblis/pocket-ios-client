@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 //MARK: - Класс отвечающий за список чатов с пользователями
 class ChatListTableViewController: UITableViewController {
     
+<<<<<<< HEAD
     //MARK: - Properties
     private let segueId = "SegueToChatFromChatList"
     private let cellReuseIdentifier = "ChatCell"
@@ -20,10 +21,16 @@ class ChatListTableViewController: UITableViewController {
     private var deleteRecord = UIButton() //right button is top bar
     private var editingRecords = UIButton()//left button is top bar
     private var isEnabledButton: Bool!
+=======
+    let cellReuseIdentifier = "ChatCell"
+    var chatCell = DataBase(.myData).loadChatList()
+    var observerChatList: RealmNotification?
+>>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
 
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
       
         editingTableView()
         createBarButtonItem()
@@ -85,20 +92,29 @@ class ChatListTableViewController: UITableViewController {
 
     
     private func editingTableView() {
+=======
+        
+>>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
         tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = SetupElementsUI().chatLstRowH
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
     }
     
+<<<<<<< HEAD
     private func observerChatListNSToken() {
         observerChatList = DataBase().observerChatList() { (changes) in
             switch changes {
             case .initial, .update:
                 self.chatCell = DataBase().loadChatList()
+=======
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        observerChatList = DataBase(.myData).observerChatList() { (changes) in
+            if changes {
+>>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
                 self.tableView.reloadData()
-            case .error(let error):
-                print(error)
             }
         }
     }
@@ -113,7 +129,7 @@ class ChatListTableViewController: UITableViewController {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let user = DataBase().loadOneContactsList(userId: chatCell[indexPath.item].id)
+            let user = DataBase(.myData).loadOneContactsList(userId: chatCell[indexPath.item].id)
             chatField?.chatInformation = user[0]
         }
     }
@@ -129,7 +145,7 @@ class ChatListTableViewController: UITableViewController {
         
         
         let chatMessage = chatCell[indexPath.item]
-        let user = DataBase().loadOneContactsList(userId: chatMessage.id)
+        let user = DataBase(.myData).loadOneContactsList(userId: chatMessage.id)
         cell.nameLabel.text = user[0].accountName
         cell.profileImageView.image = UIImage(named: user[0].avatarImage)
         if let sender = chatMessage.messages.last?.senderName, let msg = chatMessage.messages.last?.text {
@@ -143,6 +159,7 @@ class ChatListTableViewController: UITableViewController {
         return cell
     }
     
+<<<<<<< HEAD
     //MARK: - Delete cell
 //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 //        if editingStyle == .delete {
@@ -160,6 +177,11 @@ class ChatListTableViewController: UITableViewController {
             })
             
             self.present(alert, animated: true, completion: nil)
+=======
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            DataBase(.myData).deleteChatFromDB(chatCell[indexPath.row])
+>>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
         }
         
         shareAction.backgroundColor = UIColor.buttonPrimary

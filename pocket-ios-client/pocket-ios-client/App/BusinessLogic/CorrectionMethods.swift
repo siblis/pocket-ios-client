@@ -9,11 +9,12 @@
 import Foundation
 
 class CorrectionMethods: ApplicationSwitcherRC {
+    
     func autoLogIn() {
-        guard let selfInfo = DataBase().loadSelfUser() else { return }
+        let selfInfo = DataBase(.accounts).loadSelfUser()
         URLServices().signIn(login: selfInfo.accountName, password: selfInfo.password) { (info) in
             if info.token != "" {
-                Token.main = info.token
+                Account.token = info.token
                 self.choiceRootVC()
             } else {
                 self.logOut()
@@ -21,9 +22,16 @@ class CorrectionMethods: ApplicationSwitcherRC {
         }
     }
     
+    func sign(for personalInfo: SelfAccount) {
+        DataBase(.accounts).saveSelfUser(info: personalInfo)
+        DispatchQueue.main.async {
+            ApplicationSwitcherRC().initVC(choiceVC: .tabbar)
+        }
+    }
+    
     func logOut() {
-        Token.main = nil
-        DataBase().deleteAllRecords()
+        Account.token = ""
+        DataBase(.myData).deleteAllRecords()
         ApplicationSwitcherRC().initVC(choiceVC: .login)
     }
     

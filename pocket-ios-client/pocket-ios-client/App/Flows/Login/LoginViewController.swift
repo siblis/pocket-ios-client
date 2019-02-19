@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 class LoginViewController: UIViewController {
     
@@ -17,6 +16,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var singUpButton: UIButton!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+<<<<<<< HEAD
+=======
+    
+>>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
     @IBOutlet weak var scrollView: UIScrollView!
     var selfInfo = SelfAccount()
 
@@ -61,15 +64,15 @@ class LoginViewController: UIViewController {
     //MARK: - Action
     @IBAction func signIn(_ sender: Any) {
         
-        guard let password = passwordTextField.text, let accountName = loginTextField.text else {return}
+        guard let password = passwordTextField.text, let accountName = loginTextField.text else { return }
         selfInfo.password = password
         URLServices().signIn(login: accountName, password: password) { (info) in
-            if info.token != "" {
-                Token.main = info.token
+            if !info.token.isEmpty {
+                Account.token = info.token
+                Account.name = accountName
                 URLServices().getSelfUser(token: info.token) { (myAcc) in
                     myAcc.password = self.selfInfo.password
-                    DataBase().saveSelfUser(info: myAcc)
-                    ApplicationSwitcherRC().choiceRootVC()
+                    CorrectionMethods().sign(for: myAcc)
                 }
             }
         }

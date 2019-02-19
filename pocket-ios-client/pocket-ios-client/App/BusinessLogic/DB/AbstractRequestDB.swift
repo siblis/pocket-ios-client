@@ -9,18 +9,29 @@
 import UIKit
 import RealmSwift
 
+typealias RealmNotification = NotificationToken
+
 protocol AbstractRequestDB: class {
     func saveInDB(_ smElements: [Object])
     func deleteAllRecords()
+    func deleteDBFile()
     func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int)
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
     func loadOneRecordFromDB<A: Object>(smTableDB: A.Type, filter: String) -> Results<A>
-    func realmObserver<A: Object>(smTableDB: Results<A>, complition: @escaping (RealmCollectionChange<Results<A>>) -> Void) -> NotificationToken?
+    func realmObserver<A: Object>(for smRecordsDB: Results<A>, complition: @escaping (Bool) -> Void) -> NotificationToken?
 }
 
 class RequestDB: AbstractRequestDB {
     
-    let realm = try! Realm()
+    private let realm: Realm
+    
+    init(fileName: String, with baseElements: [Object.Type]) {
+        var config = Realm.Configuration()
+        config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(fileName).realm")
+        config.objectTypes = baseElements
+        config.schemaVersion = shemaDB
+        self.realm = try! Realm(configuration: config)
+    }
     
     func saveInDB(_ smElements: [Object]) {
         try! realm.write {
@@ -32,6 +43,13 @@ class RequestDB: AbstractRequestDB {
         try! realm.write {
             realm.deleteAll()
         }
+    }
+    
+    func deleteDBFile() {
+//        let folderPath = realm.configuration.fileURL!.deletingLastPathComponent().path
+//
+//        // Disable file protection for this directory
+//        try! FileManager.default.setAttributes(<#[FileAttributeKey : Any]#>, ofItemAtPath: folderPath)
     }
     
     func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int) {
@@ -53,17 +71,24 @@ class RequestDB: AbstractRequestDB {
     }
     
     func loadOneRecordFromDB<A: Object>(smTableDB: A.Type, filter: String) -> Results<A> {
-        return realm.objects(smTableDB.self).filter(filter)
+        let oneRecordFromDB = realm.objects(smTableDB.self).filter(filter)
+        return oneRecordFromDB
     }
     
     func realmObserver<A: Object>(
-        smTableDB: Results<A>,
-        complition: @escaping (RealmCollectionChange<Results<A>>) -> Void
+        for smRecordsDB: Results<A>,
+        complition: @escaping (Bool) -> Void
         ) -> NotificationToken? {
         
-        return smTableDB.observe({ (changes) in
-            complition(changes)
-        })
+        return smRecordsDB.observe() { (changes) in
+            switch changes {
+            case .initial, .update:
+                complition(true)
+            case .error(let error):
+                print(error)
+                complition(false)
+            }
+        }
     }
     
 }

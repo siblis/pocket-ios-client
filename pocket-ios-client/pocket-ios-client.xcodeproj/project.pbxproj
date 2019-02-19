@@ -28,7 +28,7 @@
 		24EC57AD21F3CCFA008A4E4F /* Constraints+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC57AC21F3CCFA008A4E4F /* Constraints+UIView.swift */; };
 		24EC57AF21F4E61E008A4E4F /* SetupElementsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC57AE21F4E61E008A4E4F /* SetupElementsUI.swift */; };
 		24EC57B121F4E643008A4E4F /* Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC57B021F4E643008A4E4F /* Interface.swift */; };
-		6D2988F021935F590004199F /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2988EF21935F590004199F /* TokenService.swift */; };
+		6D2988F021935F590004199F /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2988EF21935F590004199F /* AccountService.swift */; };
 		6D2E38CD219B68A300059DD3 /* Object+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E38CC219B68A300059DD3 /* Object+Codable.swift */; };
 		6D6AA39F2136DED600635BB4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6D6AA39E2136DED600635BB4 /* .gitignore */; };
 		6D8FB1D6219B0C7100E90D89 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8FB1D5219B0C7100E90D89 /* DataBase.swift */; };
@@ -104,7 +104,7 @@
 		24EC57B021F4E643008A4E4F /* Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interface.swift; sourceTree = "<group>"; };
 		27A1FDB081DFD17F42B4F5D9 /* Pods_pocket_ios_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_ios_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3196F743F6A858E70F1D8C /* Pods-pocket-ios-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket-ios-client.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket-ios-client/Pods-pocket-ios-client.release.xcconfig"; sourceTree = "<group>"; };
-		6D2988EF21935F590004199F /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
+		6D2988EF21935F590004199F /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		6D2E38CC219B68A300059DD3 /* Object+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Object+Codable.swift"; sourceTree = "<group>"; };
 		6D6AA39E2136DED600635BB4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6D8FB1D5219B0C7100E90D89 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
@@ -168,14 +168,6 @@
 				3F3196F743F6A858E70F1D8C /* Pods-pocket-ios-client.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		2438D52E21C6E061002FCF20 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				6DA111292163E8FA00C2AA45 /* NetworkServices.swift */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		2456173C21768A04007A9103 /* ChatWindow */ = {
@@ -258,7 +250,7 @@
 			children = (
 				2438D53021C6E0E1002FCF20 /* CodableJSON.swift */,
 				6D2E38CC219B68A300059DD3 /* Object+Codable.swift */,
-				6D2988EF21935F590004199F /* TokenService.swift */,
+				6D2988EF21935F590004199F /* AccountService.swift */,
 				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
 				244753F52204FCE5000E2EE3 /* Obj+Codable.swift */,
 			);
@@ -337,7 +329,7 @@
 		6DA111282163E8DC00C2AA45 /* NetworkServices */ = {
 			isa = PBXGroup;
 			children = (
-				2438D52E21C6E061002FCF20 /* Controller */,
+				6DA111292163E8FA00C2AA45 /* NetworkServices.swift */,
 			);
 			path = NetworkServices;
 			sourceTree = "<group>";
@@ -673,7 +665,7 @@
 				6DA1113B216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift in Sources */,
 				6DA11135216B8C6D00C2AA45 /* ChatListTableViewController.swift in Sources */,
 				6DA1112D2166732000C2AA45 /* ContactListTableViewController.swift in Sources */,
-				6D2988F021935F590004199F /* TokenService.swift in Sources */,
+				6D2988F021935F590004199F /* AccountService.swift in Sources */,
 				6DD41E442120C5C8002EE1F3 /* AppDelegate.swift in Sources */,
 				24392F8421B873B1003C444C /* AbstractRequestDB.swift in Sources */,
 				24A680B021DEE114003C4D21 /* AbstractErrorParser.swift in Sources */,

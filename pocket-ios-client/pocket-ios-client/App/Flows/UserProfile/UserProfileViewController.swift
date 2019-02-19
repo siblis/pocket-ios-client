@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class UserProfileViewController: UIViewController {
 
@@ -47,7 +47,6 @@ class UserProfileViewController: UIViewController {
     let screenWidth = UIScreen.main.bounds.width
     
     var user = ContactAccount()
-    var contactArray: Results<ContactAccount>?
     let myGroup = DispatchGroup()
     var isContact = false
     
@@ -65,10 +64,10 @@ class UserProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         myGroup.enter()
-        self.contactArray = DataBase().loadContactsList()
+        let contactArray = DataBase(.myData).loadContactsList()
         print("load contacts")
         myGroup.leave()
-        if contactArray!.contains(where: {$0.uid == user.uid}) {
+        if contactArray.contains(where: {$0.uid == user.uid}) {
             isContact = true
         } else {
             isContact = false
@@ -159,12 +158,12 @@ class UserProfileViewController: UIViewController {
         if isContact {
             showDeleteAlert()
         } else {
-            if let token = Token.main {
-                URLServices().addUserByMail(user.email, token: token) { (contact) in
+            if !Account.token.isEmpty {
+                URLServices().addUserByMail(user.email, token: Account.token) { (contact) in
                     print ("success")
                 }
             }
-            DataBase().saveContacts(data: [user])
+            DataBase(.myData).saveContacts(data: [user])
             showAddAlert()
         }
     }
@@ -174,13 +173,13 @@ class UserProfileViewController: UIViewController {
         let alert = UIAlertController(title: "", message: "Вы действительно хотите удалить пользователя?", preferredStyle: .alert)
         
         let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
-            if let token = Token.main {
-                URLServices().deleteUserByMail(self.user.email, token: token) { (contact) in
+            if !Account.token.isEmpty {
+                URLServices().deleteUserByMail(self.user.email, token: Account.token) { (contact) in
                     print("success: \(contact)")
                 }
             }
 
-            DataBase().deleteContactFromDB(self.user)
+            DataBase(.myData).deleteContactFromDB(self.user)
         })
         let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
         alert.addAction(actionYes)
