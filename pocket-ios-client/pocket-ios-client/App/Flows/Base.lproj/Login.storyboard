@@ -298,9 +298,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Ixs-Xw-LJA" kind="show" identifier="SegueToChatFromChatList" id="KCD-2t-1D7"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -309,6 +306,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Chats" id="Tl1-19-FvD"/>
+                    <connections>
+                        <segue destination="Ixs-Xw-LJA" kind="show" identifier="SegueToChatFromChatList" id="aGw-uf-wta"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6c-OF-tc3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -537,6 +537,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="fVb-l5-f3R"/>
         <segue reference="Up2-uc-cpm"/>
-        <segue reference="KCD-2t-1D7"/>
+        <segue reference="aGw-uf-wta"/>
     </inferredMetricsTieBreakers>
 </document>

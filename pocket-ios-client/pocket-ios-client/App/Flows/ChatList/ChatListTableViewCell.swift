@@ -31,7 +31,13 @@ class ChatListTableViewCell: UITableViewCell {
         addConstraintsWithFormat(format: "H:|-12-[v0(68)]", views: profileImageView)
         addConstraintsWithFormat(format: "V:[v0(68)]", views: profileImageView)
         
-        addConstraint(NSLayoutConstraint(item: profileImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: profileImageView,
+                                         attribute: .centerY,
+                                         relatedBy: .equal,
+                                         toItem: self,
+                                         attribute: .centerY,
+                                         multiplier: 1,
+                                         constant: 0))
     }
   
     private func setupMessageCountView() {
@@ -53,7 +59,13 @@ class ChatListTableViewCell: UITableViewCell {
         addSubview(containerView)
         addConstraintsWithFormat(format: "H:|-90-[v0]|", views: containerView)
         addConstraintsWithFormat(format: "V:[v0(50)]", views: containerView)
-        addConstraint(NSLayoutConstraint(item: containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: containerView,
+                                         attribute: .centerY,
+                                         relatedBy: .equal,
+                                         toItem: self,
+                                         attribute: .centerY,
+                                         multiplier: 1,
+                                         constant: 0))
         
         setupMessageCountView()
         
@@ -66,5 +78,4 @@ class ChatListTableViewCell: UITableViewCell {
         containerView.addConstraintsWithFormat(format: "H:|[v0]-36-|", views: messageLabel)
         containerView.addConstraintsWithFormat(format: "V:|[v0(24)]", views: timeLabel)
     }
-    
 }
