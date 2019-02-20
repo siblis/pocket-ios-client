@@ -12,6 +12,12 @@ import UIKit
 class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     var selfInfo = SelfAccount()
+    private let actionList: [ActionBtn] = [
+        ActionBtn.init(name: "Отмена", style: .cancel),
+        ActionBtn.init(name: "Сделать фото", style: .default),
+        ActionBtn.init(name: "Выбрать фото", style: .default),
+        ActionBtn.init(name: "Удалить фото", style: .default)
+    ]
 
     //определяем элементы экрана
     let cancelBtn = Interface().btnIni(textAlignment: .right)
@@ -156,17 +162,10 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func showActionSheet(_ sender: UITapGestureRecognizer) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let actionCancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-        actionSheet.addAction(actionCancel)
-        
-        let actionMail = UIAlertAction(title: "Сделать фото", style: .default, handler: nil)
-        let actionShare = UIAlertAction(title: "Выбрать фото", style: .default, handler: nil)
-        let actionSave = UIAlertAction(title: "Удалить фото", style: .default, handler: nil)
-        actionSheet.addAction(actionMail)
-        actionSheet.addAction(actionShare)
-        actionSheet.addAction(actionSave)
-        
+        let actionSheet = UIAlertController(show: .actionList(btns: actionList)) { (btnsAction) in
+            //Need some action for buttons
+            return nil
+        }
         self.present(actionSheet, animated: true, completion: nil)
     }
     
