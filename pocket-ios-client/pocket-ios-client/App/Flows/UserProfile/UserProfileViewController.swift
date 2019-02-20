@@ -10,6 +10,11 @@ import UIKit
 
 
 class UserProfileViewController: UIViewController {
+    
+    private let btnForAlert: [ActionBtn] = [
+        ActionBtn.init(name: "Да", style: .default),
+        ActionBtn.init(name: "Нет", style: .cancel)
+    ]
 
     let backButton = Interface().btnIni()
     let addDeleteButton = Interface().btnIni()
@@ -170,29 +175,30 @@ class UserProfileViewController: UIViewController {
 
     //алерт с удалением
     func showDeleteAlert() {
-        let alert = UIAlertController(title: "", message: "Вы действительно хотите удалить пользователя?", preferredStyle: .alert)
-        
-        let actionYes = UIAlertAction(title: "Да", style: .default, handler: {(action: UIAlertAction) in
-            if !Account.token.isEmpty {
-                URLServices().deleteUserByMail(self.user.email, token: Account.token) { (contact) in
-                    print("success: \(contact)")
+        let message: String = "Вы действительно хотите удалить пользователя?"
+        let alert = UIAlertController(show: .ifAlert(message: message, btns: btnForAlert)) { (btnAction) in
+            switch btnAction {
+            case "Да":
+                if !Account.token.isEmpty {
+                    URLServices().deleteUserByMail(self.user.email, token: Account.token) { (contact) in
+                        print("success: \(contact)")
+                    }
                 }
+                
+                DataBase(.myData).deleteContactFromDB(self.user)
+                return nil
+            default:
+                return nil
             }
-
-            DataBase(.myData).deleteContactFromDB(self.user)
-        })
-        let actionNo = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
-        alert.addAction(actionYes)
-        alert.addAction(actionNo)
+        }
         present(alert, animated: true, completion: nil)
     }
     
     //алерт с добавлением
     func showAddAlert () {
-        let alert = UIAlertController(title: "Пользователь добавлен", message: "", preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        let action = UIAlertController(show: .simple(title: "Пользователь добавлен", message: "")) {_ in
+            return nil
+        }
+        present(action, animated: true, completion: nil)
     }
 }
