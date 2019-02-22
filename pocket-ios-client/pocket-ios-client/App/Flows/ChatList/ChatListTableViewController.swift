@@ -8,30 +8,22 @@
 
 import UIKit
 
-
 //MARK: - Класс отвечающий за список чатов с пользователями
 class ChatListTableViewController: UITableViewController {
     
-<<<<<<< HEAD
+    
     //MARK: - Properties
     private let segueId = "SegueToChatFromChatList"
-    private let cellReuseIdentifier = "ChatCell"
-    var chatCell = DataBase().loadChatList()
-    var observerChatList: NotificationToken?
     private var deleteRecord = UIButton() //right button is top bar
     private var editingRecords = UIButton()//left button is top bar
     private var isEnabledButton: Bool!
-=======
-    let cellReuseIdentifier = "ChatCell"
+    private let cellReuseIdentifier = "ChatCell"
     var chatCell = DataBase(.myData).loadChatList()
     var observerChatList: RealmNotification?
->>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
-
+    
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-<<<<<<< HEAD
-      
         editingTableView()
         createBarButtonItem()
         isEnabledButton = false
@@ -40,7 +32,11 @@ class ChatListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        observerChatListNSToken()
+        observerChatList = DataBase(.myData).observerChatList() { (changes) in
+            if changes {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -51,13 +47,13 @@ class ChatListTableViewController: UITableViewController {
     //MARK: - Methods
     private func createBarButtonItem() {
         
-        //Left Bar Button Item
+        //Left Bar Button Item (Editng button)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: editingRecords)
         self.editingRecords.setTitle("Edit", for: .normal)
         self.editingRecords.setTitleColor(UIColor.buttonPrimary, for: .normal)
         self.editingRecords.addTarget(self, action: #selector(clickEditingRecords(_:)), for: .touchUpInside)
         
-        //Right Bar Button Item
+        //Right Bar Button Item (Delete button)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: deleteRecord)
         self.deleteRecord.isHidden = true
         self.deleteRecord.setTitle("Delete", for: .normal)
@@ -79,44 +75,46 @@ class ChatListTableViewController: UITableViewController {
         }
     }
     
-    @objc func clickDeleteRecord(_ sender: UIButton) {
+    @objc func clickDeleteRecord(_ sender: AnyObject) {
         self.tableView.setEditing(false, animated: true)
         self.deleteRecord.isHidden = true
         self.isEnabledButton = false
+        /*
+        if deleteRecord.isEnabled == true {
+            let indexPath = self.chatCell
+           
+                
+            
+        }
+        
+         
+         var indexPaths = self.tableView.indexPathsForSelectedRows
+         print("/indexZero /\(indexPaths)//")
+         indexPaths?.removeAll()
+         self.tableView.deleteRows(at: (indexPaths ?? nil)! , with: .fade)
+         DataBase(.myData).deleteChatFromDB(self.chatCell[indexPaths?.count ?? 0])
+         
+         let indexPath = IndexPath(item: indexPaths.count, section: 0)
+         print("/indexOne /\(indexPath)//")
+         
+         DataBase(.myData).deleteChatFromDB(self.chatCell[indexPath.row])
+         print("/indexTwo /\(indexPath)//")
+         
+         tableView.deleteRows(at: [indexPath], with: .fade)
+         print("/indexThree /\(indexPath)//")
+         
+         let indexPaths = self.tableView.indexPathsForSelectedRows
+         for indexPath in indexPaths! {
+         DataBase(.myData).deleteChatFromDB(self.chatCell[indexPaths])
+         }
+         */
     }
     
-//    let indexPaths = self.tableView.indexPathsForSelectedRows
-//    for indexPath in indexPaths! {
-//    DataBase().deleteChatFromDB(self.chatCell[indexPath.row])
-//    }
-
-    
     private func editingTableView() {
-=======
-        
->>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
         tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = SetupElementsUI().chatLstRowH
         tableView.alwaysBounceVertical = true
         tableView.tableFooterView = UIView(frame: .zero)
-    }
-    
-<<<<<<< HEAD
-    private func observerChatListNSToken() {
-        observerChatList = DataBase().observerChatList() { (changes) in
-            switch changes {
-            case .initial, .update:
-                self.chatCell = DataBase().loadChatList()
-=======
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        observerChatList = DataBase(.myData).observerChatList() { (changes) in
-            if changes {
->>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
-                self.tableView.reloadData()
-            }
-        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -137,12 +135,10 @@ class ChatListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatCell.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! ChatListTableViewCell
         cell.setup()
-        
-        
         
         let chatMessage = chatCell[indexPath.item]
         let user = DataBase(.myData).loadOneContactsList(userId: chatMessage.id)
@@ -155,45 +151,37 @@ class ChatListTableViewController: UITableViewController {
         if let date = chatMessage.messages.last?.time {
             cell.timeLabel.text = CorrectionMethods().dateFormater(date)
         }
-        
         return cell
     }
     
-<<<<<<< HEAD
-    //MARK: - Delete cell
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            DataBase().deleteChatFromDB(chatCell[indexPath.row])
-//        }
-//    }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let shareAction = UITableViewRowAction(style: .default, title: "Editing") {
-            _, indexPath in
-            let alert = UIAlertController(title: "Options", message: "There will be functions", preferredStyle: .actionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default) { (sender: UIAlertAction) -> Void in
-            })
-            
-            self.present(alert, animated: true, completion: nil)
-=======
+    //MARK: - Delete / Editing cell
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             DataBase(.myData).deleteChatFromDB(chatCell[indexPath.row])
->>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
         }
-        
-        shareAction.backgroundColor = UIColor.buttonPrimary
-        
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") {
-            _, indexPath in
-            DataBase().deleteChatFromDB(self.chatCell[indexPath.row])
-        }
-        
-        return [deleteAction, shareAction]
     }
-
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let editAction = UITableViewRowAction(style: .default, title: "Editing") { (_, indexPath) in
+            let alert = UIAlertController(title: "Options", message: "There will be functions", preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender: UIAlertAction) -> Void in
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        editAction.backgroundColor = UIColor.buttonPrimary
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { (_, indexPath) in
+            DataBase(.myData).deleteChatFromDB(self.chatCell[indexPath.row])
+        })
+        return [deleteAction, editAction]
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     //MARK: - Check out cell
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return UITableViewCell.EditingStyle(rawValue: 3)!

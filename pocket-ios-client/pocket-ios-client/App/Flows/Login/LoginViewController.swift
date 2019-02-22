@@ -16,10 +16,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var singUpButton: UIButton!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-<<<<<<< HEAD
-=======
-    
->>>>>>> a32aac2315b7913c0ef278d7bb819e815117db9e
     @IBOutlet weak var scrollView: UIScrollView!
     var selfInfo = SelfAccount()
 
