@@ -11,8 +11,8 @@ import UIKit
 //MARK: - Класс отвечающий за список чатов с пользователями
 class ChatListTableViewController: UITableViewController {
     
-    
     //MARK: - Properties
+    private var indexPathsForDelete = [IndexPath]()
     private let segueId = "SegueToChatFromChatList"
     private var deleteRecord = UIButton() //right button is top bar
     private var editingRecords = UIButton()//left button is top bar
@@ -67,11 +67,9 @@ class ChatListTableViewController: UITableViewController {
             tableView.isEditing = !tableView.isEditing
             self.tableView.setEditing(true, animated: true)
             self.deleteRecord.isHidden = false
-            print("Button is enabled true")
         } else {
             self.tableView.setEditing(false, animated: true)
             self.deleteRecord.isHidden = true
-            print("Button is enabled false")
         }
     }
     
@@ -79,35 +77,18 @@ class ChatListTableViewController: UITableViewController {
         self.tableView.setEditing(false, animated: true)
         self.deleteRecord.isHidden = true
         self.isEnabledButton = false
-        /*
-        if deleteRecord.isEnabled == true {
-            let indexPath = self.chatCell
-           
-                
-            
-        }
         
-         
-         var indexPaths = self.tableView.indexPathsForSelectedRows
-         print("/indexZero /\(indexPaths)//")
-         indexPaths?.removeAll()
-         self.tableView.deleteRows(at: (indexPaths ?? nil)! , with: .fade)
-         DataBase(.myData).deleteChatFromDB(self.chatCell[indexPaths?.count ?? 0])
-         
-         let indexPath = IndexPath(item: indexPaths.count, section: 0)
-         print("/indexOne /\(indexPath)//")
-         
-         DataBase(.myData).deleteChatFromDB(self.chatCell[indexPath.row])
-         print("/indexTwo /\(indexPath)//")
-         
-         tableView.deleteRows(at: [indexPath], with: .fade)
-         print("/indexThree /\(indexPath)//")
-         
-         let indexPaths = self.tableView.indexPathsForSelectedRows
-         for indexPath in indexPaths! {
-         DataBase(.myData).deleteChatFromDB(self.chatCell[indexPaths])
-         }
-         */
+        if deleteRecord.isEnabled == true {
+            var deletedChats = [Chat]()
+            for indexPath in self.indexPathsForDelete {
+                deletedChats.append(chatCell[indexPath.row])
+            }
+            for element in deletedChats {
+                DataBase(.myData).deleteChatFromDB(element)
+                self.tableView.reloadData()
+            }
+            self.indexPathsForDelete.removeAll()
+        }
     }
     
     private func editingTableView() {
@@ -120,7 +101,14 @@ class ChatListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEnabledButton == false {
             self.performSegue(withIdentifier: segueId, sender: self)
+        } else {
+            self.indexPathsForDelete.append(indexPath)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        self.indexPathsForDelete = self.indexPathsForDelete.filter{$0 != indexPath}
+        print(self.indexPathsForDelete)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -153,7 +141,6 @@ class ChatListTableViewController: UITableViewController {
         }
         return cell
     }
-    
     
     //MARK: - Delete / Editing cell
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
