@@ -1,0 +1,6 @@
+framework module Pods_pocket_ios_client {
+  umbrella header "Pods-pocket-ios-client-umbrella.h"
+
+  export *
+  module * { export * }
+}
