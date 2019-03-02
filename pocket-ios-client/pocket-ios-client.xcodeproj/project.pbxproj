@@ -946,7 +946,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B2H4W42259;
+				DEVELOPMENT_TEAM = 55V26YV628;
 				INFOPLIST_FILE = "$(SRCROOT)/pocket-ios-client/Environments/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -965,7 +965,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B2H4W42259;
+				DEVELOPMENT_TEAM = 55V26YV628;
 				INFOPLIST_FILE = "$(SRCROOT)/pocket-ios-client/Environments/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

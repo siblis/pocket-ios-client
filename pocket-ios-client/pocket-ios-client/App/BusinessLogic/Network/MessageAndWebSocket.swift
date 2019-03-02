@@ -28,12 +28,34 @@ final class MessageAndWebSocket: WebSocketDelegate {
         guard let jsonData = text.data(using: .utf8) else { return }
         do {
             let messageInOut = try JSONDecoder().decode(Message.self, from: jsonData)
-            DataBase().saveMessages(
-                isOpenChat: id,
-                chatId: messageInOut.senderid,
-                chatName: messageInOut.senderName,
-                message: messageInOut
-            )
+            
+            let user = DataBase().loadOneContactsList(userId: messageInOut.senderid)
+            
+            switch user.count{
+                case 0:
+                    guard let token = Token.main else { return print("Cannot read token") }
+                    
+                    URLServices().getUserID(id: messageInOut.senderid, token: token) { (contact) in
+                        
+                        DataBase().saveContacts(data: [contact])
+                        
+                        DataBase().saveMessages(
+                            isOpenChat: self.id,
+                            chatId: messageInOut.senderid,
+                            chatName: messageInOut.senderName,
+                            message: messageInOut
+                        )
+                    }
+                case 1...:
+                    DataBase().saveMessages(
+                        isOpenChat: id,
+                        chatId: messageInOut.senderid,
+                        chatName: messageInOut.senderName,
+                        message: messageInOut
+                    )
+                default :
+                    print("Negative number of values in Realm response!")
+            }
         }
         catch let err {
             print("Err", err)
@@ -83,3 +105,5 @@ final class MessageAndWebSocket: WebSocketDelegate {
 class WSS {
     static let initial = MessageAndWebSocket()
 }
+
+
