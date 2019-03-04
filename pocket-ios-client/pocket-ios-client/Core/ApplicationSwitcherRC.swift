@@ -18,14 +18,16 @@ class ApplicationSwitcherRC {
     }
     
     func choiceRootVC() {
-        if let token = Token.main {
-            URLServices().getContacts(token: token) { (contacts) in
-                WSS.initial.webSocketConnect()
-                DataBase().saveContacts(data: contacts)
-                DispatchQueue.main.async {
-                    self.initVC(choiceVC: .tabbar)
-                }
-            }
+        if !Account.token.isEmpty {
+            WSS.initial.webSocketConnect()
+            initVC(choiceVC: .tabbar)
+//            URLServices().getContacts(token: Account.token) { (contacts) in
+//                WSS.initial.webSocketConnect()
+//                DataBase(.myData).saveContacts(data: contacts)
+//                DispatchQueue.main.async {
+//                    self.initVC(choiceVC: .tabbar)
+//                }
+//            }
         }
         else {
             initVC(choiceVC: .login)

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class SignUpViewController: UIViewController {
     
@@ -40,27 +40,24 @@ class SignUpViewController: UIViewController {
         }
         
         URLServices().signUp(accountName: accountName, email: email, password: password) { (info) in
-            Token.main = info.token
+            Account.token = info.token
+            Account.name = accountName
             let selfInfo = SelfAccount.init(
                 uid: info.uid,
                 accountName: accountName,
                 email: email,
                 password: password
             )
-            DataBase().saveSelfUser(info: selfInfo)
-            DispatchQueue.main.async {
-                ApplicationSwitcherRC().initVC(choiceVC: .tabbar)
-            }
+            CorrectionMethods().sign(for: selfInfo)
         }
     }
     
     //алерт с ошибкой
     func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        let action = UIAlertController(show: .simple(title: "Ошибка", message: message)) {_ in 
+            return nil
+        }
+        present(action, animated: true, completion: nil)
     }
     
     @objc func keyboardWasShown(notification: Notification) {

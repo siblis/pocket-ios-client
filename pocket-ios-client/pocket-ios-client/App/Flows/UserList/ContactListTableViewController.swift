@@ -7,27 +7,33 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class ContactListTableViewController: UITableViewController {
     
-    let contactArray = DataBase().loadContactsList()
-    var observerContactInDB: NotificationToken?
+    var contactArray = DataBase(.myData).loadContactsList()
+    var observerContactInDB: RealmNotification?
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+        URLServices().getContacts(token: Account.token) { (contacts) in
+            DataBase(.myData).saveContacts(data: contacts)
+        }
+        observerContactInDB = DataBase(.myData).observerContacts() { (changes) in
+            if changes {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        observerContactInDB = nil
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        observerContactInDB = DataBase().observerContacts() { (changes) in
-            switch changes {
-            case .initial, .update:
-                self.tableView.reloadData()
-            case .error(let error):
-                print(error)
-            }
-        }
+        
         tableView.backgroundColor = UIColor.backPrimary
         tableView.rowHeight = SetupElementsUI().usrLstRowH
         tableView.alwaysBounceVertical = true

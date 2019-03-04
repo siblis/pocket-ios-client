@@ -7,11 +7,17 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     var selfInfo = SelfAccount()
+    private let actionList: [ActionBtn] = [
+        ActionBtn.init(name: "Отмена", style: .cancel),
+        ActionBtn.init(name: "Сделать фото", style: .default),
+        ActionBtn.init(name: "Выбрать фото", style: .default),
+        ActionBtn.init(name: "Удалить фото", style: .default)
+    ]
 
     //определяем элементы экрана
     let cancelBtn = Interface().btnIni(textAlignment: .right)
@@ -58,7 +64,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        selfInfo = DataBase().loadSelfUser() ?? SelfAccount()
+        selfInfo = DataBase(.accounts).loadSelfUser()
         firstName.text = selfInfo.firstName
         lastName.text = selfInfo.lastName
         status.text = selfInfo.status
@@ -139,7 +145,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         selfInfo.firstName = firstName.text ?? ""
         selfInfo.lastName = lastName.text ?? ""
         selfInfo.status = status.text ?? ""
-        DataBase().saveSelfUser(info: selfInfo)
+        DataBase(.accounts).saveSelfUser(info: selfInfo)
         print  ("saving changes")
         self.dismiss(animated: true, completion: nil)
     }
@@ -156,17 +162,10 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func showActionSheet(_ sender: UITapGestureRecognizer) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let actionCancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-        actionSheet.addAction(actionCancel)
-        
-        let actionMail = UIAlertAction(title: "Сделать фото", style: .default, handler: nil)
-        let actionShare = UIAlertAction(title: "Выбрать фото", style: .default, handler: nil)
-        let actionSave = UIAlertAction(title: "Удалить фото", style: .default, handler: nil)
-        actionSheet.addAction(actionMail)
-        actionSheet.addAction(actionShare)
-        actionSheet.addAction(actionSave)
-        
+        let actionSheet = UIAlertController(show: .actionList(btns: actionList)) { (btnsAction) in
+            //Need some action for buttons
+            return nil
+        }
         self.present(actionSheet, animated: true, completion: nil)
     }
     
