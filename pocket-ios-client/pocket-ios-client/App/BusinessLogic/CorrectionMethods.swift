@@ -31,7 +31,6 @@ class CorrectionMethods: ApplicationSwitcherRC {
     
     func logOut() {
         Account.token = ""
-        DataBase(.myData).deleteAllRecords()
         ApplicationSwitcherRC().initVC(choiceVC: .login)
     }
     
