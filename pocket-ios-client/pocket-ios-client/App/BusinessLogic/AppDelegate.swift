@@ -34,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        
+        if !WSS.initial.socket.isConnected {
+            WSS.initial.webSocketConnect()
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
