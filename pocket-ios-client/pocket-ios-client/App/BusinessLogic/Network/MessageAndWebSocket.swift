@@ -20,6 +20,7 @@ final class MessageAndWebSocket: WebSocketDelegate {
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
+        webSocketConnect()
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
