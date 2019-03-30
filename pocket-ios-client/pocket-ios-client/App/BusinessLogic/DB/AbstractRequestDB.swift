@@ -16,6 +16,7 @@ protocol AbstractRequestDB: class {
     func deleteAllRecords()
     func deleteDBFile()
     func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int)
+    func deleteSomeRecords<A: Object>(smTableDB: A.Type, forKey: String, keyValue: Int)
     func deleteSomeRecords<A: Object>(records: [(smTableDB: A.Type, forPrimaryKey: Int)])
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
     func loadOneRecordFromDB<A: Object>(smTableDB: A.Type, filter: String) -> Results<A>
@@ -67,7 +68,24 @@ class RequestDB: AbstractRequestDB {
         }
     }
     
-    func deleteSomeRecords<A>(records: [(smTableDB: A.Type, forPrimaryKey: Int)]) where A : Object {
+    func deleteSomeRecords<A: Object>(smTableDB: A.Type, forKey: String, keyValue: Int){
+        
+        realm.beginWrite()
+        
+        let elements = realm.objects(smTableDB.self).filter(forKey + " = \(keyValue)")
+        
+        realm.delete(elements)
+        do {
+            try realm.commitWrite()
+            print ("realm delete")
+        }
+        catch {
+            print (error.localizedDescription)
+        }
+        
+    }
+    
+    func deleteSomeRecords<A: Object>(records: [(smTableDB: A.Type, forPrimaryKey: Int)]) {
         realm.beginWrite()
         for record in records{
             
