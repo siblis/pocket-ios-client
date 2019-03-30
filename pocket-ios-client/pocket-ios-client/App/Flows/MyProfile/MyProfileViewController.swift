@@ -44,6 +44,8 @@ class MyProfileViewController: UIViewController {
     let safeAreaTopInset = UIApplication.shared.statusBarFrame.height
     let screenWidth = UIScreen.main.bounds.width
     
+    let transitionManager = CustomTransitionManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -141,6 +143,11 @@ class MyProfileViewController: UIViewController {
     
     @objc func accountLogOut(_ sender: UIButton) {
         CorrectionMethods().logOut()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let editField = segue.destination as? EditProfileViewController
+        editField?.transitioningDelegate = self.transitionManager
     }
 }
 

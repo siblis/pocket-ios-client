@@ -108,7 +108,6 @@ class ChatListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.indexPathsForDelete = self.indexPathsForDelete.filter{$0 != indexPath}
-        print(self.indexPathsForDelete)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
