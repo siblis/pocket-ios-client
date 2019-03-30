@@ -16,6 +16,7 @@ protocol AbstractRequestDB: class {
     func deleteAllRecords()
     func deleteDBFile()
     func deleteOneRecord<A: Object>(smTableDB: A.Type, forPrimaryKey: Int)
+    func deleteSomeRecords<A: Object>(records: [(smTableDB: A.Type, forPrimaryKey: Int)])
     func loadFromDB<A: Object>(smTableDB: A.Type) -> Results<A>
     func loadOneRecordFromDB<A: Object>(smTableDB: A.Type, filter: String) -> Results<A>
     func realmObserver<A: Object>(for smRecordsDB: Results<A>, complition: @escaping (Bool) -> Void) -> NotificationToken?
@@ -56,13 +57,31 @@ class RequestDB: AbstractRequestDB {
         realm.beginWrite()
         if let smElement = realm.object(ofType: smTableDB.self, forPrimaryKey: forPrimaryKey) {
             realm.delete(smElement)
-            do {
-                try realm.commitWrite()
-                print ("realm delete")
+        }
+        do {
+            try realm.commitWrite()
+            print ("realm delete")
+        }
+        catch {
+            print (error.localizedDescription)
+        }
+    }
+    
+    func deleteSomeRecords<A>(records: [(smTableDB: A.Type, forPrimaryKey: Int)]) where A : Object {
+        realm.beginWrite()
+        for record in records{
+            
+            if let smElement = realm.object(ofType: record.smTableDB.self, forPrimaryKey: record.forPrimaryKey){
+                realm.delete(smElement)
             }
-            catch {
-                print (error.localizedDescription)
-            }
+        }
+        
+        do {
+            try realm.commitWrite()
+            print ("realm delete")
+        }
+        catch {
+            print (error.localizedDescription)
         }
     }
     
