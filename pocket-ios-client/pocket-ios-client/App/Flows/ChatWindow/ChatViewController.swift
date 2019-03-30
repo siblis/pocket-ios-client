@@ -16,15 +16,21 @@ class ChatViewController: UIViewController {
     let insets: CGFloat = 15
     let downInset: CGFloat = 30
     let cellReuseIdentifier = "MessageCell"
+    var interlocutorID = 0
     var chatInformation = ContactAccount()
     var groupContacts: [Int: ContactAccount] = [:]
     let token = Account.token
     let myGroup = DispatchGroup()
     var chat: [Message] = []
     var oserverMessageInDB: RealmNotification?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let interlocutor = DataBase(.myData).loadOneContactsList(userId: self.interlocutorID)
+        
+        self.chatInformation = interlocutor[0]
+        
         title = chatInformation.accountName
         //кнопка перехода на экран с деталями пользователя
         let infoButton = UIButton(type: .infoLight)
@@ -74,26 +80,34 @@ class ChatViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupElements(y: downInset)
-        WSS.initial.id = chatInformation.uid
+        let checkUser = DataBase(.myData).loadOneContactsList(userId: self.interlocutorID)
         
-        DataBase(.myData).messageCounterZeroing(chatId: chatInformation.uid)
-        oserverMessageInDB = DataBase(.myData).observerMessages(chatId: chatInformation.uid) { (action, id) in
-            if action {
-                self.chat = DataBase(.myData).loadMsgsFromChat(chatId: id)
-                self.chatField.reloadData()
+        if checkUser.count == 0
+        {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else
+        {
+            WSS.initial.id = chatInformation.uid
+            
+            DataBase(.myData).messageCounterZeroing(chatId: chatInformation.uid)
+            oserverMessageInDB = DataBase(.myData).observerMessages(chatId: chatInformation.uid) { (action, id) in
+                if action {
+                    self.chat = DataBase(.myData).loadMsgsFromChat(chatId: id)
+                    self.chatField.reloadData()
+                }
             }
+            
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(keyboardWillShow(notification:)),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil)
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(keyboardWillHide(notification:)),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil)
         }
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow(notification:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide(notification:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
