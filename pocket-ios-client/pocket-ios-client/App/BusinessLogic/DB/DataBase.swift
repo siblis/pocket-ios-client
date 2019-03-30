@@ -37,7 +37,11 @@ class DataBase {
     }
     
     func deleteContactFromDB(_ contact: ContactAccount) {
-        requestDB.deleteOneRecord(smTableDB: ContactAccount.self, forPrimaryKey: contact.uid)
+        let contactCort: (smTableDB: Object.Type, forPrimaryKey: Int) = (Chat.self, contact.uid)
+        let chatCort: (smTableDB: Object.Type, forPrimaryKey: Int) = (ContactAccount.self, contact.uid)
+        let recordsToDelete: [(smTableDB: Object.Type, forPrimaryKey: Int)] = [contactCort, chatCort]
+        
+        requestDB.deleteSomeRecords(records: recordsToDelete)
     }
     
     //MARK: - Information about my profile
