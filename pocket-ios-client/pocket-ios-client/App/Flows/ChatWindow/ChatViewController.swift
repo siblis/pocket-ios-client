@@ -23,7 +23,8 @@ class ChatViewController: UIViewController {
     let myGroup = DispatchGroup()
     var chat: [Message] = []
     var oserverMessageInDB: RealmNotification?
-    
+    let transitionMangaer = CustomTransitionManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -155,6 +156,7 @@ class ChatViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let chatInfo = segue.destination as? UserProfileViewController
         if segue.identifier == "userDetailsSegue" {
             let userDetailsVC = segue.destination as! UserProfileViewController
             userDetailsVC.user = self.chatInformation
@@ -164,6 +166,7 @@ class ChatViewController: UIViewController {
 //            groupDetailsVC.group = self.user
 //            groupDetailsVC.groupContacts = self.groupContacts
 //        }
+        chatInfo?.transitioningDelegate = transitionMangaer
     }
 }
 
