@@ -37,7 +37,15 @@ class DataBase {
     }
     
     func deleteContactFromDB(_ contact: ContactAccount) {
-        requestDB.deleteOneRecord(smTableDB: ContactAccount.self, forPrimaryKey: contact.uid)
+        
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "receiver", keyValue: contact.uid)
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "senderid", keyValue: contact.uid)
+        
+        let contactCort: (smTableDB: Object.Type, forPrimaryKey: Int) = (Chat.self, contact.uid)
+        let chatCort: (smTableDB: Object.Type, forPrimaryKey: Int) = (ContactAccount.self, contact.uid)
+        let recordsToDelete: [(smTableDB: Object.Type, forPrimaryKey: Int)] = [contactCort, chatCort]
+        
+        requestDB.deleteSomeRecords(records: recordsToDelete)
     }
     
     //MARK: - Information about my profile
@@ -79,6 +87,8 @@ class DataBase {
     }
     
     func deleteChatFromDB(_ element: Chat) {
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "receiver", keyValue: element.id)
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "senderid", keyValue: element.id)
         requestDB.deleteOneRecord(smTableDB: Chat.self, forPrimaryKey: element.id)
     }
     
