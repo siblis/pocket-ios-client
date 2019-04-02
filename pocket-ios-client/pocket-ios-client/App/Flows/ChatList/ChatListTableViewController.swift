@@ -114,8 +114,7 @@ class ChatListTableViewController: UITableViewController {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let user = DataBase(.myData).loadOneContactsList(userId: chatCell[indexPath.item].id)
-            chatField?.chatInformation = user[0]
+            chatField?.interlocutorID = chatCell[indexPath.item].id
         }
     }
     

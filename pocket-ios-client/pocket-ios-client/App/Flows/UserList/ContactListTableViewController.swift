@@ -64,7 +64,7 @@ class ContactListTableViewController: UITableViewController {
         
         let chatField = segue.destination as? ChatViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            chatField?.chatInformation = contactArray[indexPath.row]
+            chatField?.interlocutorID = contactArray[indexPath.row].uid
         }
     }
 }

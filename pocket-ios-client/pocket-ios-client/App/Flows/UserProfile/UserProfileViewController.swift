@@ -186,6 +186,9 @@ class UserProfileViewController: UIViewController {
                 }
                 
                 DataBase(.myData).deleteContactFromDB(self.user)
+                
+                self.dismiss(animated: true, completion: nil)
+                
                 return nil
             default:
                 return nil
