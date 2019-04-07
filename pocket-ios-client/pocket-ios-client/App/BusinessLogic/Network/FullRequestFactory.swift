@@ -27,21 +27,21 @@ protocol FullRequestFactory {
 class URLServices: BaseRequestFatory, FullRequestFactory {
     
     var loginRequest = requestInit.init(path: "/v1/auth/login/", method: "POST")
-    var registrRequest = requestInit.init(path: "/v1/auth/register/", method: "POST")
+    var registrRequest = requestInit.init(path: "/v1/auth/registration/", method: "POST")
     var selfRequest = requestInit.init(path: "/v1/account/", method: "GET")
     var contactRequest = requestInit.init(path: "", method: "GET")
     var addContactRequest = requestInit.init(path: "/v1/account/contacts/", method: "POST")
     var delContactRequest = requestInit.init(path: "/v1/account/contacts/", method: "DELETE")
     
     func signIn(login: String, password: String, completion: @escaping (SignInResponse) -> Void) {
-        loginRequest.parameters = ["account_name": login, "password": password]
+        loginRequest.parameters = ["email": login, "password": password]
         let rqst = try! loginRequest.asURLRequest()
         self.request(ask: rqst, completion: completion)
     }
     
     
     func signUp(accountName: String, email: String, password: String, completion: @escaping (SignUpResponse) -> Void) {
-        registrRequest.parameters = ["account_name": accountName, "email": email, "password": password]
+        registrRequest.parameters = ["name": accountName, "email": email, "password": password]
         let rqst = try! registrRequest.asURLRequest()
         self.request(ask: rqst, completion: completion)
     }
@@ -114,7 +114,6 @@ extension URLServices {
     struct requestInit: RequestRouter {
         var sheme: String = ParametersSetup.sheme
         var host: String = ParametersSetup.host
-        var port: Int = ParametersSetup.port
         var path: String
         var method: String
         var header: [String: String]? = nil

@@ -10,6 +10,7 @@ import UIKit
 
 
 class AddUserController: UITableViewController, UISearchBarDelegate {
+    
     @IBOutlet weak var searchBar: UISearchBar!
     var users: [ContactAccount] = []
     var groups: [GroupInfo] = []

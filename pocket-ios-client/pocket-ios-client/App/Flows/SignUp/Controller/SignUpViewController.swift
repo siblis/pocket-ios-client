@@ -32,7 +32,7 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func SignUpButtonPress(_ sender: Any) {
-        guard let accountName = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
+        guard let accountName = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else { return }
         guard !accountName.isEmpty, !email.isEmpty, !password.isEmpty else {
             print ("fill the data in fields")
             self.showErrorAlert(message: "Не все поля заполнены")

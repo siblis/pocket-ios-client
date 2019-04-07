@@ -108,15 +108,13 @@ class ChatListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.indexPathsForDelete = self.indexPathsForDelete.filter{$0 != indexPath}
-        print(self.indexPathsForDelete)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let user = DataBase(.myData).loadOneContactsList(userId: chatCell[indexPath.item].id)
-            chatField?.chatInformation = user[0]
+            chatField?.interlocutorID = chatCell[indexPath.item].id
         }
     }
     
