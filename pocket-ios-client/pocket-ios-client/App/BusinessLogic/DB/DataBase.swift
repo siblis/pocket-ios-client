@@ -24,7 +24,7 @@ class DataBase {
         switch file {
         case .accounts:
             fileName = "accounts"
-            baseElements = [SelfAccount.self]
+            baseElements = [MainAccounts.self]
         case .myData:
             fileName = Account.name
             baseElements = [Chat.self, ContactAccount.self, Group.self, Message.self]
@@ -49,13 +49,13 @@ class DataBase {
     }
     
     //MARK: - Information about my profile
-    func saveSelfUser(info: SelfAccount) {
+    func saveSelfUser(info: MainAccounts) {
         requestDB.saveInDB([info])
     }
     
-    func loadSelfUser() -> SelfAccount {
+    func loadSelfUser() -> MainAccounts {
         let selector = "accountName LIKE '\(Account.name)'"
-        let myAccount = requestDB.loadOneRecordFromDB(smTableDB: SelfAccount.self, filter: selector)
+        let myAccount = requestDB.loadOneRecordFromDB(smTableDB: MainAccounts.self, filter: selector)
         return myAccount[0]
     }
     

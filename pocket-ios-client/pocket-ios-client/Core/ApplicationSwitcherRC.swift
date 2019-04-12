@@ -17,9 +17,15 @@ class ApplicationSwitcherRC {
         case tabbar
     }
     
+    convenience init(choiceVC: UploadVC) {
+        self.init()
+        
+        initVC(choiceVC: choiceVC)
+    }
+    
     func choiceRootVC() {
         if !Account.token.isEmpty {
-            WSS.initial.webSocketConnect()
+//            WSS.initial.webSocketConnect()
             initVC(choiceVC: .tabbar)
 //            URLServices().getContacts(token: Account.token) { (contacts) in
 //                WSS.initial.webSocketConnect()
@@ -34,11 +40,7 @@ class ApplicationSwitcherRC {
         }
     }
     
-    func ifServerDown() {
-        initVC(choiceVC: .tabbar)
-    }
-    
-    func initVC(choiceVC: UploadVC) {
+    private func initVC(choiceVC: UploadVC) {
         let initVC = UIStoryboard.init(name: "Login", bundle: nil)
         
         switch choiceVC {
@@ -51,4 +53,5 @@ class ApplicationSwitcherRC {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = rootVC
     }
+    
 }

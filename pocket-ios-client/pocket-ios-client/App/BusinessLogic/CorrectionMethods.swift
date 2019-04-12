@@ -12,7 +12,7 @@ class CorrectionMethods: ApplicationSwitcherRC {
     
     func autoLogIn() {
         let selfInfo = DataBase(.accounts).loadSelfUser()
-        URLServices().signIn(login: selfInfo.accountName, password: selfInfo.password) { (info) in
+        URLServices().signIn(login: selfInfo.email, password: selfInfo.password) { (info) in
             if info.token != "" {
                 Account.token = info.token
                 self.choiceRootVC()
@@ -22,16 +22,16 @@ class CorrectionMethods: ApplicationSwitcherRC {
         }
     }
     
-    func sign(for personalInfo: SelfAccount) {
+    func sign(for personalInfo: MainAccounts) {
         DataBase(.accounts).saveSelfUser(info: personalInfo)
         DispatchQueue.main.async {
-            ApplicationSwitcherRC().initVC(choiceVC: .tabbar)
+            ApplicationSwitcherRC(choiceVC: .tabbar)
         }
     }
     
     func logOut() {
         Account.token = ""
-        ApplicationSwitcherRC().initVC(choiceVC: .login)
+        ApplicationSwitcherRC(choiceVC: .login)
     }
     
     func dateFormater(_ time: Double) -> String {

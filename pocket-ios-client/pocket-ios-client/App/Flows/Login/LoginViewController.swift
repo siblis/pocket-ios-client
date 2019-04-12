@@ -19,12 +19,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    var selfInfo = SelfAccount()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginTextField.attributedPlaceholder = NSAttributedString(string: "Login / Email",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        loginTextField.attributedPlaceholder = NSAttributedString(string: "Email",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
@@ -37,16 +35,17 @@ class LoginViewController: UIViewController {
     
     @IBAction func signIn(_ sender: Any) {
         
-        guard let password = passwordTextField.text, let accountName = loginTextField.text else { return }
-        selfInfo.password = password
-        URLServices().signIn(login: accountName, password: password) { (info) in
+        guard let password = passwordTextField.text, let email = loginTextField.text else { return }
+        URLServices().signIn(login: email, password: password) { (info) in
             if !info.token.isEmpty {
                 Account.token = info.token
-                Account.name = accountName
-                URLServices().getSelfUser(token: info.token) { (myAcc) in
-                    myAcc.password = self.selfInfo.password
-                    CorrectionMethods().sign(for: myAcc)
-                }
+                Account.name = email
+                let user = MainAccounts()
+                user.id = info.user.id
+                user.nick = info.user.profile?.userName ?? ""
+                user.email = email
+                user.password = password
+                CorrectionMethods().sign(for: user)
             }
         }
     }

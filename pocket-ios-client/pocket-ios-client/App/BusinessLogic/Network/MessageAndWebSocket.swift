@@ -35,17 +35,18 @@ final class MessageAndWebSocket: WebSocketDelegate {
             switch user.count{
                 
             case 0:
-                URLServices().getUserID(id: messageInOut.senderid, token: Account.token) { (contact) in
-                    
-                    DataBase(.myData).saveContacts(data: [contact])
-                    
-                    DataBase(.myData).saveMessages(
-                        isOpenChat: self.id,
-                        chatId: messageInOut.senderid,
-                        chatName: messageInOut.senderName,
-                        message: messageInOut
-                    )
-                }
+                print("Selected 0")
+//                URLServices().getUserID(id: messageInOut.senderid, token: Account.token) { (contact) in
+//                    
+//                    DataBase(.myData).saveContacts(data: [contact])
+//                    
+//                    DataBase(.myData).saveMessages(
+//                        isOpenChat: self.id,
+//                        chatId: messageInOut.senderid,
+//                        chatName: messageInOut.senderName,
+//                        message: messageInOut
+//                    )
+//                }
             case 1...:
                 DataBase(.myData).saveMessages(
                     isOpenChat: self.id,
@@ -72,14 +73,14 @@ final class MessageAndWebSocket: WebSocketDelegate {
     //MARK: Message sending
     func sendMessage (receiver: ContactAccount, message: String) -> Message {
         let myPersInf = DataBase(.accounts).loadSelfUser()
-        let msg = Message.init(
-            receiver: receiver.uid,
-            text: message,
-            senderid: myPersInf.uid,
-            senderName: myPersInf.accountName,
-            time: NSDate().timeIntervalSince1970,
-            isEnemy: false
-        )
+        let msg = Message()// .init(
+//            receiver: receiver.uid,
+//            text: message,
+//            senderid: myPersInf.id,
+//            senderName: myPersInf.email,
+//            time: NSDate().timeIntervalSince1970,
+//            isEnemy: false
+//        )
         do {
             let jsonData = try JSONEncoder().encode(msg)
             socket.write(data: jsonData)
@@ -93,10 +94,10 @@ final class MessageAndWebSocket: WebSocketDelegate {
     //MARK: WebSocket connecting
     func webSocketConnect() {
         
-        let url = URL(string: "wss://pocketmsg.ru:8888/v1/ws/")
+        let url = URL(string: "https://pocket-java-backend.herokuapp.com/v1/socket?token=\(Account.token)")
         var request = URLRequest(url: url!)
-        request.timeoutInterval = 5
-        request.setValue(Account.token, forHTTPHeaderField: "token")
+        request.timeoutInterval = 10
+//        request.setValue(Account.token, forHTTPHeaderField: "token")
         
         self.socket = WebSocket(request: request)
         socket.delegate = self
