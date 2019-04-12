@@ -18,8 +18,8 @@ class ChatListTableViewController: UITableViewController {
     private var editingRecords = UIButton()
     private var isEnabledButton: Bool!
     private let cellReuseIdentifier = "ChatCell"
-    var chatCell = DataBase(.myData).loadChatList()
-    var observerChatList: RealmNotification?
+    var chatCell: [Chat] = []// DataBase(.myData).loadChatList()
+//    var observerChatList: RealmNotification?
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -32,16 +32,16 @@ class ChatListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        observerChatList = DataBase(.myData).observerChatList() { (changes) in
-            if changes {
-                self.tableView.reloadData()
-            }
-        }
+//        observerChatList = DataBase(.myData).observerChatList() { (changes) in
+//            if changes {
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        observerChatList = nil
+//        observerChatList = nil
     }
     
     //MARK: - Methods
@@ -84,7 +84,7 @@ class ChatListTableViewController: UITableViewController {
                 deletedChats.append(chatCell[indexPath.row])
             }
             for element in deletedChats {
-                DataBase(.myData).deleteChatFromDB(element)
+//                DataBase(.myData).deleteChatFromDB(element)
                 self.tableView.reloadData()
             }
             self.indexPathsForDelete.removeAll()
@@ -108,15 +108,13 @@ class ChatListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         self.indexPathsForDelete = self.indexPathsForDelete.filter{$0 != indexPath}
-        print(self.indexPathsForDelete)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let chatField = segue.destination as? ChatViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            let user = DataBase(.myData).loadOneContactsList(userId: chatCell[indexPath.item].id)
-            chatField?.chatInformation = user[0]
+            chatField?.interlocutorID = chatCell[indexPath.item].id
         }
     }
     
@@ -129,7 +127,7 @@ class ChatListTableViewController: UITableViewController {
         cell.setup()
         
         let chatMessage = chatCell[indexPath.item]
-        let user = DataBase(.myData).loadOneContactsList(userId: chatMessage.id)
+        let user: [ContactAccount] = []// DataBase(.myData).loadOneContactsList(userId: chatMessage.id)
         cell.nameLabel.text = user[0].accountName
         cell.profileImageView.image = UIImage(named: user[0].avatarImage)
         if let sender = chatMessage.messages.last?.senderName, let msg = chatMessage.messages.last?.text {
@@ -145,7 +143,7 @@ class ChatListTableViewController: UITableViewController {
     //MARK: - Delete / Editing cell
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            DataBase(.myData).deleteChatFromDB(chatCell[indexPath.row])
+//            DataBase(.myData).deleteChatFromDB(chatCell[indexPath.row])
         }
     }
     
@@ -160,7 +158,7 @@ class ChatListTableViewController: UITableViewController {
         editAction.backgroundColor = UIColor.buttonPrimary
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { (_, indexPath) in
-            DataBase(.myData).deleteChatFromDB(self.chatCell[indexPath.row])
+//            DataBase(.myData).deleteChatFromDB(self.chatCell[indexPath.row])
         })
         return [deleteAction, editAction]
     }

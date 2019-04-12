@@ -64,10 +64,10 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        selfInfo = DataBase(.accounts).loadSelfUser()
-        firstName.text = selfInfo.firstName
-        lastName.text = selfInfo.lastName
-        status.text = selfInfo.status
+//        selfInfo = DataBase(.accounts).loadSelfUser()
+//        firstName.text = selfInfo.firstName
+//        lastName.text = selfInfo.lastName
+//        status.text = selfInfo.status
     }
     
     func setUpHeader () {
@@ -145,7 +145,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate {
         selfInfo.firstName = firstName.text ?? ""
         selfInfo.lastName = lastName.text ?? ""
         selfInfo.status = status.text ?? ""
-        DataBase(.accounts).saveSelfUser(info: selfInfo)
+//        DataBase(.accounts).saveSelfUser(info: selfInfo)
         print  ("saving changes")
         self.dismiss(animated: true, completion: nil)
     }

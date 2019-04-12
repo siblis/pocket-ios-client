@@ -24,7 +24,7 @@ class DataBase {
         switch file {
         case .accounts:
             fileName = "accounts"
-            baseElements = [SelfAccount.self]
+            baseElements = [MainAccounts.self]
         case .myData:
             fileName = Account.name
             baseElements = [Chat.self, ContactAccount.self, Group.self, Message.self]
@@ -37,17 +37,25 @@ class DataBase {
     }
     
     func deleteContactFromDB(_ contact: ContactAccount) {
-        requestDB.deleteOneRecord(smTableDB: ContactAccount.self, forPrimaryKey: contact.uid)
+        
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "receiver", keyValue: contact.uid)
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "senderid", keyValue: contact.uid)
+        
+        let contactCort: (smTableDB: Object.Type, forPrimaryKey: Int) = (Chat.self, contact.uid)
+        let chatCort: (smTableDB: Object.Type, forPrimaryKey: Int) = (ContactAccount.self, contact.uid)
+        let recordsToDelete: [(smTableDB: Object.Type, forPrimaryKey: Int)] = [contactCort, chatCort]
+        
+        requestDB.deleteSomeRecords(records: recordsToDelete)
     }
     
     //MARK: - Information about my profile
-    func saveSelfUser(info: SelfAccount) {
+    func saveSelfUser(info: MainAccounts) {
         requestDB.saveInDB([info])
     }
     
-    func loadSelfUser() -> SelfAccount {
+    func loadSelfUser() -> MainAccounts {
         let selector = "accountName LIKE '\(Account.name)'"
-        let myAccount = requestDB.loadOneRecordFromDB(smTableDB: SelfAccount.self, filter: selector)
+        let myAccount = requestDB.loadOneRecordFromDB(smTableDB: MainAccounts.self, filter: selector)
         return myAccount[0]
     }
     
@@ -79,6 +87,8 @@ class DataBase {
     }
     
     func deleteChatFromDB(_ element: Chat) {
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "receiver", keyValue: element.id)
+        requestDB.deleteSomeRecords(smTableDB: Message.self, forKey: "senderid", keyValue: element.id)
         requestDB.deleteOneRecord(smTableDB: Chat.self, forPrimaryKey: element.id)
     }
     

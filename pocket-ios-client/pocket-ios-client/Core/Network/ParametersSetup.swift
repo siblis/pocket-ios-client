@@ -10,6 +10,5 @@ import Foundation
 
 class ParametersSetup {
     static let sheme: String = "https"
-    static let host: String = "pocketmsg.ru"
-    static let port: Int = 8888
+    static let host: String = "pocket-java-backend.herokuapp.com"
 }

@@ -32,7 +32,7 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func SignUpButtonPress(_ sender: Any) {
-        guard let accountName = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {return}
+        guard let accountName = loginTextField.text, let email = emailTextField.text, let password = passwordTextField.text else { return }
         guard !accountName.isEmpty, !email.isEmpty, !password.isEmpty else {
             print ("fill the data in fields")
             self.showErrorAlert(message: "Не все поля заполнены")
@@ -41,14 +41,12 @@ class SignUpViewController: UIViewController {
         
         URLServices().signUp(accountName: accountName, email: email, password: password) { (info) in
             Account.token = info.token
-            Account.name = accountName
-            let selfInfo = SelfAccount.init(
-                uid: info.uid,
-                accountName: accountName,
-                email: email,
-                password: password
-            )
-            CorrectionMethods().sign(for: selfInfo)
+            Account.name = email
+            let user = MainAccounts()
+            user.id = info.user.id
+            user.email = email
+            user.password = password
+            CorrectionMethods().sign(for: user)
         }
     }
     

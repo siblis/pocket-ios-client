@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        ApplicationSwitcherRC().initVC(choiceVC: .login)
+//        ApplicationSwitcherRC(choiceVC: .login)
 //        Account.token = ""
         ApplicationSwitcherRC().choiceRootVC()
         

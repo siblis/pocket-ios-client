@@ -10,8 +10,6 @@ import Foundation
 import RealmSwift
 
 
-var shemaDB: UInt64 = 1
-
 //MARK: Модель собственного профиля (Login, SignUp, MyProfile)
 class SelfAccount: Object, Codable {
     @objc dynamic var uid: Int = 0

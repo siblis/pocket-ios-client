@@ -163,12 +163,12 @@ class UserProfileViewController: UIViewController {
         if isContact {
             showDeleteAlert()
         } else {
-            if !Account.token.isEmpty {
-                URLServices().addUserByMail(user.email, token: Account.token) { (contact) in
-                    print ("success")
-                }
-            }
-            DataBase(.myData).saveContacts(data: [user])
+//            if !Account.token.isEmpty {
+//                URLServices().addUserByMail(user.email, token: Account.token) { (contact) in
+//                    print ("success")
+//                }
+//            }
+//            DataBase(.myData).saveContacts(data: [user])
             showAddAlert()
         }
     }
@@ -179,13 +179,16 @@ class UserProfileViewController: UIViewController {
         let alert = UIAlertController(show: .ifAlert(message: message, btns: btnForAlert)) { (btnAction) in
             switch btnAction {
             case "Да":
-                if !Account.token.isEmpty {
-                    URLServices().deleteUserByMail(self.user.email, token: Account.token) { (contact) in
-                        print("success: \(contact)")
-                    }
-                }
+//                if !Account.token.isEmpty {
+//                    URLServices().deleteUserByMail(self.user.email, token: Account.token) { (contact) in
+//                        print("success: \(contact)")
+//                    }
+//                }
+//                
+//                DataBase(.myData).deleteContactFromDB(self.user)
                 
-                DataBase(.myData).deleteContactFromDB(self.user)
+                self.dismiss(animated: true, completion: nil)
+                
                 return nil
             default:
                 return nil

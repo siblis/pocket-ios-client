@@ -1,6 +1,6 @@
 //
 //  RequestRouter.swift
-//  StarShop
+//  pocket-ios-client
 //
 //  Created by Мак on 01/11/2018.
 //  Copyright © 2018 Мак. All rights reserved.
@@ -11,7 +11,6 @@ import Foundation
 protocol RequestRouter {
     var sheme: String { get }
     var host: String { get }
-    var port: Int { get }
     var path: String { get }
     var method: String { get }
     var header: [String: String]? { get }
@@ -23,7 +22,6 @@ extension RequestRouter {
         var urlConstructor = URLComponents()
         urlConstructor.scheme = sheme
         urlConstructor.host = host
-        urlConstructor.port = port
         urlConstructor.path = path
         return urlConstructor.url!
     }
