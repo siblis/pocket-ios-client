@@ -149,9 +149,9 @@ class ChatViewController: UIViewController {
     
     func getGroupUsers (id: Int) {
         myGroup.enter()
-        URLServices().getUserID(id: id, token: Account.token) { (info) in
-            self.groupContacts[id] = info
-        }
+//        URLServices().getUserID(id: id, token: Account.token) { (info) in
+//            self.groupContacts[id] = info
+//        }
         myGroup.leave()
     }
     

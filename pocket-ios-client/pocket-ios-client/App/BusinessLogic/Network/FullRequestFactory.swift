@@ -11,117 +11,59 @@ import Foundation
 
 protocol FullRequestFactory {
     
-    func signIn(login: String, password: String, completion: @escaping (SignInResponse) -> Void)
-    func signUp(accountName: String, email: String, password: String, completion: @escaping (SignUpResponse) -> Void)
-    func getSelfUser(token: String, completion: @escaping (SelfAccount) -> Void)
-    func getUserID(id: Int, token: String, completion: @escaping (ContactAccount) -> Void)
-    func getUserByNickname(nickname: String, token: String, completion: @escaping ([ContactAccount]) -> Void)
-    func getUserByEmail(email: String, token: String, completion: @escaping (ContactAccount) -> Void)
-    func getGroupInfo(info: String, token: String, completion: @escaping (GroupInfo) -> Void)
-    func getContacts(token: String, completion: @escaping ([ContactAccount]) -> Void)
-    func addUserByMail(_ email: String, token: String, completion: @escaping (ContactAccount) -> Void)
-    func deleteUserByMail(_ email: String, token: String, completion: @escaping (DeleteContact) -> Void)
+    //MARK: - Auth (/auth)
+    func signIn(login: String, password: String, completion: @escaping (SignResponse) -> Void)
+    func signUp(accountName: String, email: String, password: String, completion: @escaping (SignResponse) -> Void)
     
-}
-
-class URLServices: BaseRequestFatory, FullRequestFactory {
+    //MARK: - Account (/account)
+    func getSelfUser(completion: @escaping (User) -> Void)
+    func changePassword(email: String, old: String, new: String, completion: @escaping (User) -> Void)
     
-    var loginRequest = requestInit.init(path: "/v1/auth/login/", method: "POST")
-    var registrRequest = requestInit.init(path: "/v1/auth/registration/", method: "POST")
-    var selfRequest = requestInit.init(path: "/v1/account/", method: "GET")
-    var contactRequest = requestInit.init(path: "", method: "GET")
-    var addContactRequest = requestInit.init(path: "/v1/account/contacts/", method: "POST")
-    var delContactRequest = requestInit.init(path: "/v1/account/contacts/", method: "DELETE")
+    //MARK: - Chats (/account/chats)
+    func getChats(offset: Int, completion: @escaping (UserChatCollection) -> Void)
     
-    func signIn(login: String, password: String, completion: @escaping (SignInResponse) -> Void) {
-        loginRequest.parameters = ["email": login, "password": password]
-        let rqst = try! loginRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
+    //MARK: - Contacts (/account/contacts)
+    func getContactsList(offset: Int, completion: @escaping (UserContactCollection) -> Void)
+    func getContactByID(id: String, completion: @escaping (UserContact) -> Void)
+    func addNewContact(id: String, name: String?, completion: @escaping (UserContact) -> Void)
+    func editContact(id: String, name: String, completion: @escaping (UserContact) -> Void)
+    func deleteContact(id: String, completion: @escaping (UserContact) -> Void)
     
+    //MARK: - Blacklist (/account/blacklist)
+    func getBlacklist(offset: Int, completion: @escaping (UserBlacklistCollection) -> Void)
+    func addContactToBlacklist(id: String, completion: @escaping (UserBlacklist) -> Void)
+    func deleteContactFromBlacklist(id: String, completion: @escaping (UserContact) -> Void)
     
-    func signUp(accountName: String, email: String, password: String, completion: @escaping (SignUpResponse) -> Void) {
-        registrRequest.parameters = ["name": accountName, "email": email, "password": password]
-        let rqst = try! registrRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
+    //MARK: - User (/users)
+    func getUserByID(id: String, completion: @escaping (UserProfile) -> Void)
+    func getUserByMail(email: String?, completion: @escaping (UserProfile) -> Void)
     
+    //MARK: - Group (/groups)
+    func getGroupByID(id: String, invitationCode: String?, completion: @escaping (Groupp) -> Void)
+    func createGroup(name: String, description: String?, completion: @escaping (Groupp) -> Void)
+    func editGroup(id: String, name: String?, description: String?, completion: @escaping (Groupp) -> Void)
+    func connectToGroup(id: String, invitationCode: String, completion: @escaping (Groupp) -> Void)
+    func disconnectToGroup(id: String, completion: @escaping (Groupp) -> Void)
     
-    func getSelfUser(token: String, completion: @escaping (SelfAccount) -> Void) {
-        selfRequest.header = ["token": token]
-        let rqst = try! selfRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
+    //MARK: - Group members (/groups/%id/members)
+    func getMembers(id: String, offset: Int, completion: @escaping (GroupMemberCollection) -> Void)
+    func addMember(id: String, addID: String, completion: @escaping (GroupMember) -> Void)
+    func changeMemberRights(id: String, chID: String, role: String, completion: @escaping (GroupMember) -> Void)
+    func deleteMember(id: String, delID: String, completion: @escaping (GroupMember) -> Void)
     
+    //MARK: - Group invites (/groups/%id/invites)
+    func getInviteStatus(id: String, completion: @escaping (GroupMemberCollection) -> Void)
+    func createInvite(id: String, completion: @escaping (GroupMemberCollection) -> Void)
+    func deleteInvite(id: String, completion: @escaping (GroupMemberCollection) -> Void)
     
-    func getUserID(id: Int, token: String, completion: @escaping (ContactAccount) -> Void) {
-        contactRequest.header = ["token": token]
-        contactRequest.path = "/v1/users/" + "\(id)"
-        let rqst = try! contactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
+    //MARK: - User messages (/user/%id/messages)
+    func getUserMessages(uID: String, offset: Int, completion: @escaping (MessageCollection) -> Void)
+    func getUserOneMessages(uID: String, msgID: String, completion: @escaping (Messag) -> Void)
     
+    //MARK: - Groups messages (/groups/%id/messages)
+    func getGroupMessages(gID: String, offset: Int, completion: @escaping (MessageCollection) -> Void)
+    func getGroupOneMessages(gID: String, msgID: String, completion: @escaping (Messag) -> Void)
     
-    func getUserByNickname(nickname: String, token: String, completion: @escaping ([ContactAccount]) -> Void) {
-        contactRequest.header = ["token": token]
-        contactRequest.path = "/v1/users/" + nickname
-        let rqst = try! contactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
-    
-    
-    func getUserByEmail(email: String, token: String, completion: @escaping (ContactAccount) -> Void) {
-        contactRequest.header = ["token": token]
-        contactRequest.path = "/v1/users/" + email
-        let rqst = try! contactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
-    
-    func getGroupInfo(info: String, token: String, completion: @escaping (GroupInfo) -> Void) {
-        contactRequest.header = ["token": token]
-        contactRequest.path = "/v1/chats/" + info
-        let rqst = try! contactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
-    
-    
-    func getContacts(token: String, completion: @escaping ([ContactAccount]) -> Void) {
-        contactRequest.header = ["token": token]
-        contactRequest.path = "/v1/account/contacts/"
-        let rqst = try! contactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
-    
-    
-    func addUserByMail(_ email: String, token: String, completion: @escaping (ContactAccount) -> Void) {
-        addContactRequest.header = ["token": token]
-        addContactRequest.parameters = ["contact": email]
-        let rqst = try! addContactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
-    
-    
-    func deleteUserByMail(_ email: String, token: String, completion: @escaping (DeleteContact) -> Void) {
-        delContactRequest.header = ["token": token]
-        delContactRequest.parameters = ["contact": email]
-        let rqst = try! delContactRequest.asURLRequest()
-        self.request(ask: rqst, completion: completion)
-    }
-}
-
-extension URLServices {
-    
-    struct requestInit: RequestRouter {
-        var sheme: String = ParametersSetup.sheme
-        var host: String = ParametersSetup.host
-        var path: String
-        var method: String
-        var header: [String: String]? = nil
-        var parameters: [String: String]? = nil
-        
-        init(path: String, method: String) {
-            self.path = path
-            self.method = method
-        }
-    }
+    //MARK: - WebSocket (/socket)
+    func getSocket(completion: @escaping (Messag) -> Void)
 }

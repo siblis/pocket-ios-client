@@ -11,7 +11,7 @@ import UIKit
 
 class MyProfileViewController: UIViewController {
     
-    var selfInfo = DataBase(.accounts).loadSelfUser()
+    var selfInfo = SelfAccount()// DataBase(.accounts).loadSelfUser()
     
     //определяем элементы экрана
     let backgroundView = Interface().viewIni(color: UIColor.backSecondary)

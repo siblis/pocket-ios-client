@@ -10,6 +10,7 @@
 		242481EF217ED15000F708C6 /* MessageAndWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */; };
 		2438D53121C6E0E1002FCF20 /* CodableJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438D53021C6E0E1002FCF20 /* CodableJSON.swift */; };
 		24392F8421B873B1003C444C /* AbstractRequestDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24392F8321B873B1003C444C /* AbstractRequestDB.swift */; };
+		24441B7522604AC8001FD456 /* URLServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24441B7422604AC8001FD456 /* URLServices.swift */; };
 		244753F62204FCE5000E2EE3 /* Obj+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244753F52204FCE5000E2EE3 /* Obj+Codable.swift */; };
 		245617422178BDB8007A9103 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245617412178BDB8007A9103 /* ChatViewController.swift */; };
 		245DE7B72196294D002596FF /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DE7B62196294D002596FF /* MessageCell.swift */; };
@@ -84,6 +85,7 @@
 		242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAndWebSocket.swift; sourceTree = "<group>"; };
 		2438D53021C6E0E1002FCF20 /* CodableJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableJSON.swift; sourceTree = "<group>"; };
 		24392F8321B873B1003C444C /* AbstractRequestDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractRequestDB.swift; sourceTree = "<group>"; };
+		24441B7422604AC8001FD456 /* URLServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLServices.swift; sourceTree = "<group>"; };
 		244753F52204FCE5000E2EE3 /* Obj+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Obj+Codable.swift"; sourceTree = "<group>"; };
 		245617412178BDB8007A9103 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		245DE7B62196294D002596FF /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -258,10 +260,10 @@
 			isa = PBXGroup;
 			children = (
 				2438D53021C6E0E1002FCF20 /* CodableJSON.swift */,
+				244753F52204FCE5000E2EE3 /* Obj+Codable.swift */,
 				6D2E38CC219B68A300059DD3 /* Object+Codable.swift */,
 				6D2988EF21935F590004199F /* AccountService.swift */,
 				BC9AC6A02193059F00348948 /* ChatListModel.swift */,
-				244753F52204FCE5000E2EE3 /* Obj+Codable.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -283,6 +285,7 @@
 			children = (
 				6DA111282163E8DC00C2AA45 /* NetworkServices */,
 				24A680AA21DEE0F2003C4D21 /* FullRequestFactory.swift */,
+				24441B7422604AC8001FD456 /* URLServices.swift */,
 				242481EE217ED15000F708C6 /* MessageAndWebSocket.swift */,
 			);
 			path = Network;
@@ -676,6 +679,7 @@
 				6DA1112F2166737900C2AA45 /* ContactListTableViewCell.swift in Sources */,
 				24EC57AA21EEF05A008A4E4F /* CustomFont.swift in Sources */,
 				6D8FB1D6219B0C7100E90D89 /* DataBase.swift in Sources */,
+				24441B7522604AC8001FD456 /* URLServices.swift in Sources */,
 				890F195A2242B24100D54BD0 /* CustomTransitionManager.swift in Sources */,
 				24EEE119221AF9A4007CA4F2 /* AlertFactory.swift in Sources */,
 				6DA1113B216CD0BC00C2AA45 /* ApplicationSwitcherRC.swift in Sources */,

@@ -8,31 +8,18 @@
 
 import Foundation
 
-struct SignInResponse: Codable {
+struct SignResponse: Codable {
     var token: String
+    var user: User
     
     enum CodingKeys: String, CodingKey {
         case token = "token"
+        case user = "user"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.token = try container.decode(String.self, forKey: .token)
-    }
-}
-
-struct SignUpResponse: Codable {
-    var token: String
-    var uid: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case token = "token"
-        case uid = "user_id"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uid = try container.decode(Int.self, forKey: .uid)
+        self.user = try container.decode(User.self, forKey: .user)
         self.token = try container.decode(String.self, forKey: .token)
     }
 }

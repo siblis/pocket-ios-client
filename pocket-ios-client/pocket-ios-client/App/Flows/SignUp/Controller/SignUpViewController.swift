@@ -41,14 +41,12 @@ class SignUpViewController: UIViewController {
         
         URLServices().signUp(accountName: accountName, email: email, password: password) { (info) in
             Account.token = info.token
-            Account.name = accountName
-            let selfInfo = SelfAccount.init(
-                uid: info.uid,
-                accountName: accountName,
-                email: email,
-                password: password
-            )
-            CorrectionMethods().sign(for: selfInfo)
+            Account.name = email
+            let user = MainAccounts()
+            user.id = info.user.id
+            user.email = email
+            user.password = password
+            CorrectionMethods().sign(for: user)
         }
     }
     

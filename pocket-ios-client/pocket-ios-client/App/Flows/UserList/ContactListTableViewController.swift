@@ -11,24 +11,24 @@ import UIKit
 
 class ContactListTableViewController: UITableViewController {
     
-    var contactArray = DataBase(.myData).loadContactsList()
-    var observerContactInDB: RealmNotification?
+    var contactArray: [ContactAccount] = []// DataBase(.myData).loadContactsList()
+//    var observerContactInDB: RealmNotification?
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
-        URLServices().getContacts(token: Account.token) { (contacts) in
-            DataBase(.myData).saveContacts(data: contacts)
-        }
-        observerContactInDB = DataBase(.myData).observerContacts() { (changes) in
-            if changes {
-                self.tableView.reloadData()
-            }
-        }
+//        URLServices().getContacts(token: Account.token) { (contacts) in
+//            DataBase(.myData).saveContacts(data: contacts)
+//        }
+//        observerContactInDB = DataBase(.myData).observerContacts() { (changes) in
+//            if changes {
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        observerContactInDB = nil
+//        observerContactInDB = nil
     }
 
     override func viewDidLoad() {

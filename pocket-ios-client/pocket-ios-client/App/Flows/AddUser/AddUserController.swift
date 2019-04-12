@@ -105,11 +105,11 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
             if !Account.token.isEmpty {
                 for id in groups[indexPath.row].users {
                     myGroup.enter()
-                    URLServices().getUserID(id: Int(id), token: Account.token) { (contact) in
-                        self.selectedGroup.users.append(contact)
-                        print ("add contact")
-                        self.myGroup.leave()
-                    }
+//                    URLServices().getUserID(id: Int(id), token: Account.token) { (contact) in
+//                        self.selectedGroup.users.append(contact)
+//                        print ("add contact")
+//                        self.myGroup.leave()
+//                    }
                 }
                 myGroup.notify(queue: .main) {
                     self.performSegue(withIdentifier: "showSelectedGroupDetails", sender: self)
@@ -129,21 +129,21 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
         if !Account.token.isEmpty {
             if searchText.contains("@") {
                 print ("Searching by email...")
-                URLServices().getUserByEmail(email: searchText, token: Account.token) { (contact) in
-                    self.users.append(contact)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
+//                URLServices().getUserByEmail(email: searchText, token: Account.token) { (contact) in
+//                    self.users.append(contact)
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
+//                }
             } else if digitSet.contains(searchText.unicodeScalars.first!) {
                 print ("Searching by id...")
                 if let id = Int(searchText) {
-                    URLServices().getUserID(id: id, token: Account.token) { (contact) in
-                        self.users.append(contact)
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
+//                    URLServices().getUserID(id: id, token: Account.token) { (contact) in
+//                        self.users.append(contact)
+//                        DispatchQueue.main.async {
+//                            self.tableView.reloadData()
+//                        }
+//                    }
                 }
             } else {
                 print ("Searching by nickname...")
@@ -172,12 +172,12 @@ class AddUserController: UITableViewController, UISearchBarDelegate {
             }
             
             print ("Searching group")
-            URLServices().getGroupInfo(info: searchText, token: Account.token) { (group) in
-                self.groups.append(group)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+//            URLServices().getGroupInfo(info: searchText, token: Account.token) { (group) in
+//                self.groups.append(group)
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
         }
         
     }

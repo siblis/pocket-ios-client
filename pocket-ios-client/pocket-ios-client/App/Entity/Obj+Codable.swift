@@ -9,11 +9,24 @@
 import Foundation
 import RealmSwift
 
+var shemaDB: UInt64 = 2
+
+class MainAccounts: Object {
+    @objc dynamic var id: String = ""
+    @objc dynamic var nick: String = ""
+    @objc dynamic var email: String = ""
+    @objc dynamic var password: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+}
+
 class UserProfile: Object, Codable {
     @objc dynamic var id: String = ""
     @objc dynamic var userName: String = ""
     @objc dynamic var fullName: String = ""
-    @objc dynamic var lastSeen: Double  = 0
+    @objc dynamic var lastSeen: Double = 0
 
     override class func primaryKey() -> String? {
         return "id"
@@ -29,22 +42,22 @@ class UserProfile: Object, Codable {
     public convenience init(
         id: String,
         userName: String,
-        fullName: String,
-        lastSeen: Double
+        fullName: String?,
+        lastSeen: Double?
         ){
         self.init()
         self.id = id
         self.userName = userName
-        self.fullName = fullName
-        self.lastSeen = lastSeen
+        self.fullName = fullName ?? ""
+        self.lastSeen = lastSeen ?? 0
     }
 
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id = try container.decode(String.self, forKey: .id)
         let userName = try container.decode(String.self, forKey: .userName)
-        let fullName = try container.decode(String.self, forKey: .fullName)
-        let lastSeen = try container.decode(Double.self, forKey: .lastSeen)
+        let fullName = try? container.decode(String.self, forKey: .fullName)
+        let lastSeen = try? container.decode(Double.self, forKey: .lastSeen)
         self.init(id: id, userName: userName, fullName: fullName, lastSeen: lastSeen)
     }
 }
@@ -52,7 +65,7 @@ class UserProfile: Object, Codable {
 class User: Object, Codable {
     @objc dynamic var id: String = ""
     @objc dynamic var email: String = ""
-    @objc dynamic var profile = UserProfile()
+    @objc dynamic var profile: UserProfile? = UserProfile()
 
     override class func primaryKey() -> String? {
         return "id"
@@ -67,7 +80,7 @@ class User: Object, Codable {
     public convenience init(
         id: String,
         email: String,
-        profile: UserProfile
+        profile: UserProfile?
         ){
         self.init()
         self.id = id
@@ -79,7 +92,7 @@ class User: Object, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id = try container.decode(String.self, forKey: .id)
         let email = try container.decode(String.self, forKey: .email)
-        let profile = try container.decode(UserProfile.self, forKey: .profile)
+        let profile = try? container.decode(UserProfile.self, forKey: .profile)
         self.init(id: id, email: email, profile: profile)
     }
 }
